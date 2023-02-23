@@ -12,7 +12,8 @@
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
     "styled-components": "^5.3.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@bootpay/client-js":"^4.2.7"
   },
   "scripts": {
     "start": "react-scripts start",
