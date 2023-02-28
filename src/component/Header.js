@@ -1,7 +1,17 @@
 import React from 'react'
+// styled-component
 import styled from 'styled-components'
+// Common style
 import {Inner} from '../common/js/style'
+// logo 경로
 import logo from '../common/images/logo.png'
+// react icon
+import { AiOutlineSearch } from "react-icons/ai";
+// react tab
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+// tab custom css
+import '../common/css/custom.css'
 
 
 const HeaderBlock = styled.header`
@@ -10,14 +20,25 @@ const HeaderBlock = styled.header`
 const Top = styled.div`
   display: flex;
   justify-content: end;
+  padding: 8px 0;
+  box-sizing: border-box;
   
   ul{
     display: flex;
     list-style: none;
     margin: 0;
-    padding: 8px 40px;
     li{
       padding: 0 12px;
+      box-sizing: border-box;
+
+      &:first-child{
+        padding-left: 0;
+      }
+
+      &:last-child{
+        padding-right: 0;
+      }
+
       a{
         color: #222;
         text-decoration: none;
@@ -31,20 +52,25 @@ const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 0;
+  box-sizing: border-box;
+
   ul{
     display: flex;
     list-style: none;
     margin: 0;
-    padding: 20px 40px;
     li{
       padding: 0 20px;
+      box-sizing: border-box;
 
       &:first-child{
         padding-left: 0;
       }
-      &:lest-child{
-        padding:right: 0;
+
+      &:last-child{
+        padding-right: 40px;
       }
+
       a{
         color: #222;
         text-decoration: none;
@@ -54,10 +80,19 @@ const Navbar = styled.nav`
   }
 `
 
+const NavBlock = styled.div`
+  display: flex;
+  align-items: center;
+  
+  .flex{
+    display: flex;
+  }
+`
+
 const Header = () => {
   return (
     <HeaderBlock>
-      <Inner>
+      <Inner padding="0 40px;">
         <Top>
           <ul>
             <li>
@@ -75,24 +110,47 @@ const Header = () => {
           <div>
             <img width='120px' src={logo}></img>
           </div>
-          <nav>
-            <ul>
-              <li>
-                <a href='#'>HOME</a>
-              </li>
-              <li>
-                <a href='#'>HOME</a>
-              </li>
-              <li>
-                <a href='#'>HOME</a>
-              </li>
-              <li>
-                <a href='#'>HOME</a>
-              </li>
-            </ul>
-          </nav>
+          <NavBlock>
+            <nav>
+              <ul>
+                <li>
+                  <a href='#'>HOME</a>
+                </li>
+                <li>
+                  <a href='#'>STYLE</a>
+                </li>
+                <li>
+                  <a href='#'>SHOP</a>
+                </li>
+                <li>
+                  <a href='#'>MY</a>
+                </li>
+              </ul>
+            </nav>
+            <div className='flex'><AiOutlineSearch size="28"/></div>
+          </NavBlock>
         </Navbar>
-        <div></div>
+        <Tabs>
+            <TabList>
+              <Tab>추천</Tab>
+              <Tab>남성</Tab>
+              <Tab>여성</Tab>
+              <Tab>기획전</Tab>
+            </TabList>
+
+            <TabPanel>
+              <h2>추천</h2>
+            </TabPanel>
+            <TabPanel>
+              <h2>남성</h2>
+            </TabPanel>
+            <TabPanel>
+              <h2>여성</h2>
+            </TabPanel>
+            <TabPanel>
+              <h2>기획전</h2>
+            </TabPanel>
+          </Tabs>
       </Inner>
     </HeaderBlock>
   )

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 export const Inner = styled.div`
     width: 1280px; 
     margin: 0 auto;
+    padding: ${props => props.padding}
+    box-sizing: border-box;
 `
 export const Button = styled.button`
     height: ${props => props.height}
@@ -10,4 +12,6 @@ export const Button = styled.button`
     border-radius: 12px;
     padding: 10px 30px;
     background-color: 
+    box-sizing: border-box;
+
 `

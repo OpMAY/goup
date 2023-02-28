@@ -1,4 +1,5 @@
 import {Routes, Route} from 'react-router-dom';
+import Footer from './component/Footer';
 // import Kakao from "./module/Kakao";
 // import axios from "axios";
 import Header from './component/Header';
@@ -23,6 +24,7 @@ function App() {
                 {/*<Route path="" element={}/>*/}
                 {/* <Route path="/oauth" element={<Kakao/>}/> */}
             </Routes>
+            <Footer></Footer>
         </div>
     );
 }
