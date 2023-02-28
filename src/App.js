@@ -1,7 +1,7 @@
 import {Routes, Route} from 'react-router-dom';
 // import Kakao from "./module/Kakao";
 // import axios from "axios";
-import {Button} from "./common/style"
+import Header from './component/Header';
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
 
     return (
         <div className="App">
-            <Button type="button" height="40px;">버튼</Button>
+            <Header></Header>
             <Routes>
                 {/*<Route path="" element={}/>*/}
                 {/* <Route path="/oauth" element={<Kakao/>}/> */}

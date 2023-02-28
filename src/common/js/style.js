@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Inner = styled.div`
+    width: 1280px; 
+    margin: 0 auto;
+`
 export const Button = styled.button`
     height: ${props => props.height}
     border: 1px solid #d3d3d3;
