@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 // common style
 import { Inner } from '../../common/js/style';
+import ProductItem from './ProductItem';
 
 const Product = () => {
   return (
@@ -20,10 +21,11 @@ const Product = () => {
 			</Inner>
 
 			<TabPanel>
-				<>
-    			<BannerSwiper></BannerSwiper>
-
-				</>
+				{/* swiper */}
+				<BannerSwiper />
+				<Inner>
+					<ProductItem  title={'Just Dropped'} subTitle={'발매 상품'}/>
+				</Inner>
 			</TabPanel>
 			<TabPanel>
 					<h2>남성</h2>

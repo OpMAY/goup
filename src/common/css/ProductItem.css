@@ -1,0 +1,13 @@
+h2, h3{
+    margin: 0;
+    padding: 0;
+}
+
+h2{
+    font-size: 18px;
+}
+h3{
+    font-size: 14px;
+    font-weight: normal;
+    color: rgba(34,34,34,.5);
+}
