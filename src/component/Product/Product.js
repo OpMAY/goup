@@ -6,25 +6,26 @@ import 'react-tabs/style/react-tabs.css';
 // common style
 import { Inner } from '../../common/js/style';
 import ProductItem from './ProductItem';
+import FocusList from './FocusList';
 
 const Product = () => {
   return (
     <>
     <Tabs>
-			<Inner>
+			<Inner padding="0 40px;">
 				<TabList>
 					<Tab>추천</Tab>
 					<Tab>남성</Tab>
 					<Tab>여성</Tab>
-					<Tab>기획전</Tab>
 				</TabList>
 			</Inner>
 
 			<TabPanel>
 				{/* swiper */}
 				<BannerSwiper />
-				<Inner>
+				<Inner padding="0 40px;">
 					<ProductItem  title={'Just Dropped'} subTitle={'발매 상품'}/>
+					<FocusList title={'Brand Focus'} subTitle={'추천 브랜드'}></FocusList>
 				</Inner>
 			</TabPanel>
 			<TabPanel>
@@ -32,9 +33,6 @@ const Product = () => {
 			</TabPanel>
 			<TabPanel>
 					<h2>여성</h2>
-			</TabPanel>
-			<TabPanel>
-					<h2>기획전</h2>
 			</TabPanel>
     </Tabs>
     </>

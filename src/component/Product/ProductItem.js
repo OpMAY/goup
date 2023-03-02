@@ -63,7 +63,7 @@ const ProductInfo = styled.div`
     content: "";
     display: block;
     width: 100%;
-    border: 1px solid #ccc;
+    border-top: 1px solid #ccc;
     margin: 56px auto 40px;
 
     
