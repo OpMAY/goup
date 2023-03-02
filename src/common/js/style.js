@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import BookMarkModal from '../../component/modal/BookMarkModal';
 
 export const Inner = styled.div`
   width: 1280px;
@@ -17,6 +19,8 @@ export const Button = styled.button`
 // MainItems
 const MainItems = styled.div`
   flex: 0 0 auto;
+
+  margin-top: 16px;
   .productInfo{
     padding: 9px 0 0;
   }
@@ -45,6 +49,7 @@ const MainItems = styled.div`
   
 `
 const MainItemImage = styled.div`
+  position: relative;
   width: 294px;
   height: 294px;
   background-image: url(${props => props.url});
@@ -52,21 +57,38 @@ const MainItemImage = styled.div`
   background-color: #000;
   background-position: center;
   border-radius: 15px;
+
+  .bookMark{
+    width: 25px;
+    height: 25px;
+    border: 1px solid #555;
+    position: absolute;
+    right:10px;
+    bottom: 10px;
+    border-radius: 50px;
+    background-color: #fff;
+  }
 `
 export const MainItem = ({p}) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <MainItems>
-      <MainItemImage url={p.images[0].url}></MainItemImage>
-      {/* <img alt="Main Test Images" src="/images/img0.png"/> */}
-      <div className='productInfo'>
-        <em>{p.title}</em>
-        <p className='name'>상세</p>
-        <div className='price'>
-          <strong>금액</strong>
-          <p>즉시 구매가</p>
+    <>
+      <MainItems>
+        <MainItemImage url={p.images[0].url}>
+          <div className='bookMark'></div>
+        </MainItemImage>
+        {/* <img alt="Main Test Images" src="/images/img0.png"/> */}
+        <div className='productInfo'>
+          <em>{p.title}</em>
+          <p className='name'>상세</p>
+          <div className='price'>
+            <strong>금액</strong>
+            <p>즉시 구매가</p>
+          </div>
         </div>
-      </div>
-    </MainItems>
+      </MainItems>
+      <BookMarkModal></BookMarkModal>
+    </>
   )
 }
 
@@ -87,7 +109,6 @@ const CardImage = styled.div`
   border-radius: 15px;
 `
 export const Card = ({item}) => {
-  console.log(item)
   return(
     <CardItem>
       <CardImage url={item.url}></CardImage>
