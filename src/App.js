@@ -3,7 +3,7 @@ import Footer from './component/Footer';
 // import Kakao from "./module/Kakao";
 // import axios from "axios";
 import Header from './component/Header';
-
+import Detail from './page/Detail';
 
 function App() {
     // const kakaoTest = () => {
@@ -22,6 +22,7 @@ function App() {
             <Header></Header>
             <Routes>
                 {/*<Route path="" element={}/>*/}
+                <Route path="/detail" element={<Detail/>}/>
                 {/* <Route path="/oauth" element={<Kakao/>}/> */}
             </Routes>
             <Footer></Footer>
