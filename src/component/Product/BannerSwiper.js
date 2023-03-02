@@ -47,7 +47,6 @@ const BannerSwiper = () => {
           <ThirdImage>33333</ThirdImage>
         </SwiperSlide>
       </Swiper>
-      ;
     </>
   );
 };

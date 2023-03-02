@@ -7,9 +7,7 @@ import {Inner} from '../common/js/style'
 import logo from '../common/images/logo.png'
 // react icon
 import { AiOutlineSearch } from "react-icons/ai";
-// react tab
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
+
 // tab custom css
 import '../common/css/custom.css'
 
@@ -130,27 +128,6 @@ const Header = () => {
             <div className='flex'><AiOutlineSearch size="28"/></div>
           </NavBlock>
         </Navbar>
-        <Tabs>
-            <TabList>
-              <Tab>추천</Tab>
-              <Tab>남성</Tab>
-              <Tab>여성</Tab>
-              <Tab>기획전</Tab>
-            </TabList>
-
-            <TabPanel>
-              <h2>추천</h2>
-            </TabPanel>
-            <TabPanel>
-              <h2>남성</h2>
-            </TabPanel>
-            <TabPanel>
-              <h2>여성</h2>
-            </TabPanel>
-            <TabPanel>
-              <h2>기획전</h2>
-            </TabPanel>
-          </Tabs>
       </Inner>
     </HeaderBlock>
   )

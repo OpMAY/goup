@@ -1,4 +1,18 @@
+/* react Tab custom */
 .react-tabs__tab-list{
     border: none;
+    margin-bottom: 0 !important;
 }
 
+/* swiper custom */
+.swiper-button-prev:after, .swiper-rtl .swiper-button-next:after, .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after{
+    color: #fff;
+}
+
+.home_card_list .banner_slide_light[data-v-2ff4a50d] .slick-dots>li>button:before{
+    background-color: #000;
+    opacity: 3;
+}
+.swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet{
+    background-color: #000;
+}
