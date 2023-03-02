@@ -12,6 +12,7 @@ const FooterTop = styled.div`
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   padding-top: 50px;
+  margin-top: 56px;
   h3{
     font-size: 16px;
     margin: 0;
