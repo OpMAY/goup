@@ -1,9 +1,14 @@
+
 import {Routes, Route} from 'react-router-dom';
-import Footer from './component/Footer';
 // import Kakao from "./module/Kakao";
 // import axios from "axios";
+// header
 import Header from './component/Header';
-import Detail from './page/Detail';
+// footer
+import Footer from './component/Footer';
+// product
+import Product from './component/Product/Product';
+import Detail from './page/Detail';import Detail from './page/Detail';
 
 function App() {
     // const kakaoTest = () => {
@@ -17,17 +22,19 @@ function App() {
     //     })
     // }
 
-    return (
-        <div className="App">
-            <Header></Header>
-            <Routes>
-                {/*<Route path="" element={}/>*/}
+	return (
+		<div className="App">
+			<Header></Header>
+			<Product></Product>
+			<Footer></Footer>			
+			<Routes>
+				{/*<Route path="" element={}/>*/}
+				<Route path="/detail" element={<Detail/>}/>
                 <Route path="/detail" element={<Detail/>}/>
-                {/* <Route path="/oauth" element={<Kakao/>}/> */}
-            </Routes>
-            <Footer></Footer>
-        </div>
-    );
+				{/* <Route path="/oauth" element={<Kakao/>}/> */}
+			</Routes>
+		</div>
+	);
 }
 
 export default App;

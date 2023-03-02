@@ -9,7 +9,10 @@ const FooterTop = styled.div`
   justify-content: space-between;
   padding-bottom: 56px;
   box-sizing: border-box;
+  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  padding-top: 50px;
+  margin-top: 56px;
   h3{
     font-size: 16px;
     margin: 0;
@@ -58,6 +61,7 @@ const Service = styled.div`
 `
 const BtnBox = styled.div`
   padding-top: 17px;
+  box-sizing: border-box;
   a{
     display: inline-block;
     padding: 10px 18px;
@@ -82,6 +86,7 @@ const FooterBottom = styled.div`
     
     li{
       margin-right: 20px;
+      box-sizing: border-box;
       a{
         font-size: 14px;
         text-decoration: none;
@@ -112,6 +117,7 @@ const SnsBox = styled.div`
     li{
       padding: 0 20px;
       margin: 0;
+      box-sizing: border-box;
         
       &:first-child{
         padding: 0;
@@ -127,11 +133,58 @@ const SnsBox = styled.div`
     }
   }
 `
+const Information = styled.p`
+  color: rgba(34,34,34,.5);
+  margin: 16px 0 0 0;
+  font-size: 13px;
+  line-height: 20px;
+  box-sizing: border-box;
+`
+
+const Spacing = styled.span`
+  margin-right: 15px;
+  box-sizing: border-box;
+`
+const Guide = styled.div`
+  padding: 40px 0 8px;
+  box-sizing: border-box;
+
+  h5{
+    font-size: 12px;
+    margin: 0;
+  }
+  
+  p{
+    margin: 4px 0 0 0;
+    box-sizing: border-box;
+    font-size: 12px;
+    color: rgba(34,34,34,.5);
+  }
+`
+const Notice = styled.div`
+  display: flex;c
+  font-size: 12px;
+  color: rgba(34,34,34,.5);
+  align-items: end;
+  padding: 12px 0 0 0;
+  
+  p{
+    margin: 0;
+    flex: .5;
+    font-size: 12px;
+
+    &:last-child{
+      text-align: right;
+      color: rgba(34,34,34,.3);
+    }
+  }
+`
 const Footer = () => {
   return (
     <footer>
-        <Inner padding="50px 40px;">
+        <Inner padding="0 40px;">
           <FooterTop>
+            
             <Menu>
               <MenuList>
                 <h3>이용안내</h3>
@@ -165,13 +218,6 @@ const Footer = () => {
             </Service>
           </FooterTop>
           <FooterBottom>
-            <ul>
-              <li><a href='#'>회사소개</a></li>
-              <li><a href='#'>인재채용</a></li>
-              <li><a href='#'>제휴제안</a></li>
-              <li><a href='#'>이용약관</a></li>
-              <li><a href='#'>개인정보처리방침</a></li>
-            </ul>
             <SnsBox>
               <ul>
                 <li><a href='#'><BsInstagram color="#000" size="20px"></BsInstagram></a></li>
@@ -179,7 +225,32 @@ const Footer = () => {
                 <li><a href='#'><BsChatDotsFill color="#000" size="20px"></BsChatDotsFill></a></li>
               </ul>
             </SnsBox>
+            <ul>
+              <li><a href='#'>회사소개</a></li>
+              <li><a href='#'>인재채용</a></li>
+              <li><a href='#'>제휴제안</a></li>
+              <li><a href='#'>이용약관</a></li>
+              <li><a href='#'>개인정보처리방침</a></li>
+            </ul>
+            <Information>
+            크림 주식회사 · 대표 김창욱<Spacing></Spacing>사업자등록번호 : 570-88-01618 사업자정보확인<Spacing></Spacing>통신판매업 : 제 2021-성남분당C-0093호 <br/>
+            사업장소재지 : 경기도 성남시 분당구 분당내곡로 131 판교테크원 타워1, 8층<Spacing></Spacing>호스팅 서비스 : 네이버 클라우드 ㈜
+            </Information>
+            
+            <Guide>
+              <h5>신한은행 채무지급보증 안내</h5>
+              <p>당사는 고객님의 현금 결제 금액에 대해 신한은행과 채무지급보증 계약을 체결하여 안전거래를 보장하고 있습니다. 서비스가입 사실 확인</p>
+            </Guide>
+            <Notice>
+              <p>
+                크림(주)는 통신판매 중개자로서 통신판매의 당사자가 아닙니다. 본 상품은 개별판매자가 등록한 상품으로 상품, 상품정보, 거래에 관한 의무와 책임은 각 판매자에게 있습니다. 단, 이용약관 및 정책, 기타 거래 체결 과정에서 고지하는 내용 등에 따라 검수하고 보증하는 내용에 대한 책임은 크림(주)에 있습니다.
+              </p>
+              <p>
+                © KREAM Corp.
+              </p>
+            </Notice>
           </FooterBottom>
+          
         </Inner>
     </footer>
   )
