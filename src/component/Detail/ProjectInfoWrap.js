@@ -27,6 +27,9 @@ const ProjectInfoWrap = () => {
             line-height: 14px;
             font-size: 12px;
           }
+          .model_num {
+            font-weight: 600;
+          }
           dd {
             margin: 0;
             margin-top: 4px;
@@ -46,7 +49,7 @@ const ProjectInfoWrap = () => {
         <dl className="detail_product">
           <div className="detail_box">
             <dt>모델번호</dt>
-            <dd>SSLF12333</dd>
+            <dd className="model_num">SSLF12333</dd>
           </div>
           <div className="detail_box">
             <dt>출시일</dt>

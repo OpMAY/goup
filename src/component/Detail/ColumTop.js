@@ -4,12 +4,15 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import BuySellButton from "./BuySellButton";
 
 const DetailMainTitle = styled.div`
-  a {
-    text-decoration: none;
-    border-bottom: 2px solid black;
-    font-weight: 800;
-    margin-bottom: 9px;
-    color: black;
+  font-size: 18px;
+  div {
+    margin-bottom: 10px;
+    a {
+      text-decoration: none;
+      border-bottom: 2px solid black;
+      font-weight: 800;
+      color: black;
+    }
   }
   .productName {
     margin-bottom: 4px;
@@ -85,7 +88,9 @@ const ColumTop = () => {
   return (
     <div>
       <DetailMainTitle>
-        <a href="3">Helinox</a>
+        <div>
+          <a href="3">Helinox</a>
+        </div>
         <div className="productName">Helinox x Obey Sunset Chair Black</div>
         <div className="ProductKoName">헬리녹스 x 오베이 선셋 체어 블랙</div>
       </DetailMainTitle>

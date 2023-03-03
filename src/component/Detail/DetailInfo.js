@@ -7,17 +7,26 @@ import DetailWraper from "./DetailWraper";
 import DeliveryWrap from "./DeliveryWrap";
 import { BsArrowRight } from "react-icons/bs";
 
-const InfoSection = styled.div`
+const LeftSection = styled.div`
   flex-direction: column;
   flex: 1;
-  ${props => (props.padding ? "padding-left: 39.5px;" : "padding-right: 39.5px;")}
-  ${props => props.divider && "border-left: 1px solid #ebebeb;"}
+  padding-right: 39.5px;
   .product_image {
     background-color: yellow;
   }
 `;
 
-// Wrap 에 overflow
+const RightSection = styled.div`
+  flex-direction: column;
+  flex: 1;
+  overflow-y: scroll;
+  height: 800px;
+  border-left: 1px solid #ebebeb;
+  padding-left: 39.5px;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const BannerBox = styled.div`
   margin-top: 20px;
@@ -82,16 +91,16 @@ const LeftInfo = styled.div`
   }
 `;
 
+const DetailContainer = styled.div`
+  display: flex;
+`;
+
 const DetailInfo = () => {
   return (
     <>
       <Inner padding="30px 40px 120px;">
-        <div
-          style={{
-            display: "flex",
-            direction: "row",
-          }}>
-          <InfoSection>
+        <DetailContainer>
+          <LeftSection>
             <LeftInfo>
               <div className="product_image_container">
                 <div className="product_image"></div>
@@ -110,8 +119,8 @@ const DetailInfo = () => {
                 </span>
               </div>
             </LeftInfo>
-          </InfoSection>
-          <InfoSection divider padding>
+          </LeftSection>
+          <RightSection>
             <div>
               <ColumTop />
               <ProjectInfoWrap />
@@ -126,8 +135,8 @@ const DetailInfo = () => {
               </BannerBox>
               <DetailWraper />
             </div>
-          </InfoSection>
-        </div>
+          </RightSection>
+        </DetailContainer>
       </Inner>
     </>
   );
