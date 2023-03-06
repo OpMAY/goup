@@ -16,3 +16,10 @@
 .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet{
     background-color: #000;
 }
+
+.css-14i5wbm-MuiButtonBase-root-MuiButton-root{
+    min-width: none;
+}
+.css-mqz80f-MuiButtonBase-root-MuiButton-root:hover{
+    background-color: none !important;
+}

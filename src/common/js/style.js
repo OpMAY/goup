@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import BookMarkModal from '../../component/modal/BookMarkModal';
+import Button from '@mui/material/Button';
+import '../css/custom.css'
 
 export const Inner = styled.div`
   width: 1280px;
@@ -8,13 +10,6 @@ export const Inner = styled.div`
   padding: ${props => props.padding};
   box-sizing: border-box;
   border-top: ${props => props.bordertop};
-`
-// Button
-export const Button = styled.button`
-  height: ${props => props.height}
-  border: 1px solid #d3d3d3;
-  border-radius: 12px;
-  padding: 10px 30px;
 `
 // MainItems
 const MainItems = styled.div`
@@ -69,13 +64,29 @@ const MainItemImage = styled.div`
     background-color: #fff;
   }
 `
+
+const buttonStyle = {
+  position: 'absolute',
+  'min-width': "25px",
+  height: "25px",
+  'background-color': "#fff",
+  bottom: "10px",
+  right: "10px",
+  padding: "0",
+  'border-radius': '50px',
+  "&:hover": {
+    backgroundColor: '#fff'
+  }
+}
 export const MainItem = ({p}) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <>
       <MainItems>
         <MainItemImage url={p.images[0].url}>
-          <div className='bookMark'></div>
+          <Button sx={buttonStyle} onClick={handleOpen}></Button>
         </MainItemImage>
         {/* <img alt="Main Test Images" src="/images/img0.png"/> */}
         <div className='productInfo'>
@@ -87,7 +98,11 @@ export const MainItem = ({p}) => {
           </div>
         </div>
       </MainItems>
-      <BookMarkModal></BookMarkModal>
+      <BookMarkModal 
+      open={open}
+      setOpen={setOpen}
+      handleClose={handleClose}
+      />
     </>
   )
 }
@@ -116,3 +131,38 @@ export const Card = ({item}) => {
     </CardItem>
   )
 }
+
+const GenderItem = styled.div`
+  margin: 40px 0 0 0;
+  .imgBox{
+    height: 100px;
+    background-image: url("https://carrier-bubbly.s3.ap-northeast-2.amazonaws.com/image/kream/a_460eb0a606f247d181ffba99af7cf7d7.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #ccc;
+    border-radius: 15px;
+
+    
+  }
+  .name{
+    margin-bottom: 0;
+    text-align: center;
+  }
+`
+
+export const GenderList = () => {
+  return(
+    <GenderItem>
+      <div className='imgBox'></div>
+      <p className='name'>test</p>
+    </GenderItem>      
+  )
+}
+
+// border top / bottom 
+export const Hr = styled.hr`
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: ${props => props.margin}
+`
