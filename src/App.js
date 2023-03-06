@@ -8,7 +8,10 @@ import Header from './component/Header';
 import Footer from './component/Footer';
 // product
 import Product from './component/Product/Product';
+// Detail
 import Detail from './page/Detail';
+// Shop
+import Shop from './page/Shop';
 
 function App() {
     // const kakaoTest = () => {
@@ -25,13 +28,15 @@ function App() {
 	return (
 		<div className="App">
 			<Header></Header>
-			<Product></Product>
-			<Footer></Footer>			
 			<Routes>
 				{/*<Route path="" element={}/>*/}
+				<Route path="/" element={<Product/>}/>
 				<Route path="/detail" element={<Detail/>}/>
+				<Route path="/shop" element={<Shop/>}/>
 				{/* <Route path="/oauth" element={<Kakao/>}/> */}
 			</Routes>
+			<Footer></Footer>
+			{/* Route */}
 		</div>
 	);
 }
