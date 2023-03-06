@@ -3,9 +3,17 @@ import styled from "styled-components";
 import { Inner } from "../../common/js/style";
 import ColumTop from "./ColumTop";
 import ProjectInfoWrap from "./ProjectInfoWrap";
-import DetailWraper from "./DetailWraper";
 import DeliveryWrap from "./DeliveryWrap";
 import { BsArrowRight } from "react-icons/bs";
+import ProductGraph from "./ProductGraph";
+import ConfirmWrap from "./ConfirmWrap";
+import PointGuide from "./PointGuide";
+import MeditationNotice from "./MeditationNotice";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, EffectFade } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const LeftSection = styled.div`
   flex-direction: column;
@@ -43,12 +51,40 @@ const BannerBox = styled.div`
 
 const LeftInfo = styled.div`
   .product_image_container {
-    .product_image {
-      background-repeat: no-repeat;
-      background-size: contain;
-      height: 560px;
-      background-color: transparent;
-      background-image: url("https://shopping-phinf.pstatic.net/main_3319750/33197507754.20221017111653.jpg?type=f640");
+    width: 560px;
+    .swiper {
+      .swiper-slide {
+        .product_image {
+          background-repeat: no-repeat;
+          background-size: contain;
+          height: 560px;
+          background-color: transparent;
+        }
+      }
+      .swiper-pagination {
+        display: flex;
+        max-width: 528px;
+        margin: 0 16px 20px;
+        span {
+          height: 2px;
+          background-color: #222;
+          flex: 1;
+          border-radius: 0;
+          margin: 0;
+        }
+      }
+      .swiper-button-prev {
+        &:after {
+          font-size: 24px;
+          color: rgba(34, 34, 34, 0.2);
+        }
+      }
+      .swiper-button-next {
+        &:after {
+          font-size: 24px;
+          color: rgba(34, 34, 34, 0.2);
+        }
+      }
     }
   }
   .alert_box {
@@ -103,8 +139,28 @@ const DetailInfo = () => {
           <LeftSection>
             <LeftInfo>
               <div className="product_image_container">
-                <div className="product_image"></div>
-                <div />
+                <Swiper
+                  pagination={{ clickable: true }}
+                  navigation={true}
+                  effect="fade"
+                  modules={[EffectFade, Pagination, Navigation]}>
+                  <SwiperSlide>
+                    <div
+                      className="product_image"
+                      style={{
+                        backgroundImage:
+                          "url(https://image.a-rt.com/art/product/upload6/M9622C_Navy/S1.jpg?shrink=560:560)",
+                      }}></div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div
+                      className="product_image"
+                      style={{
+                        backgroundImage:
+                          "url(	https://image.a-rt.com/art/product/upload6/M9622C_Navy/S3.jpg?shrink=560:560)",
+                      }}></div>
+                  </SwiperSlide>
+                </Swiper>
               </div>
               <div className="alert_box">
                 <div className="content">
@@ -133,7 +189,12 @@ const DetailInfo = () => {
                   />
                 </a>
               </BannerBox>
-              <DetailWraper />
+              <div>
+                <ProductGraph />
+                <ConfirmWrap />
+                <PointGuide />
+                <MeditationNotice />
+              </div>
             </div>
           </RightSection>
         </DetailContainer>
