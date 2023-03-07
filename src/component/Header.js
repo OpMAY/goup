@@ -100,7 +100,7 @@ const Header = () => {
               <a href='#'>관심상품</a>
             </li>
             <li>
-              <a href='#'>로그인</a>
+              <a href='/login'>로그인</a>
             </li>
           </ul>
         </Top>
