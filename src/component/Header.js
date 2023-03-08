@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 // styled-component
 import styled from 'styled-components'
 // Common style
@@ -7,7 +7,7 @@ import {Inner} from '../common/js/style'
 import logo from '../common/images/logo.png'
 // react icon
 import { AiOutlineSearch } from "react-icons/ai";
-
+import { Link, useLocation } from 'react-router-dom';
 // tab custom css
 import '../common/css/custom.css'
 
@@ -90,41 +90,49 @@ const NavBlock = styled.div`
   }
 `
 
+
+
 const Header = () => {
+  const location =useLocation()
+  
+  const onRelode = () => {
+    
+
+  }
   return (
     <HeaderBlock>
       <Inner padding="0 40px;">
         <Top>
           <ul>
             <li>
-              <a href='#'>고객센터</a>
+              <Link to="/" >고객센터</Link>
             </li>
             <li>
-              <a href='#'>관심상품</a>
+              <Link to="/">관심상품</Link>
             </li>
             <li>
-              <a href='/login'>로그인</a>
+              <Link to="/login">로그인</Link>
             </li>
           </ul>
         </Top>
         <Navbar>
           <div>
-            <img width='120px' src={logo}></img>
+            <a href="/"><img width='120px' src={logo}></img></a>
           </div>
           <NavBlock>
             <nav>
               <ul>
                 <li>
-                  <a href='#'>HOME</a>
+                  <a href='/'>HOME</a>
                 </li>
                 <li>
-                  <a href='#'>STYLE</a>
+                  <Link to="/style">STYLE</Link>
                 </li>
                 <li>
-                  <a href='#'>SHOP</a>
+                  <Link to="/shop">SHOP</Link>
                 </li>
                 <li>
-                  <a href='#'>MY</a>
+                  <Link to="/login">MY</Link>
                 </li>
               </ul>
             </nav>

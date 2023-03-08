@@ -11,9 +11,10 @@ import Product from "./component/Product/Product";
 import Shop from "./page/Shop";
 // Login
 import Login from "./page/Login";
-
 // Detail
 import Detail from './page/Detail';
+// Style page
+import Style from "./page/Style";
 
 function App() {
   // const kakaoTest = () => {
@@ -34,6 +35,7 @@ function App() {
         {/*<Route path="" element={}/>*/}
         <Route path="/" element={<Product />} />
         <Route path="/detail" element={<Detail />} />
+        <Route path="/style" element={<Style />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         {/* <Route path="/oauth" element={<Kakao/>}/> */}

@@ -14,8 +14,8 @@ const ShopList = () => {
   return (
     <ListBlock>
       <Grid container spacing={2}>
-        {arr.map(() =>(
-          <Grid xs={3}>
+        {arr.map((v, i) =>(
+          <Grid xs={3} key={i}>
             <ShoplItem />
           </Grid>
         ))}

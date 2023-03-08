@@ -67,13 +67,13 @@ const MainItemImage = styled.div`
 
 const buttonStyle = {
   position: 'absolute',
-  'min-width': "25px",
+  minWidth: "25px",
   height: "25px",
-  'background-color': "#fff",
+  backgroundColor: "#fff",
   bottom: "10px",
   right: "10px",
   padding: "0",
-  'border-radius': '50px',
+  borderRadius: '50px',
   "&:hover": {
     backgroundColor: '#fff'
   }
