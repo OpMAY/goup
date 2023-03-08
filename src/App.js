@@ -7,12 +7,12 @@ import Header from "./component/Header";
 import Footer from "./component/Footer";
 // product
 import Product from "./component/Product/Product";
-// Detail
-import Detail from "./page/Detail";
 // Shop
 import Shop from "./page/Shop";
 // Login
 import Login from "./page/Login";
+// Detail
+import Detail from './page/Detail';
 
 function App() {
   // const kakaoTest = () => {
@@ -41,7 +41,7 @@ function App() {
       <Footer></Footer>
       {/* Route */}
     </div>
-  );
+  )
 }
 
 export default App;
