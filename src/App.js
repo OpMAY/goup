@@ -30,7 +30,6 @@ function App() {
   return (
     <div className="App">
       <Header></Header>
-      <Product></Product>
       <Routes>
         {/*<Route path="" element={}/>*/}
         <Route path="/" element={<Product />} />

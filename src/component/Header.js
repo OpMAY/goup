@@ -13,13 +13,16 @@ import '../common/css/custom.css'
 
 
 const HeaderBlock = styled.header`
-    
+  position: sticky;
+  top: 0;
+  background-color: #fff;
 `
 const Top = styled.div`
   display: flex;
   justify-content: end;
   padding: 8px 0;
   box-sizing: border-box;
+  
   
   ul{
     display: flex;

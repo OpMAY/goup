@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import BookMarkModal from '../../component/modal/BookMarkModal';
 import Button from '@mui/material/Button';
-import '../css/custom.css'
+import '../css/custom.css';
 
 export const Inner = styled.div`
   width: 1280px;
@@ -165,4 +165,11 @@ export const Hr = styled.hr`
   border: 0;
   border-top: 1px solid #ccc;
   margin: ${props => props.margin}
+`
+
+// Title
+export const Title = styled.h2`
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
 `

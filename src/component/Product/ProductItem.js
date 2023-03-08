@@ -81,7 +81,7 @@ const ItemBlock = styled.div`
 
 
 const ProductItem = ({title, subTitle}) => {
-  const [item, setItem] = useState();
+  // const [item, setItem] = useState();
   const plusClick = () => {
     
   }

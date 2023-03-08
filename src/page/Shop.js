@@ -1,35 +1,31 @@
 import React from 'react'
-import { Inner } from '../common/js/style'
+import { Inner, Title} from '../common/js/style'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import FilterSide from '../component/Shop/FilterSide';
-import ShopList from '../component/Shop/ShopList';
-import styled from 'styled-components'
+import ItemAll from '../component/Shop/ItemAll';
 
-const ShopBlock = styled.div`
-  display: flex;
-`
+const shopTab ={
+  "background-color": '#fff',
+  position: 'sticky',
+  top: '103px'
+
+}
 
 
 const Shop = () => {
   return (
     <>
-      <h2>Shop</h2>
-    <Tabs>
-      <TabList>
-        <Inner>
-          <Tab></Tab>
-        </Inner>
-      </TabList>
-    </Tabs>
-      <TabPanel>
-          
-      </TabPanel>
-      <Inner padding="0 40px;">
-        <ShopBlock>
-          <FilterSide />
-          <ShopList />
-        </ShopBlock>
-      </Inner>
+      <Title>Shop</Title>
+      <Tabs>
+        <TabList style={shopTab}>
+          <Inner padding="0 40px;">
+            <Tab>전체</Tab>
+          </Inner>
+        </TabList>
+        <TabPanel>
+          <ItemAll />
+        </TabPanel>
+      </Tabs>
+      
     </>
   )
 }
