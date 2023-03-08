@@ -11,6 +11,7 @@ import Product from "./component/Product/Product";
 import Shop from "./page/Shop";
 // Login
 import Login from "./page/Login";
+
 // Detail
 import Detail from './page/Detail';
 
