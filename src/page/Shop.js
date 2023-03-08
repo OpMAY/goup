@@ -16,9 +16,14 @@ const Shop = () => {
       <h2>Shop</h2>
     <Tabs>
       <TabList>
-        <Tab></Tab>
+        <Inner>
+          <Tab></Tab>
+        </Inner>
       </TabList>
     </Tabs>
+      <TabPanel>
+          
+      </TabPanel>
       <Inner padding="0 40px;">
         <ShopBlock>
           <FilterSide />
