@@ -12,9 +12,10 @@ import Shop from "./page/Shop";
 // Login
 import Login from "./page/Login";
 // Detail
-import Detail from './page/Detail';
+import Detail from "./page/Detail";
 // Style page
 import Style from "./page/Style";
+import Profile from "./page/Profile";
 
 function App() {
   // const kakaoTest = () => {
@@ -38,12 +39,13 @@ function App() {
         <Route path="/style" element={<Style />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/my" element={<Profile />} />
         {/* <Route path="/oauth" element={<Kakao/>}/> */}
       </Routes>
       <Footer></Footer>
       {/* Route */}
     </div>
-  )
+  );
 }
 
 export default App;
