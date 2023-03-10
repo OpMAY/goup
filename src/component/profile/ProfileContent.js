@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import Buying from "./Buying";
+import Buying from "./Buying/Buying";
 
 const ProfileContent = () => {
   const location = useLocation();
