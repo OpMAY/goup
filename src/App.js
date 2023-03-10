@@ -15,9 +15,7 @@ import Login from "./page/Login";
 import Detail from "./page/Detail";
 // Style page
 import Style from "./page/Style";
-import Profile from "./page/Profile";
-import Buying from "./component/profile/Buying";
-import ProfileContent from "./component/profile/ProfileContent";
+import My from "./page/My";
 function App() {
   // const kakaoTest = () => {
   //     axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {
@@ -40,8 +38,16 @@ function App() {
         <Route path="/style" element={<Style />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/my" element={<Profile />} />
-        <Route path="/my/buying" element={<Buying />} />
+        <Route path="/my" element={<My/>} />
+        <Route path="/my/buying" element={<My path='buying'/>} />
+        <Route path="/my/selling" element={<My path='selling'/>} />
+        <Route path="/my/account" element={<My path='account'/>} />
+        <Route path="/my/address" element={<My path='address'/>} />
+        <Route path="/my/payment" element={<My path='payment'/>} />
+        <Route path="/my/point" element={<My path='point'/>} />
+        <Route path="/my/profile" element={<My path='profile'/>} />
+        <Route path="/my/receipt" element={<My path='receipt'/>} />
+        <Route path="/my/wish" element={<My path='wish'/>} />
         {/* <Route path="/oauth" element={<Kakao/>}/> */}
       </Routes>
       <Footer></Footer>

@@ -20,41 +20,41 @@ export default ProfileList;
 const SHOPPING_LIST = [
   {
     name: "구매 내역",
-    link: "buying",
+    link: "/my/buying",
   },
   {
     name: "판매 내역",
-    link: "selling",
+    link: "/my/selling",
   },
   {
     name: "관심 상품",
-    link: "wish",
+    link: "/my/wish",
   },
 ];
 
 const MY_LIST = [
   {
     name: "프로필 정보",
-    link: "profile",
+    link: "/my/profile",
   },
   {
     name: "주소록",
-    link: "address",
+    link: "/my/address",
   },
   {
     name: "결제 정보",
-    link: "payment",
+    link: "/my/payment",
   },
   {
     name: "판매 정산 계좌",
-    link: "account",
+    link: "/my/account",
   },
   {
     name: "현금영수증 정보",
-    link: "receipt",
+    link: "/my/receipt",
   },
   {
     name: "포인트",
-    link: "point",
+    link: "/my/point",
   },
 ];
