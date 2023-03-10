@@ -6,10 +6,15 @@ import ProfileContent from "./ProfileContent";
 
 const ProfilePage = () => {
   return (
-    <Inner padding="0 40px;">
-      <Stack direction="row" bgcolor="gray">
+    <Inner padding="40px 40px;">
+      <Stack direction="row" border="1px solid gray">
         <ProfileList />
-        <ProfileContent />
+        {<ProfileContent />}
+        {<ProfileContent />}
+        {<ProfileContent />}
+        {<ProfileContent />}
+        {<ProfileContent />}
+        {<ProfileContent />}
       </Stack>
     </Inner>
   );

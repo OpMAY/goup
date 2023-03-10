@@ -16,6 +16,7 @@ import Detail from "./page/Detail";
 // Style page
 import Style from "./page/Style";
 import Profile from "./page/Profile";
+import Hello from "./component/profile/Hello.js";
 
 function App() {
   // const kakaoTest = () => {
@@ -40,6 +41,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/my" element={<Profile />} />
+        <Route path="/my/:id" element={<Hello />} />
         {/* <Route path="/oauth" element={<Kakao/>}/> */}
       </Routes>
       <Footer></Footer>
