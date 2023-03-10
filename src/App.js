@@ -16,8 +16,8 @@ import Detail from "./page/Detail";
 // Style page
 import Style from "./page/Style";
 import Profile from "./page/Profile";
-import Hello from "./component/profile/Hello.js";
-
+import Buying from "./component/profile/Buying";
+import ProfileContent from "./component/profile/ProfileContent";
 function App() {
   // const kakaoTest = () => {
   //     axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {
@@ -41,7 +41,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/my" element={<Profile />} />
-        <Route path="/my/:id" element={<Hello />} />
+        <Route path="/my/buying" element={<Buying />} />
         {/* <Route path="/oauth" element={<Kakao/>}/> */}
       </Routes>
       <Footer></Footer>
