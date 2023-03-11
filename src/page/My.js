@@ -11,14 +11,18 @@ import Account from "../component/profile/Account/Account";
 import Receipt from "../component/profile/Receipt/Receipt";
 import Point from "../component/profile/Point/Point";
 import { Box, Stack } from "@mui/material";
+import SellingContent from "../component/profile/SellingContent";
+import ProfileCard from "../component/profile/ProfileCard";
+import BuyingContent from "../component/profile/BuyingContent";
+import WishContent from "../component/profile/WishContent";
 
 const My = ({ path }) => {
   console.log(path);
   return (
     <Inner padding="40px 40px;">
-      <Stack direction="row" border="1px solid gray">
+      <Stack direction="row">
         <ProfileList />
-        <Box sx={{ width: "100%", bgcolor: "blue" }}>
+        <Box sx={{ width: "100%" }}>
           {path === "buying" && <Buying />}
           {path === "selling" && <Selling />}
           {path === "wish" && <Wish />}
@@ -28,6 +32,14 @@ const My = ({ path }) => {
           {path === "account" && <Account />}
           {path === "receipt" && <Receipt />}
           {path === "point" && <Point />}
+          {path === undefined && (
+            <>
+              <ProfileCard />
+              <BuyingContent />
+              <SellingContent />
+              <WishContent />
+            </>
+          )}
         </Box>
       </Stack>
     </Inner>
