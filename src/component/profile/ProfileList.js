@@ -16,7 +16,7 @@ const MyPageText = styled.div`
 
 const ProfileList = () => {
   return (
-    <Box sx={{ width: "180px", marginRight: "20px" }}>
+    <Box sx={{ width: "200px", marginRight: "20px" }}>
       <MyPageText>
         <Link to={"/my"}>마이 페이지</Link>
       </MyPageText>
