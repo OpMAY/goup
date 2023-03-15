@@ -16,6 +16,9 @@ import Detail from "./page/Detail";
 // Style page
 import Style from "./page/Style";
 import My from "./page/My";
+import BuySelect from "./component/Detail/BuySelect";
+import OrderPayment from "./component/Detail/OrderPayment";
+
 function App() {
   // const kakaoTest = () => {
   //     axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {
@@ -35,6 +38,9 @@ function App() {
         {/*<Route path="" element={}/>*/}
         <Route path="/" element={<Product />} />
         <Route path="/detail" element={<Detail />} />
+        <Route path="/buy/select" element={<BuySelect path="select" />} />
+        <Route path="/buy/id" element={<BuySelect path="order"/>} />
+        <Route path="/buy/check" element={<BuySelect path="check" />} />
         <Route path="/style" element={<Style />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
