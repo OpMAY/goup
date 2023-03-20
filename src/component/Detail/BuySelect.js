@@ -8,6 +8,7 @@ const Container = styled.div`
   background-color: #fafafa;
   display: flex;
   justify-content: center;
+  border: 1px solid red;
   .box {
     margin: 20px 0 160px;
     width: 700px;
@@ -17,9 +18,10 @@ const Container = styled.div`
   }
   .box_2{
     margin: 20px 0 160px;
-    width: 700px;
-    padding: 32px;
+    width: 780px;
+    padding: 20px 40px 160px;
     background-color: #fff;
+    border: 1px solid green;
   }
 `;
 
@@ -27,8 +29,6 @@ const BuySelect = ({ path }) => {
   console.log(path);
   return (
     <Container>
-      {/* <div className="box"> */}
-      {/* </div> */}
       {path === "select" && (
         <div className="box">
           <BuySelectContainer />
@@ -44,8 +44,6 @@ const BuySelect = ({ path }) => {
           <OrderPayment />
         </div>
       )}
-      {/* {path === "check" && <BuyCheckContainer />} */}
-      {/* {path === "order" && <OrderPayment />} */}
     </Container>
   );
 };
