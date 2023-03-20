@@ -5,6 +5,8 @@ import 'react-tabs/style/react-tabs.css';
 import { Inner } from '../../common/js/style';
 import Home from './Home'
 import Gender from './Gender';
+import {useRecoilState, useRecoilValue} from "recoil";
+import {userAtom} from "../../atoms/atom";
 
 // common style
 
