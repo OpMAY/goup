@@ -52,7 +52,7 @@ const doLogin = (name) => {
     switch (name) {
         case '카카오' :
             console.log('kakao');
-            axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {
+            axios.post('http://3.35.219.16/api/sns/key/kakao', {}).then((res) => {
                 const data = res.data;
                 if (data.status === 'OK') {
                     const clientId = data.data.key;
