@@ -6,7 +6,7 @@ import { Inner } from "../common/js/style";
 // logo 경로
 import logo from "../common/images/logo.png";
 // react icon
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 // tab custom css
 import "../common/css/custom.css";
 import SearchModal from "./modal/SearchModal";
@@ -90,9 +90,7 @@ const NavBlock = styled.div`
 `;
 
 const Header = () => {
-  const location = useLocation();
-
-  const onRelode = () => {};
+  
   return (
     <HeaderBlock>
       <Inner padding="0 40px;">
@@ -102,7 +100,7 @@ const Header = () => {
               <Link to="/">고객센터</Link>
             </li>
             <li>
-              <Link to="/">관심상품</Link>
+              <Link to="/my/wish">관심상품</Link>
             </li>
             <li>
               <Link to="/login">로그인</Link>
