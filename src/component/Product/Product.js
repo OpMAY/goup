@@ -12,8 +12,6 @@ import {userAtom} from "../../atoms/atom";
 
 
 const Product = () => {
-  const [user, setUser] = useRecoilState(userAtom);
-  console.log(user);
   return (
     <>
       <Tabs>

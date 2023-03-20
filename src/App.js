@@ -17,8 +17,8 @@ import Detail from "./page/Detail";
 import Style from "./page/Style";
 import My from "./page/My";
 import Kakao from "./module/Kakao";
-import {RecoilRoot} from "recoil";
-import LoginPage from "./component/Login/LoginPage";
+import {useRecoilState} from "recoil";
+import {userAtom} from "./atoms/atom";
 import BuySelect from "./component/Detail/BuySelect";
 import OrderPayment from "./component/Detail/OrderPayment";
 function App() {
@@ -33,6 +33,9 @@ function App() {
     //     })
     // }
 
+    const [getUser, setUser] = useRecoilState(userAtom);
+
+    console.log(getUser);
     return (
         <div className="App">
             <Header></Header>
