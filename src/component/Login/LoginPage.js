@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Inner } from "../../common/js/style";
 import LoginButtonBox from "./LoginButtonBox";
 import { Stack } from "@mui/material";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {userAtom} from "../../atoms/atom";
 
 const LogoContainer = styled.div`
   margin-bottom: 40px;
@@ -13,6 +15,8 @@ const LogoContainer = styled.div`
 `;
 
 const LoginPage = () => {
+    const user = useRecoilValue(userAtom);
+    console.log(user);
   return (
     <Inner padding="0 40px;">
       <Stack
@@ -32,7 +36,7 @@ const LoginPage = () => {
         <Stack direction="column" spacing={1}>
           <LoginButtonBox name="카카오" color="orange"/>
           <LoginButtonBox name="네이버" color="green"/>
-          <LoginButtonBox name="다음으" color="blue"/>
+          <LoginButtonBox name="구글" color="blue"/>
         </Stack>
       </Stack>
       ;
