@@ -17,7 +17,7 @@ const BuySelectContainer = () => {
   return (
     <SelectContainer>
       <SelectProductItem />
-      <Hr margin="0;" />
+      <Hr margin="20px 0 0;" />
       <Grid container className="size_container">
         <BuySelectButton />
         <BuySelectButton />

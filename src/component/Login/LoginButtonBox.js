@@ -30,7 +30,7 @@ const LoginButton = styled.button`
 const LoginButtonBox = ({ name }) => {
   return (
     <LoginButton>
-      <div className="button_icon" name>
+      <div className="button_icon">
         {name === "카카오" && <SiKakao size={24} />}
         {name === "다음으" && <FcGoogle size={24} />}
         {name === "네이버" && (
