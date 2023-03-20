@@ -8,9 +8,8 @@ const Kakao = () => {
   let params = url.searchParams;
   let code = params.get("code");
   console.log(code);
-
   const [getUser, setUser] = useRecoilState(userAtom);
-
+  
   useEffect(() => {
     axios
       .get("http://3.35.219.16/api/oauth/callback?code=" + code, {})
