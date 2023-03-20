@@ -21,3 +21,9 @@ export const userAtom = atom({
     default: null,
     effects_UNSTABLE: [persistAtom],
 })
+
+export const tokenAtom = atom({
+    key : 'token',
+    default : null,
+    effects_UNSTABLE: [persistAtom]
+})
