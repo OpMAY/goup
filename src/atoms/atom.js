@@ -1,4 +1,5 @@
 import {atom} from "recoil";
+import {recoilPersist} from "recoil-persist";
 
 export const isToggleAtom = atom({
     key : 'isToggle',
@@ -10,7 +11,13 @@ export const isLoggedInAtom = atom({
     default: false
 })
 
+const { persistAtom } = recoilPersist({
+    key: '내맘대로 정하는 키 이름',
+    storage: sessionStorage,
+});
+
 export const userAtom = atom({
     key : 'user',
-    default: null
+    default: null,
+    effects_UNSTABLE: [persistAtom],
 })
