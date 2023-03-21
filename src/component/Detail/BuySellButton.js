@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../../atoms/atom";
 
 const BuySellButtonContainer = styled.div`
   display: flex;
@@ -49,16 +51,27 @@ const BtnDivisionLink = styled(Link)`
 `;
 
 const BuySellButton = () => {
+  const [getUser, setUser] = useRecoilState(userAtom);
+
+  console.log(getUser);
   return (
     <BuySellButtonContainer>
-      <BtnDivisionLink to="/buy/select" className="buy" href="a" primary>
+      {/* <h1>{getUser}</h1> */}
+      <BtnDivisionLink
+        to={getUser ? "/buy/select" : "/login"}
+        className="buy"
+        href="a"
+        primary>
         <strong className="title">구매</strong>
         <div className="price">
           <span className="amount">655,000원</span>
           <span className="desc">즉시 구매가</span>
         </div>
       </BtnDivisionLink>
-      <BtnDivisionLink to="/sell/select" className="sell" href="a">
+      <BtnDivisionLink
+        to={getUser ? "/sell/select" : "/login"}
+        className="sell"
+        href="a">
         <strong className="title">판매</strong>
         <div className="price">
           <span className="amount">777,000원</span>

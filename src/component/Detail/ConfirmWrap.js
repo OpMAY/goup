@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ConfirmList from "./ConfirmList";
+import InfoTitle from "./InfoTitle";
 
 const ConfirmWrapContainer = styled.div`
   padding-top: 39px;
@@ -25,7 +26,7 @@ const ConfirmWrapContainer = styled.div`
 const ConfirmWrap = () => {
   return (
     <ConfirmWrapContainer>
-      <h3 className="confirm_title">구매 전 꼭 확인해주세요!</h3>
+      <InfoTitle className="confirm_title" title="구매 전 꼭 확인해주세요!"/>
       <div className="confirm_content">
         <ul>
           <ConfirmList title="배송 기간 안내" />

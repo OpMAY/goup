@@ -3,6 +3,7 @@ import { Tab, Tabs, Box, Button, Typography, Stack } from "@mui/material";
 import { useState } from "react";
 import styled from "styled-components";
 import { RiArrowDropDownFill } from "react-icons/ri";
+import MyResponsiveLine from "../../Detail/MyResponsiveLine";
 
 const PeriodNotice = styled.ul`
   margin: 0;
@@ -182,7 +183,7 @@ const Buying = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          Item One
+          <MyResponsiveLine />
         </TabPanel>
         <TabPanel value={value} index={1}>
           Item Two

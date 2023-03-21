@@ -109,7 +109,7 @@ const Header = () => {
                         </li>
                         <li>
                             <Link to="/login">{
-                                getUser === null ? '로그인' : '로그아웃'
+                                getUser ? '로그아웃' : '로그인'
                             }</Link>
                         </li>
                     </ul>

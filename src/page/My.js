@@ -15,9 +15,12 @@ import SellingContent from "../component/profile/SellingContent";
 import ProfileCard from "../component/profile/ProfileCard";
 import BuyingContent from "../component/profile/BuyingContent";
 import WishContent from "../component/profile/WishContent";
+import {useRecoilState} from "recoil";
+import { userAtom } from "../atoms/atom";
 
 const My = ({ path }) => {
   console.log(path);
+  
   return (
     <Inner padding="40px 40px;">
       <Stack direction="row">

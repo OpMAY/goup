@@ -14,9 +14,11 @@ const LogoContainer = styled.div`
   }
 `;
 
+
 const LoginPage = () => {
     const user = useRecoilValue(userAtom);
     console.log(user);
+    
   return (
     <Inner padding="0 40px;">
       <Stack

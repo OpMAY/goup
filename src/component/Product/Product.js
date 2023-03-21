@@ -10,7 +10,6 @@ import {userAtom} from "../../atoms/atom";
 
 // common style
 
-
 const Product = () => {
   return (
     <>

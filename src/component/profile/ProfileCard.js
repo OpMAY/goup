@@ -2,8 +2,13 @@ import React from "react";
 import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
 import SubButton from "./SubButton";
 import MembershipDetail from "./MembershipDetail";
+import {useRecoilState} from 'recoil'
+import { userAtom } from "../../atoms/atom";
 
 const ProfileCard = () => {
+  const [getUser, setUser] = useRecoilState(userAtom);
+
+  console.log(getUser);
   return (
     <Box
       sx={{
@@ -41,8 +46,13 @@ const ProfileCard = () => {
         </Box>
         <Box sx={{ display: "flex", marginLeft: "auto" }}>
           <MembershipDetail top="일반 회원" bottom="회원 등급" />
-          <Box sx={{width:"1px", height:"100%", backgroundColor:"#ebebeb"}}></Box>
-          <MembershipDetail  top="0P" bottom="포인트" />
+          <Box
+            sx={{
+              width: "1px",
+              height: "100%",
+              backgroundColor: "#ebebeb",
+            }}></Box>
+          <MembershipDetail top="0P" bottom="포인트" />
         </Box>
       </Stack>
     </Box>
