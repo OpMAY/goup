@@ -20,11 +20,6 @@ import Kakao from "./module/Kakao";
 import { useRecoilState } from "recoil";
 import { userAtom } from "./atoms/atom";
 import BuySelect from "./component/Detail/BuySelect";
-import OrderPayment from "./component/Detail/OrderPayment";
-import {useRecoilState} from "recoil";
-import {userAtom} from "./atoms/atom";
-import BuySelect from "./component/Detail/BuySelect";
-import OrderPayment from "./component/Detail/OrderPayment";
 function App() {
   // const kakaoTest = () => {
   //     axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {

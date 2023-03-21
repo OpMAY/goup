@@ -56,30 +56,14 @@ const BuySellButton = () => {
   console.log(getUser);
   return (
     <BuySellButtonContainer>
-<<<<<<< HEAD
-      {/* <h1>{getUser}</h1> */}
-      <BtnDivisionLink
-        to={getUser ? "/buy/select" : "/login"}
-        className="buy"
-        href="a"
-        primary>
-=======
       <BtnDivisionLink to="/buy/select" className="buy" href="a" primary>
->>>>>>> f626caf (충돌)
         <strong className="title">구매</strong>
         <div className="price">
           <span className="amount">655,000원</span>
           <span className="desc">즉시 구매가</span>
         </div>
       </BtnDivisionLink>
-<<<<<<< HEAD
-      <BtnDivisionLink
-        to={getUser ? "/sell/select" : "/login"}
-        className="sell"
-        href="a">
-=======
       <BtnDivisionLink to="/sell/select" className="sell" href="a">
->>>>>>> f626caf (충돌)
         <strong className="title">판매</strong>
         <div className="price">
           <span className="amount">777,000원</span>

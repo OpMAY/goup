@@ -31,23 +31,6 @@ const LoginButton = styled.button`
   }
 `;
 
-<<<<<<< HEAD
-const LoginButtonBox = ({name}) => {
-    return (
-        <LoginButton onClick={() => doLogin(name)}>
-            <div className="button_icon">
-                {name === "카카오" && <SiKakao size={24}/>}
-                {name === "구글" && <FcGoogle size={24}/>}
-                {name === "네이버" && (
-                    <div className="naver_icon">
-                        <SiNaver size={24}/>
-                    </div>
-                )}
-            </div>
-            {name}로 로그인
-        </LoginButton>
-    );
-=======
 const LoginButtonBox = ({ name }) => {
   return (
     <LoginButton>
@@ -63,7 +46,6 @@ const LoginButtonBox = ({ name }) => {
       {name}로 로그인
     </LoginButton>
   );
->>>>>>> 51a5cf2 (OrderPayment 선택 생성)
 };
 
 const doLogin = (name) => {
