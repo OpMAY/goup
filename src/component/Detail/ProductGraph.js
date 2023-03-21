@@ -5,11 +5,10 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { ResponsiveLine } from "@nivo/line";
 import InfoTitle from "./InfoTitle";
 import { RiArrowDownSLine } from "react-icons/ri";
-// import MyResponsiveLine from "./MyResponsiveLine";
 import MultipleSelect from "./MultiSizeSelect";
+import MyResponsiveLine from "./MyResponsiveLine";
 
 const ProductContainer = styled.div`
   height: 300px;
@@ -54,6 +53,7 @@ const ProductGraph = () => {
 
   return (
     <ProductContainer>
+      <MyResponsiveLine />
       <div className="head">
         <InfoTitle title="시세" />
         <span>
@@ -83,8 +83,11 @@ const ProductGraph = () => {
               <Tab label="전체" value="5" />
             </TabList>
           </Box>
-          <TabPanel value="1">{size}111111111111</TabPanel>
-          <TabPanel value="2">{size}2222Item Two</TabPanel>
+          <TabPanel value="1">
+            {size}
+            <MyResponsiveLine />
+          </TabPanel>
+          <TabPanel value="2">{size}333333Ite</TabPanel>
           <TabPanel value="3">{size}33333333Item Three</TabPanel>
           <TabPanel value="4">{size}2222Item Two</TabPanel>
           <TabPanel value="5">{size}33333333Item Three</TabPanel>

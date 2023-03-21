@@ -4,8 +4,12 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import InfoTitle from "./InfoTitle";
+import { Box, Typography } from "@mui/material";
+
+const ConfirmWrapContainer = styled(Box)`
+  padding-top: 39px;
+`;
 
 const Accordion = styled(props => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -44,7 +48,7 @@ export default function CustomizedAccordions() {
   };
 
   return (
-    <div>
+    <ConfirmWrapContainer>
       <InfoTitle className="confirm_title" title="구매 전 꼭 확인해주세요!" />
       <Accordion
         expanded={expanded === "panel1"}
@@ -111,6 +115,6 @@ export default function CustomizedAccordions() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-    </div>
+    </ConfirmWrapContainer>
   );
 }
