@@ -56,18 +56,19 @@ const ItemBlcok = styled.div`
   
 `
 
-const ShopItem = () => {
+const ShopItem = ({product}) => {
+  console.log(product)
   return (
     <ItemBlcok>
       <div className='img-box'></div>
       <div>
         <div className='product-info'>
-          <p className='name'>삼품이름</p>
-          <p className='item-detail'>상품 상세</p>
-          <p className='item-detail-kr'>상품 상세 한글</p>
+          <p className='name'>{product.brand.name}</p>
+          <p className='item-detail'>{product.en_name}</p>
+          <p className='item-detail-kr'>{product.kor_name}</p>
         </div>
         <div className='price-info'>
-          <p className='price'>000,000 원</p>
+          <p className='price'>{product.price} 원</p>
           <p className='desc'>즉시 구매가</p>
         </div>
         <div className='icon-box'>
