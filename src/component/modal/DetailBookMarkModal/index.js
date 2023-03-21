@@ -26,25 +26,18 @@ const DetailBookMarkModal = () => {
     setOpen(false);
   };
 
-  const button = {
-    padding: 0,
-    color: "inherit",
-    fontSize: "16px",
-  };
-  const subtext = {
-    fontSize: "16px",
-    fontWeight: 700,
-    textAlign: "center",
-  };
-
   const header = {
     borderTopRadius: "16px",
   };
 
   const checkButton = {
+    // // display: "flex",
+    // // justifyContent: "center",
+    padding: "8px 34px",
+    color: "#222",
+    margin: "20px auto",
+    border: "1px solid rgba(34,34,34,.5)",
     borderRadius: "10px",
-    padding:"24px 32px",
-    
   };
 
   const text = {
@@ -127,7 +120,7 @@ const DetailBookMarkModal = () => {
               height: "288px",
               overflowX: "hidden",
             }}>
-            <Box sx={{ minHeight: "488px"}}>
+            <Box sx={{ minHeight: "488px" }}>
               <Grid container className="content" sx={{}}>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(
                   (item, id) => (
@@ -139,7 +132,12 @@ const DetailBookMarkModal = () => {
               </Grid>
             </Box>
           </Box>
-          <Box sx={checkButton}>확인</Box>
+          <Stack>
+            <Button sx={checkButton}>
+              확인
+              {/* <Typography sx={buttonText}>확인</Typography> */}
+            </Button>
+          </Stack>
         </Box>
       </Modal>
     </div>
