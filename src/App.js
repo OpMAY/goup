@@ -18,23 +18,12 @@ import Style from "./page/Style";
 import My from "./page/My";
 import Kakao from "./module/Kakao";
 import {useRecoilState} from "recoil";
-import {userAtom} from "./atoms/atom";
+import {tokenAtom, userAtom} from "./atoms/atom";
 
 function App() {
-    // const kakaoTest = () => {
-    //     axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {
-    //         const data = res.data;
-    //         if (data.status === 'OK') {
-    //             const clientId = data.data.key;
-    //             const redirectURI = 'http://localhost:3000/oauth';
-    //             window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + clientId + '&redirect_uri=' + redirectURI + '&response_type=code'
-    //         }
-    //     })
-    // }
-
     const [getUser, setUser] = useRecoilState(userAtom);
-
-    console.log(getUser);
+    const [token, setToken] = useRecoilState(tokenAtom);
+    console.log('token ? ', token);
     return (
         <div className="App">
             <Header></Header>

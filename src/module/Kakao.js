@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import axios from "axios";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {userAtom} from "../atoms/atom";
+import {useRecoilState} from "recoil";
+import {tokenAtom, userAtom} from "../atoms/atom";
+import {axiosGetFunction, axiosPostFunction} from "./CustomAxios";
 
 const Kakao = () => {
     let url = new URL(window.location.href);
@@ -10,9 +11,11 @@ const Kakao = () => {
     console.log(code);
 
     const [getUser, setUser] = useRecoilState(userAtom);
+    const [token, setToken] = useRecoilState(tokenAtom);
+    console.log(token);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/oauth/callback?code=' + code, {}).then((res) => {
+        axiosGetFunction('/api/oauth/callback?code=' + code, token, setToken).then((res) => {
             console.log(res.data);
             if (res.data.status === 'OK') {
                 if (res.data.data.success) {
@@ -28,9 +31,9 @@ const Kakao = () => {
                         data.login_type = login_type;
                         data.profile_img = user.profile_img;
                         data.name = user.name;
-                        axios.post('http://localhost:8080/api/kream/my/join', data, {}).then((res) => {
+                        axiosPostFunction('/api/kream/my/join', data, false, token, setToken).then((res) => {
                             console.log('join : ', res);
-                            if(res.data.status === 'OK') {
+                            if (res.data.status === 'OK') {
                                 setUser(res.data.data.user.no);
                                 window.location.href = '/';
                             }
@@ -38,7 +41,7 @@ const Kakao = () => {
                     }
                 }
             }
-        });
+        })
     }, []);
 
 
