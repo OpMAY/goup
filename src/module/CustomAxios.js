@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const DEFAULT_SERVER_URL = 'http://localhost:8080';
+const DEFAULT_SERVER_URL = 'http://3.35.219.16';
 const DEFAULT_ACCESS_KEY = 'N4gdubumGsrvzFFzewu4hQ==';
 
 export const setDefaultAxios = () => {
@@ -29,12 +29,13 @@ const authFunction = async (token, setToken) => {
     })
 }
 
-export const axiosGetFunction = async (url, token, setToken) => {
+export const axiosGetFunction = async (url, params, token, setToken) => {
     const config = {};
     config.headers = {
         contentType: 'application/x-www-form-urlencoded',
         authorization: 'bearer ' + token
     }
+    config.params = params;
     return new Promise((resolve, reject) => {
         axios.get(DEFAULT_SERVER_URL + url, config).then(async (res) => {
             if (res.data.status === 'UNAUTHORIZED') {
