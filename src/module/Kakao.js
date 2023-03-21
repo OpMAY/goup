@@ -9,7 +9,9 @@ const Kakao = () => {
   let code = params.get("code");
   console.log(code);
   const [getUser, setUser] = useRecoilState(userAtom);
-  
+
+  console.log(getUser);
+
   useEffect(() => {
     axios
       .get("http://3.35.219.16/api/oauth/callback?code=" + code, {})
@@ -29,6 +31,8 @@ const Kakao = () => {
               data.login_type = login_type;
               data.profile_img = user.profile_img;
               data.name = user.name;
+              data.email = user.email;
+              data.id = user.id;
               axios
                 .post("http://3.35.219.16/api/kream/my/join", data, {})
                 .then(res => {
@@ -38,6 +42,7 @@ const Kakao = () => {
                     window.location.href = "/";
                   }
                 });
+              console.log(user);
             }
           }
         }

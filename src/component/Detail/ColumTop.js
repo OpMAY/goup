@@ -2,6 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import BuySellButton from "./BuySellButton";
+import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../../atoms/atom";
+import { RiArrowDropDownFill } from "react-icons/ri";
+import DetailSizeModal from "../modal/DetailSizeModal";
+import DetailBookMarkModal from '../modal/DetailBookMarkModal'
 
 const DetailMainTitle = styled.div`
   font-size: 18px;
@@ -39,6 +45,17 @@ const SizeInfo = styled.div`
   .detail {
     font-weight: 700;
   }
+  .button {
+    background-color: #fff;
+    border: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    p {
+      margin: 0;
+    }
+  }
 `;
 
 const RecentPrice = styled.div`
@@ -61,7 +78,7 @@ const RecentPrice = styled.div`
   }
 `;
 
-const WishButton = styled.a`
+const WishButton = styled(Link)`
   text-decoration: none;
   align-items: center;
   background-color: #fff;
@@ -85,6 +102,8 @@ const WishButton = styled.a`
 `;
 
 const ColumTop = () => {
+  const [getUser, setUser] = useRecoilState(userAtom);
+  console.log(getUser);
   return (
     <div>
       <DetailMainTitle>
@@ -97,7 +116,13 @@ const ColumTop = () => {
       <div className="product_figure_wrap">
         <SizeInfo>
           <div className="title">사이즈</div>
-          <div className="detail">ONE SIZE</div>
+          {/* 아래, onesize 또는 모달 버튼이 뜸 */}
+          {/* <div className="detail">ONE SIZE</div> */}
+          <DetailSizeModal />
+          {/* <button className="button">
+            <p>모든 사이즈</p>
+            <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
+          </button> */}
         </SizeInfo>
         <RecentPrice>
           <div className="title">최근 거래가</div>
@@ -111,11 +136,12 @@ const ColumTop = () => {
       </div>
       <div className="buttonWrap">
         <BuySellButton />
-        <WishButton className="btn_wish" href="a">
+        <DetailBookMarkModal />
+        {/* <WishButton to={getUser ? "#" : "/login"} className="btn_wish">
           <BsBookmark size="20px"></BsBookmark>
           <span className="btn_text">관심상품</span>
           <span className="wish_count">1,231</span>
-        </WishButton>
+        </WishButton> */}
       </div>
     </div>
   );

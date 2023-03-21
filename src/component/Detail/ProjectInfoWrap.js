@@ -1,14 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import InfoTitle from "./InfoTitle";
 
 const ProjectInfoWrap = () => {
   const ProductInfoWrap = styled.div`
-    h3 {
-      font-size: 18px;
-      font-weight: 700;
-      padding: 40px 0 13px;
-      margin: 0;
-    }
     .detail_product_info_wrap {
       .detail_product {
         padding: 20px 0;
@@ -44,7 +39,7 @@ const ProjectInfoWrap = () => {
 
   return (
     <ProductInfoWrap>
-      <h3 className="info_title">상품정보</h3>
+      <InfoTitle class="detail_title" title="상품정보" />
       <div className="detail_product_info_wrap">
         <dl className="detail_product">
           <div className="detail_box">
