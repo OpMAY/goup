@@ -53,7 +53,7 @@ function App() {
         <Route path="/style" element={<Style />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/my" element={<My />} />
+        <Route path="/my" element={getUser === null ? <Login /> : <My />} />
         <Route path="/my/buying" element={<My path="buying" />} />
         <Route path="/my/selling" element={<My path="selling" />} />
         <Route path="/my/account" element={<My path="account" />} />
