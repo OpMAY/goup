@@ -21,18 +21,23 @@ import { useRecoilState } from "recoil";
 import { userAtom } from "./atoms/atom";
 import BuySelect from "./component/Detail/BuySelect";
 import OrderPayment from "./component/Detail/OrderPayment";
+import {useRecoilState} from "recoil";
+import {userAtom} from "./atoms/atom";
+import BuySelect from "./component/Detail/BuySelect";
+import OrderPayment from "./component/Detail/OrderPayment";
 function App() {
-    // const kakaoTest = () => {
-    //     axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {
-    //         const data = res.data;
-    //         if (data.status === 'OK') {
-    //             const clientId = data.data.key;
-    //             const redirectURI = 'http://localhost:3000/oauth';
-    //             window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + clientId + '&redirect_uri=' + redirectURI + '&response_type=code'
-    //         }
-    //     })
-    // }
-    const [getUser, setUser] = useRecoilState(userAtom);
+  // const kakaoTest = () => {
+  //     axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {
+  //         const data = res.data;
+  //         if (data.status === 'OK') {
+  //             const clientId = data.data.key;
+  //             const redirectURI = 'http://localhost:3000/oauth';
+  //             window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + clientId + '&redirect_uri=' + redirectURI + '&response_type=code'
+  //         }
+  //     })
+  // }
+
+  const [getUser, setUser] = useRecoilState(userAtom);
 
   console.log(getUser);
   return (
@@ -66,6 +71,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
