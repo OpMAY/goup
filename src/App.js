@@ -32,6 +32,7 @@ function App() {
   //         }
   //     })
   // }
+
   const [getUser, setUser] = useRecoilState(userAtom);
 
   console.log(getUser);

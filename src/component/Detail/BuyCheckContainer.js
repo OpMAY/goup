@@ -17,10 +17,6 @@ const CheckContainer = styled.div`
       color: #f15746;
     }
   }
-  hr{
-    margin: 20px 0 0;
-    border : 1px solid #222;
-  }
 `;
 
 const BuyCheckContainer = () => {
@@ -31,8 +27,7 @@ const BuyCheckContainer = () => {
         하시기 전에 꼭 확인하세요.
       </p>
       <SelectProductItem size="290" />
-      {/* <Hr margin="20px 0 0;" /> */}
-      <hr/>
+      <Hr margin="0;" />
       <CheckArea status={false} />
       <CheckArea />
       <CheckArea />

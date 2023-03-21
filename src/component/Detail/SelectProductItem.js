@@ -4,8 +4,7 @@ import styled from "styled-components";
 
 const ProductItem = styled.div`
   display: flex;
-  /* padding-bottom: 20px; */
-  /* padding: 32px; */
+  margin-bottom: 20px;
   .img {
     border-radius: 8px;
     width: 80px;

@@ -17,7 +17,11 @@ const BuySelectContainer = () => {
   return (
     <SelectContainer>
       <SelectProductItem />
+<<<<<<< HEAD
       <Hr margin="20px 0 0;" />
+=======
+      <Hr margin="0;" />
+>>>>>>> f626caf (충돌)
       <Grid container className="size_container">
         <BuySelectButton />
         <BuySelectButton />
