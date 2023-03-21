@@ -4,10 +4,10 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ItemAll from '../component/Shop/ItemAll';
 
 const shopTab ={
-  "background-color": '#fff',
+  backgroundColor: '#fff',
   position: 'sticky',
-  top: '103px'
-
+  top: '103px',
+  zIndex: '9999'
 }
 
 
