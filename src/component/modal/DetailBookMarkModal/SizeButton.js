@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 
 const Button = styled.button`
-&:focus{
-  border: 1px solid #222;
-}
+  &:focus {
+    border: 1px solid #222;
+  }
   text-align: center;
   height: 50px;
   color: #222;
   width: 100%;
   background-color: #fff;
   border-radius: 10px;
-  border: 1px solid rgba(34, 34, 34, 0.4);
+  border: 1px solid #d3d3d3;
   cursor: pointer;
   p {
     margin: 0;
@@ -19,24 +20,19 @@ const Button = styled.button`
   .top {
     font-size: 14px;
   }
-  .price {
-    font-size: 12px;
-    color: #f15746;
-  }
-  .pending {
-    color: inherit;
+  .bottom{
+    width: 16px;
+    height: 16px;
   }
 `;
-const SizeButton = ({ onClick ,size}) => {
-
+const SizeButton = ({ size }) => {
   return (
-    <Button onClick={onClick}>
+    <Button>
       <p className="top">{size}</p>
-      {true ? (
-        <p className="bottom price">210,000</p>
-      ) : (
-        <p className="bottom pending">구매입찰</p>
-      )}
+      <span className="bottom">
+        <BsBookmark size={16}></BsBookmark>
+        {/* <BsBookmarkFill size={16}></BsBookmarkFill> */}
+      </span>
     </Button>
   );
 };

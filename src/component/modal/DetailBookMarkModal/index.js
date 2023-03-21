@@ -33,10 +33,10 @@ const DetailBookMarkModal = () => {
   const checkButton = {
     // // display: "flex",
     // // justifyContent: "center",
-    padding: "8px 34px",
+    padding: "8px 44px",
     color: "#222",
-    margin: "20px auto",
-    border: "1px solid rgba(34,34,34,.5)",
+    margin: "24px auto 32px",
+    border: "1px solid #d3d3d3",
     borderRadius: "10px",
   };
 
@@ -84,7 +84,7 @@ const DetailBookMarkModal = () => {
   return (
     <div>
       <WishButton
-        to={getUser ? "#" : "/login"}
+        to={!getUser ? "#" : "/login"}
         className="btn_wish"
         onClick={handleClickOpen}>
         <BsBookmark size="20px"></BsBookmark>
@@ -97,19 +97,6 @@ const DetailBookMarkModal = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
-          <Box className="close_button">
-            <IconButton
-              aria-label="close"
-              onClick={handleClose}
-              sx={{
-                position: "absolute",
-                right: 8,
-                top: 8,
-                color: theme => theme.palette.grey[500],
-              }}>
-              <TfiClose size={24}></TfiClose>
-            </IconButton>
-          </Box>
           <Box sx={header} className="header">
             <Typography sx={text}>관심 상품 추가</Typography>
           </Box>
@@ -121,10 +108,10 @@ const DetailBookMarkModal = () => {
               overflowX: "hidden",
             }}>
             <Box sx={{ minHeight: "488px" }}>
-              <Grid container className="content" sx={{}}>
+              <Grid container className="content">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(
                   (item, id) => (
-                    <Grid item xs={3.7} sx={{ margin: "4px" }}>
+                    <Grid item xs={5.7} sx={{ margin: "4px" }}>
                       <SizeButton onClick={handleClose} key={id} size={item} />
                     </Grid>
                   )
@@ -133,7 +120,7 @@ const DetailBookMarkModal = () => {
             </Box>
           </Box>
           <Stack>
-            <Button sx={checkButton}>
+            <Button sx={checkButton} onClick={handleClose}>
               확인
               {/* <Typography sx={buttonText}>확인</Typography> */}
             </Button>
