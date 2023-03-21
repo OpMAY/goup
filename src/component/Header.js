@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 // styled-component
 import styled from "styled-components";
 // Common style
@@ -17,6 +17,7 @@ const HeaderBlock = styled.header`
   position: sticky;
   top: 0;
   background-color: #fff;
+  z-index: 9999;
 `;
 const Top = styled.div`
   display: flex;
@@ -125,7 +126,7 @@ const Header = () => {
                 <Navbar>
                     <div>
                         <a href="/">
-                            <img width="120px" src={logo}></img>
+                            <img width="120px" src={logo} alt="logo"></img>
                         </a>
                     </div>
                     <NavBlock>
