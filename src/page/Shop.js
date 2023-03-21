@@ -10,7 +10,6 @@ const shopTab ={
   zIndex: '9999'
 }
 
-
 const Shop = () => {
   return (
     <>
@@ -25,7 +24,6 @@ const Shop = () => {
           <ItemAll />
         </TabPanel>
       </Tabs>
-      
     </>
   )
 }
