@@ -3,7 +3,7 @@ import {Inner, Title} from '../common/js/style'
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import ItemAll from '../component/Shop/ItemAll';
 import {useRecoilState} from "recoil";
-import {tokenAtom} from "../atoms/atom";
+import {tokenAtom, productAtom} from "../atoms/atom";
 import {axiosGetFunction} from "../module/CustomAxios";
 
 const shopTab ={
@@ -15,15 +15,25 @@ const shopTab ={
 
 const Shop = () => {
     const [token, setToken] = useRecoilState(tokenAtom);
+    const [product, setProduct] = useRecoilState(productAtom)
+
     useEffect(() => {
         axiosGetFunction('/api/kream/product/shop', {
-            brands: '1,2',
+            brands: '1,2', // 브랜드
+            // genders: '', // 성별
+            // categories: '', // 카테고리
+            // keyword: '', // 검색어
+            // size_list: '', // 사이즈
+            // price: '', // 금액
+
         }, token, setToken).then((res) => {
-            console.log(res);
+            setProduct(res.data.data.products);
+            
         })
     }, [])
     return (
         <>
+        
             <Title>Shop</Title>
             <Tabs>
                 <TabList style={shopTab}>
@@ -35,7 +45,6 @@ const Shop = () => {
                     <ItemAll/>
                 </TabPanel>
             </Tabs>
-
         </>
     )
 }

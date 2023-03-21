@@ -1,9 +1,9 @@
 import {atom} from "recoil";
 import {recoilPersist} from "recoil-persist";
 
-export const isToggleAtom = atom({
-    key : 'isToggle',
-    default: 0
+export const productAtom = atom({
+    key : 'product',
+    default: null
 })
 
 export const isLoggedInAtom = atom({

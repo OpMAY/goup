@@ -21,17 +21,15 @@ const AccordionFillter = () => {
         <Typography>카테고리</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>
           <div className='menu'>
             <ul className='list'>
               <li className='item'>
               <FormGroup>
-                <FormControlLabel control={<Checkbox defaultChecked />} label="Test" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="신발" />
               </FormGroup>
               </li>
             </ul>
           </div>
-        </Typography>
       </AccordionDetails>
     </Accordion>
   )
