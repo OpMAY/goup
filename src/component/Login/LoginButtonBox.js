@@ -57,7 +57,6 @@ const doLogin = (name, token, setToken) => {
     switch (name) {
         case '카카오' :
             console.log('kakao');
-
             axiosPostFunction('/api/sns/key/kakao', {}, false, token, setToken).then((res) => {
                 console.log(res);
                 const data = res.data;

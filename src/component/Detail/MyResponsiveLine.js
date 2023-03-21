@@ -1,6 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 
-const MyResponsiveLine = ({ data }) => (
+const MyResponsiveLine = () => (
   <ResponsiveLine
     data={[
       {

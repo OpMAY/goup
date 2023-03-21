@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 // styled-component
 import styled from "styled-components";
 // Common style
@@ -17,6 +17,7 @@ const HeaderBlock = styled.header`
   position: sticky;
   top: 0;
   background-color: #fff;
+  z-index: 9999;
 `;
 const Top = styled.div`
   display: flex;
@@ -95,7 +96,12 @@ const NavBlock = styled.div`
 
 const Header = () => {
     const [getUser, setUser] = useRecoilState(userAtom);
-
+    
+    const logoutClick = () => { 
+      setUser(null); 
+      window.location.reload();
+      window.location.href('http://localhost:3000');
+    }
     return (
         <HeaderBlock>
             <Inner padding="0 40px;">
@@ -105,19 +111,22 @@ const Header = () => {
                             <Link to="/">고객센터</Link>
                         </li>
                         <li>
-                            <Link to="/my/wish">관심상품</Link>
+                            <Link to="/my/wish">관심상품1</Link>
                         </li>
                         <li>
-                            <Link to="/login">{
-                                getUser === null ? '로그인' : '로그아웃'
-                            }</Link>
+                          {
+                            getUser === null ? 
+                            <Link to='/login'>로그인</Link> 
+                            : 
+                            <Link to="/" onClick={() => logoutClick()}>로그아웃</Link>
+                          }
                         </li>
                     </ul>
                 </Top>
                 <Navbar>
                     <div>
                         <a href="/">
-                            <img width="120px" src={logo}></img>
+                            <img width="120px" src={logo} alt="logo"></img>
                         </a>
                     </div>
                     <NavBlock>

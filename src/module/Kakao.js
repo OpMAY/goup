@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from "react";
 import axios from "axios";
 import {useRecoilState} from "recoil";
 import {tokenAtom, userAtom} from "../atoms/atom";
 import {axiosGetFunction, axiosPostFunction} from "./CustomAxios";
 
 const Kakao = () => {
-    let url = new URL(window.location.href);
-    let params = url.searchParams;
-    let code = params.get('code');
-    console.log(code);
+  let url = new URL(window.location.href);
+  let params = url.searchParams;
+  let code = params.get("code");
+  console.log(code);
 
     const [getUser, setUser] = useRecoilState(userAtom);
     const [token, setToken] = useRecoilState(tokenAtom);
@@ -31,6 +31,7 @@ const Kakao = () => {
                         data.login_type = login_type;
                         data.profile_img = user.profile_img;
                         data.name = user.name;
+                        data.email = user.email;
                         axiosPostFunction('/api/kream/my/join', data, false, token, setToken).then((res) => {
                             console.log('join : ', res);
                             if (res.data.status === 'OK') {
@@ -44,12 +45,7 @@ const Kakao = () => {
         })
     }, []);
 
-
-    return (
-        <div>
-            oauth call page
-        </div>
-    );
+  return <div>oauth call page</div>;
 };
 
 export default Kakao;
