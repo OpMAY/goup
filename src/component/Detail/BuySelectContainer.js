@@ -18,10 +18,14 @@ const BuySelectContainer = () => {
     <SelectContainer>
       <SelectProductItem />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <Hr margin="20px 0 0;" />
 =======
       <Hr margin="0;" />
 >>>>>>> f626caf (충돌)
+=======
+      <Hr margin="20px 0 0;" />
+>>>>>>> f852faa (resolve complete)
       <Grid container className="size_container">
         <BuySelectButton />
         <BuySelectButton />
