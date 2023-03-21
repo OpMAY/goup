@@ -21,6 +21,10 @@ import { useRecoilState } from "recoil";
 import { userAtom } from "./atoms/atom";
 import BuySelect from "./component/Detail/BuySelect";
 import OrderPayment from "./component/Detail/OrderPayment";
+import {useRecoilState} from "recoil";
+import {userAtom} from "./atoms/atom";
+import BuySelect from "./component/Detail/BuySelect";
+import OrderPayment from "./component/Detail/OrderPayment";
 function App() {
   // const kakaoTest = () => {
   //     axios.post('http://localhost:8080/api/sns/key/kakao', {}).then((res) => {
@@ -32,6 +36,7 @@ function App() {
   //         }
   //     })
   // }
+
   const [getUser, setUser] = useRecoilState(userAtom);
 
   console.log(getUser);
@@ -48,7 +53,7 @@ function App() {
         <Route path="/style" element={<Style />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/my" element={<My />} />
+        <Route path="/my" element={getUser === null ? <Login /> : <My />} />
         <Route path="/my/buying" element={<My path="buying" />} />
         <Route path="/my/selling" element={<My path="selling" />} />
         <Route path="/my/account" element={<My path="account" />} />

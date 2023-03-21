@@ -8,9 +8,14 @@ const Kakao = () => {
   let params = url.searchParams;
   let code = params.get("code");
   console.log(code);
+<<<<<<< HEAD
   const [getUser, setUser] = useRecoilState(userAtom);
 
   console.log(getUser);
+=======
+
+  const [getUser, setUser] = useRecoilState(userAtom);
+>>>>>>> d2bf019 (충돌 해결)
 
   useEffect(() => {
     axios
@@ -31,8 +36,11 @@ const Kakao = () => {
               data.login_type = login_type;
               data.profile_img = user.profile_img;
               data.name = user.name;
+<<<<<<< HEAD
               data.email = user.email;
               data.id = user.id;
+=======
+>>>>>>> d2bf019 (충돌 해결)
               axios
                 .post("http://3.35.219.16/api/kream/my/join", data, {})
                 .then(res => {
@@ -42,7 +50,10 @@ const Kakao = () => {
                     window.location.href = "/";
                   }
                 });
+<<<<<<< HEAD
               console.log(user);
+=======
+>>>>>>> d2bf019 (충돌 해결)
             }
           }
         }

@@ -95,7 +95,12 @@ const NavBlock = styled.div`
 
 const Header = () => {
     const [getUser, setUser] = useRecoilState(userAtom);
-
+    
+    const logoutClick = () => { 
+      setUser(null); 
+      window.location.reload();
+      window.location.href('http://localhost:3000');
+    }
     return (
         <HeaderBlock>
             <Inner padding="0 40px;">
@@ -105,12 +110,15 @@ const Header = () => {
                             <Link to="/">고객센터</Link>
                         </li>
                         <li>
-                            <Link to="/my/wish">관심상품</Link>
+                            <Link to="/my/wish">관심상품1</Link>
                         </li>
                         <li>
-                            <Link to="/login">{
-                                getUser ? '로그아웃' : '로그인'
-                            }</Link>
+                          {
+                            getUser === null ? 
+                            <Link to='/login'>로그인</Link> 
+                            : 
+                            <Link to="/" onClick={() => logoutClick()}>로그아웃</Link>
+                          }
                         </li>
                     </ul>
                 </Top>
