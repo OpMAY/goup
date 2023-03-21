@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import {FcGoogle} from "react-icons/fc";
 import {SiNaver, SiKakao} from "react-icons/si";
 import Kakao from "../../module/Kakao";
 import axios from "axios";
+import {axiosPostFunction} from "../../module/CustomAxios";
+import {useRecoilState} from "recoil";
+import {tokenAtom} from "../../atoms/atom";
 
 const LoginButton = styled.button`
   display: flex;
@@ -31,28 +34,31 @@ const LoginButton = styled.button`
   }
 `;
 
-const LoginButtonBox = ({ name }) => {
-  return (
-    <LoginButton>
-      <div className="button_icon">
-        {name === "카카오" && <SiKakao size={24} />}
-        {name === "다음으" && <FcGoogle size={24} />}
-        {name === "네이버" && (
-          <div className="naver_icon">
-            <SiNaver size={24} />
-          </div>
-        )}
-      </div>
-      {name}로 로그인
-    </LoginButton>
-  );
+const LoginButtonBox = ({name}) => {
+    const [token, setToken] = useRecoilState(tokenAtom);
+    console.log('token ', token);
+    return (
+        <LoginButton onClick={() => doLogin(name, token, setToken)}>
+            <div className="button_icon">
+                {name === "카카오" && <SiKakao size={24}/>}
+                {name === "구글" && <FcGoogle size={24}/>}
+                {name === "네이버" && (
+                    <div className="naver_icon">
+                        <SiNaver size={24}/>
+                    </div>
+                )}
+            </div>
+            {name}로 로그인
+        </LoginButton>
+    );
 };
 
-const doLogin = (name) => {
+const doLogin = (name, token, setToken) => {
     switch (name) {
         case '카카오' :
             console.log('kakao');
-            axios.post('http://3.35.219.16/api/sns/key/kakao', {}).then((res) => {
+            axiosPostFunction('/api/sns/key/kakao', {}, false, token, setToken).then((res) => {
+                console.log(res);
                 const data = res.data;
                 if (data.status === 'OK') {
                     const clientId = data.data.key;
