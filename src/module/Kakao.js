@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import {useRecoilState} from "recoil";
 import {tokenAtom, userAtom} from "../atoms/atom";
 import {axiosGetFunction, axiosPostFunction} from "./CustomAxios";
@@ -15,7 +14,7 @@ const Kakao = () => {
     console.log(token);
 
     useEffect(() => {
-        axiosGetFunction('/api/oauth/callback?code=' + code, token, setToken).then((res) => {
+        axiosGetFunction('/api/oauth/callback?code=' + code, {}, token, setToken).then((res) => {
             console.log(res.data);
             if (res.data.status === 'OK') {
                 if (res.data.data.success) {

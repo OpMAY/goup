@@ -6,8 +6,8 @@ export const productAtom = atom({
     default: null
 })
 
-export const isLoggedInAtom = atom({
-    key : 'isLoggedIn',
+export const isToggleAtom = atom({
+    key : 'isToggle',
     default: false
 })
 

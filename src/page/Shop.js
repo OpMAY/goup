@@ -19,21 +19,22 @@ const Shop = () => {
 
     useEffect(() => {
         axiosGetFunction('/api/kream/product/shop', {
-            brands: '1,2', // 브랜드
+            // brands: '1,2', // 브랜드
             // genders: '', // 성별
             // categories: '', // 카테고리
             // keyword: '', // 검색어
             // size_list: '', // 사이즈
             // price: '', // 금액
+            cursor: 2
 
         }, token, setToken).then((res) => {
             setProduct(res.data.data.products);
-            
+
         })
     }, [])
     return (
         <>
-        
+
             <Title>Shop</Title>
             <Tabs>
                 <TabList style={shopTab}>
