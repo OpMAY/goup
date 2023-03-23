@@ -5,12 +5,6 @@ const ItemBlcok = styled.div`
   p{
     margin:0;
   }
-  .img-box{
-    height: 230px;
-    background-image: url(https://carrier-bubbly.s3.ap-northeast-2.amazonaws.com/image/kream/a_460eb0a606f247d181ffba99af7cf7d7.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
   .product-info{
     padding: 8px 4px 0;
     margin-bottom: 12px;
@@ -56,11 +50,18 @@ const ItemBlcok = styled.div`
   
 `
 
+const ImgBox = styled.div`
+  height: 230px;
+  background-image: url(${props => props.backgroundImage});
+  background-size: contain;
+  background-repeat: no-repeat;
+`
+
 const ShopItem = ({product}) => {
   console.log(product)
   return (
     <ItemBlcok>
-      <div className='img-box'></div>
+      <ImgBox backgroundImage={product.image.url}></ImgBox>
       <div>
         <div className='product-info'>
           <p className='name'>{product.brand.name}</p>
