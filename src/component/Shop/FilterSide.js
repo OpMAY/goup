@@ -7,10 +7,9 @@ const Side = styled.div`
   width: 210px;
   padding-right: 20px;
   position: sticky;
-  top: 137.5px;
   h4{
     margin:0;
-    padding: 20px 0;
+    padding: 16px 0;
   }
   .menu{
     max-height: 340px;
@@ -20,6 +19,11 @@ const Side = styled.div`
       list-style-type: none;
       padding: 0;
       margin: 0;
+
+      
+    }
+    &::-webkit-scrollbar{
+      width: 1px;
     }
   }
   
