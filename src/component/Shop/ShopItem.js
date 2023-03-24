@@ -1,5 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { productAtom } from '../../atoms/atom';
+import { useRecoilState } from 'recoil';
 
 const ItemBlcok = styled.div`
   p{
@@ -8,6 +12,7 @@ const ItemBlcok = styled.div`
   .product-info{
     padding: 8px 4px 0;
     margin-bottom: 12px;
+    height: 71px;
     .name{
       font-size: 13px;
       color: #333;
@@ -37,14 +42,14 @@ const ItemBlcok = styled.div`
   }
   
   .icon-box{
-    padding: 12px 4px 0;
+    padding: 12px 4px 0 0;
     display: flex;
     justify-content: space-between;
     .save{
 
     }
-    .review{
-  
+    .save{
+      cursor: pointer;
     }
   }
   
@@ -57,8 +62,15 @@ const ImgBox = styled.div`
   background-repeat: no-repeat;
 `
 
-const ShopItem = ({product}) => {
+const ShopItem = ({product, idx}) => {
   console.log(product)
+  const toggle = product._wish;
+  const [products, setProduct] = useRecoilState(productAtom)
+
+  const controlToggle = () => {
+    
+  }
+
   return (
     <ItemBlcok>
       <ImgBox backgroundImage={product.image.url}></ImgBox>
@@ -73,8 +85,11 @@ const ShopItem = ({product}) => {
           <p className='desc'>즉시 구매가</p>
         </div>
         <div className='icon-box'>
-          <div className='save'>아이콘</div>
-          <div className='review'>아이콘</div>
+          <div className='save' onClick={controlToggle}>
+            { 
+             !toggle ? <BookmarkBorderIcon /> : <BookmarkIcon/>
+            }
+          </div>
         </div>
       </div>
     </ItemBlcok>

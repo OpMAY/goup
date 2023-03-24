@@ -11,6 +11,11 @@ export const isToggleAtom = atom({
     default: false
 })
 
+export const bookMarkToggleAtom = atom({
+    key : 'bookMarkToggle',
+    default: false
+})
+
 const { persistAtom } = recoilPersist({
     key: '내맘대로 정하는 키 이름',
     storage: sessionStorage,
