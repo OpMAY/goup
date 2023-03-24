@@ -10,7 +10,7 @@ import { RiArrowDropDownFill } from "react-icons/ri";
 import SizeButton from "./SizeButton";
 import { Link } from "react-router-dom";
 import { BsBookmark } from "react-icons/bs";
-import BookmarkItem from "./BookmarkItem";
+import BookmarkItem from "../DetailMoreBidModal/BookmarkItem";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../../../atoms/atom";
 
