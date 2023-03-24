@@ -58,7 +58,7 @@ const MyResponsiveLine = () => (
         ],
       },
     ]}
-    margin={{ right: 50, top: 50, bottom: 50 }}
+    margin={{ right: 30, top: 30, bottom: 30 }}
     xScale={{ type: "point" }}
     yScale={{
       type: "linear",
@@ -72,7 +72,7 @@ const MyResponsiveLine = () => (
     axisRight={{
       orient: "right",
       tickSize: 0,
-      tickPadding: 20,
+      tickPadding: 10,
       tickRotation: 0,
       legend: "",
       legendOffset: -7,

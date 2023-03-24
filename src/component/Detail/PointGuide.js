@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { CgSearchFound } from "react-icons/cg";
 
 const PointGuideContainer = styled.div`
   padding-top: 40px;
@@ -11,9 +12,8 @@ const GuideBox = styled.div`
   .icon_section {
     min-width: 40px;
     height: 36px;
-    background-color: orange;
+    background-image: ${props => props.background};
     margin-right: 14px;
-    border: 1px solid gray;
   }
   .content_section {
     font-size: 13px;
@@ -31,7 +31,7 @@ const GuideBox = styled.div`
 const PointGuide = () => {
   return (
     <PointGuideContainer>
-      <GuideBox>
+      <GuideBox background="url(https://kream.co.kr/_nuxt/img/img-guide-item-01.fa306b8.svg)">
         <span className="icon_section"></span>
         <div className="content_section">
           <div className="title">100% 정품 보증</div>
@@ -41,7 +41,9 @@ const PointGuide = () => {
         </div>
       </GuideBox>
       <GuideBox margin>
-        <span className="icon_section"></span>
+        <span className="icon_section">
+          <CgSearchFound size={36}></CgSearchFound>
+        </span>
         <div className="content_section">
           <div className="title">엄격한 다중 검수</div>
           <div className="content">
@@ -50,7 +52,9 @@ const PointGuide = () => {
           </div>
         </div>
       </GuideBox>
-      <GuideBox margin>
+      <GuideBox
+        margin
+        background="url(https://kream.co.kr/_nuxt/img/img-guide-item-03.963fee7.svg)">
         <span className="icon_section"></span>
         <div className="content_section">
           <div className="title">정품 인증 패키지</div>

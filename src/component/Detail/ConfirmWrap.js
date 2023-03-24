@@ -7,10 +7,6 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import InfoTitle from "./InfoTitle";
 import { Box, Typography } from "@mui/material";
 
-const ConfirmWrapContainer = styled(Box)`
-  padding-top: 39px;
-`;
-
 const Accordion = styled(props => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -41,14 +37,14 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function CustomizedAccordions() {
-  const [expanded, setExpanded] = React.useState("panel1");
+  const [expanded, setExpanded] = React.useState("");
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
   return (
-    <ConfirmWrapContainer>
+    <Box>
       <InfoTitle className="confirm_title" title="구매 전 꼭 확인해주세요!" />
       <Accordion
         expanded={expanded === "panel1"}
@@ -115,6 +111,6 @@ export default function CustomizedAccordions() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-    </ConfirmWrapContainer>
+    </Box>
   );
 }
