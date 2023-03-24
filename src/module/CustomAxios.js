@@ -40,7 +40,7 @@ export const axiosGetFunction = async (url, params, token, setToken) => {
         axios.get(DEFAULT_SERVER_URL + url, config).then(async (res) => {
             if (res.data.status === 'UNAUTHORIZED') {
                 await authFunction(token, setToken).then(() => {
-                    config.authorization = 'bearer ' + token;
+                    config.headers['authorization'] = 'bearer ' + token;
                     axios.get(DEFAULT_SERVER_URL + url, config).then((res1) => {
                         resolve(res1)
                     })
