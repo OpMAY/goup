@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import { TfiClose } from "react-icons/tfi";
 import { Link } from "react-router-dom";
+import BookmarkItem from "./BookmarkItem";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../../../atoms/atom";
 import Table from "@mui/material/Table";
