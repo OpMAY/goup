@@ -111,7 +111,7 @@ const DetailBookMarkModal = () => {
               <Grid container className="content">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(
                   (item, id) => (
-                    <Grid item xs={5.7} sx={{ margin: "4px" }}>
+                    <Grid key={id} item xs={5.7} sx={{ margin: "4px" }}>
                       <SizeButton onClick={handleClose} key={id} size={item} />
                     </Grid>
                   )

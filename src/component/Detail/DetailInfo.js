@@ -14,6 +14,10 @@ import { Navigation, Pagination, EffectFade } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useRecoilValue } from "recoil";
+import { productAtom } from "../../atoms/atom";
+// import { useRecoilValue } from "recoil";
+// import { productAtom } from "../../atoms/atom";
 
 const LeftSection = styled.div`
   flex-direction: column;
@@ -131,7 +135,16 @@ const DetailContainer = styled.div`
   display: flex;
 `;
 
-const DetailInfo = () => {
+const DetailInfo = ({size}) => {
+  const {product} = useRecoilValue(productAtom)
+  console.log('DetailInfo SIZE',size)
+  // const product = useRecoilValue(productAtom);
+  // console.log("#####", product);
+  // console.log(
+  //   "->",
+  //   product.product.images.map(item =>item.url)
+  // );
+  // console.log(product.product.images[0].url);
   return (
     <>
       <Inner padding="30px 40px 120px;">
@@ -144,22 +157,15 @@ const DetailInfo = () => {
                   navigation={true}
                   effect="fade"
                   modules={[EffectFade, Pagination, Navigation]}>
-                  <SwiperSlide>
-                    <div
-                      className="product_image"
-                      style={{
-                        backgroundImage:
-                          "url(https://image.a-rt.com/art/product/upload6/M9622C_Navy/S1.jpg?shrink=560:560)",
-                      }}></div>
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <div
-                      className="product_image"
-                      style={{
-                        backgroundImage:
-                          "url(	https://image.a-rt.com/art/product/upload6/M9622C_Navy/S3.jpg?shrink=560:560)",
-                      }}></div>
-                  </SwiperSlide>
+                  {product.images.map((item, id) => (
+                      <SwiperSlide key={item.name}>
+                        <div
+                          className="product_image"
+                          style={{
+                            backgroundImage: `url(${item.url})`,
+                          }}></div>
+                      </SwiperSlide>
+                    ))}
                 </Swiper>
               </div>
               <div className="alert_box">
@@ -175,6 +181,7 @@ const DetailInfo = () => {
                 </span>
               </div>
             </LeftInfo>
+            \
           </LeftSection>
           <RightSection>
             <div>
@@ -190,7 +197,7 @@ const DetailInfo = () => {
                 </a>
               </BannerBox>
               <div>
-                <ProductGraph />
+                <ProductGraph size={size}/>
                 <ConfirmWrap />
                 <PointGuide />
                 <MeditationNotice />

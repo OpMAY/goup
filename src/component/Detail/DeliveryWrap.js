@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { BsQuestionCircle } from "react-icons/bs";
+// import { delivery_1, delivery_2 } from "../../../public/images";
 
 const DeliveryWay = styled.div`
   padding: 12px 0 18px;
@@ -67,10 +68,7 @@ const DeliveryWrap = () => {
       <DeliveryWay>
         <div className="way_info">
           <div className="way_status">
-            <img
-              src="https://s.pstatic.net/static/www/mobile/edit/20230224/cropImg_728x360_119159275917251819.jpeg"
-              alt="일반배송"
-            />
+            <img src="/images/delivery_1.png" alt="일반배송" />
           </div>
           <div className="way_desc">
             <p className="company">
@@ -85,10 +83,7 @@ const DeliveryWrap = () => {
       <DeliveryWay before>
         <div className="way_info">
           <div className="way_status">
-            <img
-              src="https://s.pstatic.net/static/www/mobile/edit/20230224/cropImg_728x360_119159275917251819.jpeg"
-              alt="창고보관"
-            />
+            <img src="/images/delivery_2.png" alt="창고보관" />
           </div>
           <div className="way_desc">
             <p className="company">

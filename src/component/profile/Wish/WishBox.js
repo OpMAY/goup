@@ -79,7 +79,11 @@ const WishBox = () => {
           </div>
         </div>
         <div className="right">
-          <BtnDivision title="구매" price="112,123" primary />
+          <BtnDivision
+            title="구매"
+            price="112,123"
+            background="rgb(239, 98, 83)"
+          />
           <a className="delete" href="delete">
             삭제
           </a>

@@ -2,9 +2,9 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const Button = styled.button`
-&:focus{
-  border: 1px solid #222;
-}
+  &:focus {
+    border: 1px solid #222;
+  }
   text-align: center;
   height: 50px;
   color: #222;
@@ -27,16 +27,12 @@ const Button = styled.button`
     color: inherit;
   }
 `;
-const SizeButton = ({ onClick ,size}) => {
-
+const SizeButton = ({ onClick, size, reg_datetime, price, value }) => {
   return (
-    <Button onClick={onClick}>
-      <p className="top">{size}</p>
-      {true ? (
-        <p className="bottom price">210,000</p>
-      ) : (
-        <p className="bottom pending">구매입찰</p>
-      )}
+    <Button onClick={onClick} value={value}>
+      {size}
+      <br />
+      {price ? <span className="price">{price}</span> : "구매입찰"}
     </Button>
   );
 };

@@ -15,6 +15,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DetailMoreBidModal from "../modal/DetailMoreBidModal";
+import { useRecoilValue } from "recoil";
+import { productAtom, sizeAtom, sizeStateAtom } from "../../atoms/atom";
 
 const ProductContainer = styled(Box)`
   .head {
@@ -23,9 +25,12 @@ const ProductContainer = styled(Box)`
     align-items: center;
     span {
       padding-top: 10px;
-      .size-select {
+      .size_select {
         width: 140px;
         border: none;
+        background-color: red;
+        .default_option {
+        }
       }
     }
   }
@@ -87,10 +92,13 @@ export const rows = [
   createData("Gingersdfsdbr22d", 356, 16.0, 49, 3.9),
 ];
 
-const ProductGraph = () => {
+const ProductGraph = ({ size }) => {
+  const product = useRecoilValue(productAtom);
+  const sizeState = useRecoilValue(sizeStateAtom);
   const [value, setValue] = useState("1");
   const [listValue, setListValue] = useState("1");
-  const [size, setSize] = useState("");
+  console.log("ProductGraph", product);
+  console.log("ProductGraph SIZE", size);
 
   const handleChange = (event, newValue) => {
     console.log(1, event, newValue);
@@ -104,18 +112,17 @@ const ProductGraph = () => {
 
   const handleSize = e => {
     console.log(e.target.value);
-    setSize(e.target.value);
+    // setSize(e.target.value);
   };
 
   return (
     <ProductContainer>
-      {/* <MyResponsiveLine /> */}
       <div className="head">
         <InfoTitle title="시세" />
         <span>
-          <select onChange={handleSize} name="size" className="size-select">
-            <option value="all" defaultValue>
-              모든 사이즈
+          <select onChange={handleSize} name="size" className="size_select">
+            <option className="default_option" value="all" defaultValue>
+              {sizeState}
             </option>
             {SIZE_OPTION.map((itemSize, id) => (
               <option key={id} value={itemSize}>
@@ -203,9 +210,9 @@ const ProductGraph = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.slice(0,5).map(row => (
+                      {rows.slice(0, 5).map((row, id) => (
                         <TableRow
-                          key={row.name}
+                          key={id}
                           sx={{
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}>
@@ -245,9 +252,9 @@ const ProductGraph = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.slice(0,5).map(row => (
+                      {rows.slice(0, 5).map((row, id) => (
                         <TableRow
-                          key={row.name}
+                          key={id}
                           sx={{
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}>
@@ -287,8 +294,8 @@ const ProductGraph = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.slice(0,5).map(row => (
-                        <TableRow key={row.name}>
+                      {rows.slice(0, 5).map((row, id) => (
+                        <TableRow key={id}>
                           <TableCell sx={tableCell} component="th" scope="row">
                             {row.name}
                           </TableCell>
