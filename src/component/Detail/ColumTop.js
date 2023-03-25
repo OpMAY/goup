@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import BuySellButton from "./BuySellButton";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { userAtom } from "../../atoms/atom";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import DetailSizeModal from "../modal/DetailSizeModal";
-import DetailBookMarkModal from '../modal/DetailBookMarkModal'
+import DetailBookMarkModal from "../modal/DetailBookMarkModal";
+import { productAtom } from "../../atoms/atom";
 
 const DetailMainTitle = styled.div`
   font-size: 18px;
@@ -102,16 +103,17 @@ const WishButton = styled(Link)`
 `;
 
 const ColumTop = () => {
-  const [getUser, setUser] = useRecoilState(userAtom);
-  console.log(getUser);
+  const product = useRecoilValue(productAtom);
+
+  console.log('columtop',product);
   return (
     <div>
       <DetailMainTitle>
         <div>
-          <a href="3">Helinox</a>
+          <a href="3">{product.brand.name}</a>
         </div>
-        <div className="productName">Helinox x Obey Sunset Chair Black</div>
-        <div className="ProductKoName">헬리녹스 x 오베이 선셋 체어 블랙</div>
+        <div className="productName">{product.product.en_name}</div>
+        <div className="ProductKoName">{product.product.kor_name}</div>
       </DetailMainTitle>
       <div className="product_figure_wrap">
         <SizeInfo>
@@ -128,7 +130,9 @@ const ColumTop = () => {
           <div className="title">최근 거래가</div>
           <div>
             <div>
-              <span className="detail">625,000원</span>
+              <span className="detail">
+                {product.recent_order_price.toLocaleString()}원
+              </span>
             </div>
             <p>40,000원(+7.8%)</p>
           </div>

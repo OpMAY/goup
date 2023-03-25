@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const BtnDivisionStyle = styled.a`
+const BtnDivisionStyle = styled(Link)`
   position: relative;
-  background-color: ${props =>
-    props.primary ? "rgb(239, 98, 83)" : "rgb(65, 185, 121)"};
+  background-color: ${props => props.background};
   border-radius: 10px;
   display: flex;
   color: rgb(255, 255, 255);
@@ -39,9 +39,9 @@ const BtnDivisionStyle = styled.a`
   }
 `;
 
-const BtnDivision = ({title, price}) => {
+const BtnDivision = ({ link, title, price, background }) => {
   return (
-    <BtnDivisionStyle className="buy" href="a" primary>
+    <BtnDivisionStyle className="buy" to={link} background={background}>
       <strong className="title">{title}</strong>
       <div className="price">
         <span className="amount">{price}원</span>
