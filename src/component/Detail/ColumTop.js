@@ -8,7 +8,7 @@ import { userAtom } from "../../atoms/atom";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import DetailSizeModal from "../modal/DetailSizeModal";
 import DetailBookMarkModal from "../modal/DetailBookMarkModal";
-import { productAtom } from "../../atoms/atom";
+import { productAtom, productDetailAtom } from "../../atoms/atom";
 
 const DetailMainTitle = styled.div`
   font-size: 18px;
@@ -71,6 +71,7 @@ const RecentPrice = styled.div`
   .detail {
     font-weight: 700;
     font-size: 20px;
+    text-align: right;
   }
   p {
     font-size: 13px;
@@ -103,17 +104,17 @@ const WishButton = styled(Link)`
 `;
 
 const ColumTop = () => {
-  const product = useRecoilValue(productAtom);
+  const productDetail = useRecoilValue(productDetailAtom);
 
-  console.log('columtop',product);
+  console.log("columtop", productDetail);
   return (
     <div>
       <DetailMainTitle>
         <div>
-          <a href="3">{product.brand.name}</a>
+          <a href="3">{productDetail.brand.name}</a>
         </div>
-        <div className="productName">{product.product.en_name}</div>
-        <div className="ProductKoName">{product.product.kor_name}</div>
+        <div className="productName">{productDetail.product.en_name}</div>
+        <div className="ProductKoName">{productDetail.product.kor_name}</div>
       </DetailMainTitle>
       <div className="product_figure_wrap">
         <SizeInfo>
@@ -128,14 +129,17 @@ const ColumTop = () => {
         </SizeInfo>
         <RecentPrice>
           <div className="title">최근 거래가</div>
-          <div>
+          {productDetail.recent_order_price ? (
             <div>
-              <span className="detail">
-                {product.recent_order_price.toLocaleString()}원
-              </span>
+              <div className="detail">{productDetail.recent_order_price.toLocaleString()}원</div>
+              <p>40,000원(+7.8%)</p>
             </div>
-            <p>40,000원(+7.8%)</p>
-          </div>
+          ) : (
+            <div>
+              <div className="detail">- 원</div>
+              <p>(0%)</p>
+            </div>
+          )}
         </RecentPrice>
       </div>
       <div className="buttonWrap">

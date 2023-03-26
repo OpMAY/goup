@@ -6,9 +6,19 @@ export const productAtom = atom({
   default: null,
 });
 
+export const productDetailAtom = atom({
+  key: "productDetail",
+  default: null,
+});
+
 export const sizeAtom = atom({
   key: "size",
   default: null,
+});
+
+export const paramAtom = atom({
+  key: "param",
+  default: undefined,
 });
 
 export const sizeStateAtom = atom({
