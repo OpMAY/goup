@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import InfoTitle from "./InfoTitle";
 import { useRecoilValue } from "recoil";
-import { productAtom } from "../../atoms/atom";
+import { productDetailAtom } from "../../atoms/atom";
 
 const ProductInfoWrap = styled.div`
   .detail_product_info_wrap {
@@ -39,8 +39,8 @@ const ProductInfoWrap = styled.div`
 `;
 
 const ProjectInfoWrap = () => {
-  const {product} = useRecoilValue(productAtom);
-  console.log("projectinfoWrap", product);
+  const productDetail = useRecoilValue(productDetailAtom);
+  console.log("projectinfoWrap", productDetail);
   return (
     <ProductInfoWrap>
       <InfoTitle class="detail_title" title="상품정보" />
@@ -49,21 +49,22 @@ const ProjectInfoWrap = () => {
           <div className="detail_box">
             <dt>모델번호</dt>
             <dd className="model_num">
-              {product.product_info.model_code}
+              {productDetail.product.product_info.model_code}
             </dd>
           </div>
           <div className="detail_box">
             <dt>출시일</dt>
-            <dd>{product.product_info.released_date}</dd>
+            <dd>{productDetail.product.product_info.released_date}</dd>
           </div>
           <div className="detail_box">
             <dt>컬러</dt>
-            <dd>{product.product_info.color}</dd>
+            <dd>{productDetail.product.product_info.color}</dd>
           </div>
           <div className="detail_box">
             <dt>발매가</dt>
             <dd>
-              {product.product_info.released_price.toLocaleString()}원
+              {productDetail.product.product_info.released_price.toLocaleString()}
+              원
             </dd>
           </div>
         </dl>

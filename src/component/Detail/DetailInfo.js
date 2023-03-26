@@ -15,9 +15,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useRecoilValue } from "recoil";
-import { productAtom } from "../../atoms/atom";
-// import { useRecoilValue } from "recoil";
-// import { productAtom } from "../../atoms/atom";
+import { productAtom, productDetailAtom } from "../../atoms/atom";
 
 const LeftSection = styled.div`
   flex-direction: column;
@@ -135,16 +133,11 @@ const DetailContainer = styled.div`
   display: flex;
 `;
 
-const DetailInfo = ({size}) => {
-  const {product} = useRecoilValue(productAtom)
-  console.log('DetailInfo SIZE',size)
-  // const product = useRecoilValue(productAtom);
-  // console.log("#####", product);
-  // console.log(
-  //   "->",
-  //   product.product.images.map(item =>item.url)
-  // );
-  // console.log(product.product.images[0].url);
+const DetailInfo = ({ size }) => {
+  const productDetail  = useRecoilValue(productDetailAtom);
+  console.log("DetailInfo SIZE", size);
+  console.log("DetailInfo", productDetail);
+
   return (
     <>
       <Inner padding="30px 40px 120px;">
@@ -157,15 +150,15 @@ const DetailInfo = ({size}) => {
                   navigation={true}
                   effect="fade"
                   modules={[EffectFade, Pagination, Navigation]}>
-                  {product.images.map((item, id) => (
-                      <SwiperSlide key={item.name}>
-                        <div
-                          className="product_image"
-                          style={{
-                            backgroundImage: `url(${item.url})`,
-                          }}></div>
-                      </SwiperSlide>
-                    ))}
+                  {productDetail.product.images.map((item, id) => (
+                    <SwiperSlide key={item.name}>
+                      <div
+                        className="product_image"
+                        style={{
+                          backgroundImage: `url(${item.url})`,
+                        }}></div>
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
               <div className="alert_box">
@@ -181,7 +174,6 @@ const DetailInfo = ({size}) => {
                 </span>
               </div>
             </LeftInfo>
-            \
           </LeftSection>
           <RightSection>
             <div>
@@ -197,7 +189,7 @@ const DetailInfo = ({size}) => {
                 </a>
               </BannerBox>
               <div>
-                <ProductGraph size={size}/>
+                <ProductGraph size={size} />
                 <ConfirmWrap />
                 <PointGuide />
                 <MeditationNotice />

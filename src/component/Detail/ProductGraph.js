@@ -16,7 +16,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DetailMoreBidModal from "../modal/DetailMoreBidModal";
 import { useRecoilValue } from "recoil";
-import { productAtom, sizeAtom, sizeStateAtom } from "../../atoms/atom";
+import { sizeStateAtom } from "../../atoms/atom";
 
 const ProductContainer = styled(Box)`
   .head {
@@ -93,11 +93,9 @@ export const rows = [
 ];
 
 const ProductGraph = ({ size }) => {
-  const product = useRecoilValue(productAtom);
   const sizeState = useRecoilValue(sizeStateAtom);
   const [value, setValue] = useState("1");
   const [listValue, setListValue] = useState("1");
-  console.log("ProductGraph", product);
   console.log("ProductGraph SIZE", size);
 
   const handleChange = (event, newValue) => {
