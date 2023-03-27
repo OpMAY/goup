@@ -18,7 +18,7 @@ export const sizeAtom = atom({
 
 export const paramAtom = atom({
   key: "param",
-  default: undefined,
+  default: 1,
 });
 
 export const sizeStateAtom = atom({

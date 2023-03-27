@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useRecoilValue } from "recoil";
+import { sizeStateAtom } from "../../../atoms/atom";
 
 const Button = styled.button`
   &:focus {
@@ -11,7 +13,7 @@ const Button = styled.button`
   width: 100%;
   background-color: #fff;
   border-radius: 10px;
-  border: 1px solid rgba(34, 34, 34, 0.4);
+  border: 1px solid #ebebeb;
   cursor: pointer;
   p {
     margin: 0;
@@ -28,8 +30,12 @@ const Button = styled.button`
   }
 `;
 const SizeButton = ({ onClick, size, reg_datetime, price, value }) => {
+  const sizeState = useRecoilValue(sizeStateAtom);
   return (
-    <Button onClick={onClick} value={value}>
+    <Button
+      autoFocus={sizeState === size ? true : false}
+      onClick={onClick}
+      value={value}>
       {size}
       <br />
       {price ? <span className="price">{price}</span> : "구매입찰"}

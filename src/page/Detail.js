@@ -16,6 +16,7 @@ const Detail = () => {
   const param = useRecoilValue(paramAtom);
 
   useEffect(() => {
+    setProductDetail(null);
     axiosGetFunction(
       `/api/kream/product/${param}`,
       {
@@ -23,11 +24,10 @@ const Detail = () => {
       },
       token,
       setToken
-    ).then(res => {
-      setProductDetail(null);
-      setProductDetail(res.data.data.product);
-    });
-  }, []);
+      ).then(res => {
+        setProductDetail(res.data.data.product);
+      });
+    }, []);
 
   useEffect(() => {
     axiosGetFunction(
