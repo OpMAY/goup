@@ -1,6 +1,8 @@
 import React from "react";
 import { AiFillThunderbolt } from "react-icons/ai";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { productDetailAtom } from "../../atoms/atom";
 
 const ProductItem = styled.div`
   display: flex;
@@ -10,7 +12,6 @@ const ProductItem = styled.div`
     border-radius: 8px;
     width: 80px;
     height: 80px;
-    background-image: url(https://image.a-rt.com/art/product/upload6/M9622C_Navy/S1.jpg?shrink=80:80);
     background-size: cover;
     background-position-y: center;
     background-repeat: no-repeat;
@@ -44,7 +45,7 @@ const ProductItem = styled.div`
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-    .size{
+    .size {
       font-weight: 700;
       font-size: 14px;
     }
@@ -65,21 +66,23 @@ const ProductItem = styled.div`
 `;
 
 const SelectProductItem = ({ size }) => {
+  const productDetail = useRecoilValue(productDetailAtom);
+  console.log("SelectProductItem- productDetail", productDetail);
   return (
     <ProductItem className="product">
-      <div className="img"></div>
+      <div className="img" style={{backgroundImage:`url(${productDetail.product.images[0].url})`}}></div>
       <div className="info">
-        <p className="name">DV342-234</p>
-        <p className="en_name">Nike x Ambush Air 1231-123</p>
-        <p className="ko_name">나이키 엠부쉬 에어</p>
-        {size ? (
-          <span className="size">{size}</span>
-        ) : (
-          <span className="icon">
-            <AiFillThunderbolt size={12}></AiFillThunderbolt>
-            <p>빠른 배송</p>
-          </span>
-        )}
+        <p className="name">{productDetail.product.product_info.model_code}</p>
+        <p className="en_name">{productDetail.product.en_name}</p>
+        <p className="ko_name">{productDetail.product.kor_name}</p>
+        {
+          size && <span className="size">{size}</span>
+
+          // : (<span className="icon">
+          //     <AiFillThunderbolt size={12}></AiFillThunderbolt>
+          //     <p>빠른 배송</p>
+          //   </span>)
+        }
       </div>
     </ProductItem>
   );

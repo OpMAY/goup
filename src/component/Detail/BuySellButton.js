@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { userAtom } from "../../atoms/atom";
+import { useRecoilValue } from "recoil";
+import { paramAtom, userAtom } from "../../atoms/atom";
 import BtnDivision from "./BtnDivision";
 
 const BuySellButtonContainer = styled.div`
@@ -13,13 +13,23 @@ const BuySellButtonContainer = styled.div`
 `;
 
 const BuySellButton = () => {
-  const [getUser, setUser] = useRecoilState(userAtom);
+  const getUser = useRecoilValue(userAtom);
+  const param = useRecoilValue(paramAtom);
 
-  console.log(getUser);
   return (
     <BuySellButtonContainer>
-      <BtnDivision title="구매" price="112,123" background="rgb(239, 98, 83)" />
-      <BtnDivision title="판매" price="112,123" background="rgb(65, 185, 121)" />
+      <BtnDivision
+        link={getUser ? `/buy/select/${param}?size=` : "/login"}
+        title="구매"
+        price="112,123"
+        background="rgb(239, 98, 83)"
+      />
+      <BtnDivision
+        link={getUser ? `/sell/select/${param}?size=` : "/login"}
+        title="판매"
+        price="112,123"
+        background="rgb(65, 185, 121)"
+      />
     </BuySellButtonContainer>
   );
 };

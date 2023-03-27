@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
@@ -27,12 +27,6 @@ const DetailSizeModal = () => {
     setSizeState(e.target.value);
     setOpen(false);
   };
-
-  console.log("현재 사이즈는?", sizeState);
-
-  // size.map((item, id) => {
-  //   console.log(item.size);
-  // });
 
   const button = {
     padding: 0,

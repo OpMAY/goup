@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { userAtom, paramAtom, sizeStateAtom } from "../../atoms/atom";
+import { useRecoilValue } from "recoil";
 
 const Button = styled.div`
   display: flex;
@@ -29,10 +31,12 @@ const Button = styled.div`
 `;
 
 const OrderButton = ({ type }) => {
+  const param = useRecoilValue(paramAtom);
+  const size = useRecoilValue(sizeStateAtom)
   return (
     <Button>
       {type === "buy_step1" && (
-        <Link to="/buy/check">
+        <Link to={`/buy/check/${param}?size=${size}&type=buy`}>
           <p className="status pending">구매입찰</p>
           <p className="delivery_notice">일반배송(5~7일소요)</p>
         </Link>
