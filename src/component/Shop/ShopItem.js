@@ -35,7 +35,7 @@ const ItemBlcok = styled.div`
 
     .item-detail-kr {
       font-size: 11px;
-      color: rgba(34, 34, 34, .5);
+      color: rgba(34, 34, 34, 0.5);
     }
   }
 
@@ -49,7 +49,7 @@ const ItemBlcok = styled.div`
 
     .desc {
       font-size: 11px;
-      color: rgba(34, 34, 34, .5);
+      color: rgba(34, 34, 34, 0.5);
     }
   }
 
@@ -59,25 +59,21 @@ const ItemBlcok = styled.div`
     justify-content: space-between;
 
     .save {
-
     }
 
     .save {
       cursor: pointer;
     }
   }
-
-`
+`;
 
 const ImgBox = styled.div`
   height: 230px;
   background-image: url(${props => props.backgroundImage});
   background-size: contain;
   background-repeat: no-repeat;
-`
+`;
 // modal style
-
-
 
 const ShopItem = ({product, idx}) => {
     // modal
@@ -158,4 +154,4 @@ const ShopItem = ({product, idx}) => {
     )
 }
 
-export default ShopItem
+export default ShopItem;
