@@ -133,9 +133,8 @@ const DetailContainer = styled.div`
   display: flex;
 `;
 
-const DetailInfo = ({ size }) => {
-  const productDetail  = useRecoilValue(productDetailAtom);
-  console.log("DetailInfo SIZE", size);
+const DetailInfo = () => {
+  const productDetail = useRecoilValue(productDetailAtom);
   console.log("DetailInfo", productDetail);
 
   return (
@@ -189,7 +188,7 @@ const DetailInfo = ({ size }) => {
                 </a>
               </BannerBox>
               <div>
-                <ProductGraph size={size} />
+                <ProductGraph />
                 <ConfirmWrap />
                 <PointGuide />
                 <MeditationNotice />

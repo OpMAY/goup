@@ -9,30 +9,59 @@ import { TfiClose } from "react-icons/tfi";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import SizeButton from "./SizeButton";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { sizeAtom, sizeStateAtom } from "../../../atoms/atom";
+import {
+  sizeAtom,
+  modalOpenAtom,
+  sizeStateAtom,
+  tokenAtom,
+  modalProductAtom,
+  userAtom,
+} from "../../../atoms/atom";
+import { axiosGetFunction } from "../../../module/CustomAxios";
+import { Link } from "react-router-dom";
 
-const DetailSizeModal = () => {
-  const size = useRecoilValue(sizeAtom);
+const DetailSizeModal = ({ product }) => {
+  const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
+  const [token, setToken] = useRecoilState(tokenAtom);
   const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useRecoilState(modalOpenAtom);
+  const [sizes, setSizes] = useRecoilState(sizeAtom);
+  const user = useRecoilValue(userAtom);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const LinkStyle = styled(Link)`
+    text-decoration: none;
+    display: flex;
+    color: inherit;
+  `;
+
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleButton = e => {
-    setSizeState(e.target.value);
-    setOpen(false);
+    setSizeState(()=>e.target.value);
+  };
+
+
+  const modalOpen = no => {
+    axiosGetFunction(
+      "/api/kream/product/size/" + no,
+      { user_no: user },
+      token,
+      setToken
+    ).then(res => {
+      setSizes(res.data.data.sizes);
+      setModalProduct(product);
+      setOpen(true);
+    });
   };
 
   const button = {
     padding: 0,
-    color: "inherit",
+    color: "#222",
     fontSize: "16px",
   };
+
   const subtext = {
     fontSize: "16px",
     fontWeight: 700,
@@ -65,10 +94,20 @@ const DetailSizeModal = () => {
   return (
     <>
       <div>
-        <Button sx={button} className="button" onClick={handleClickOpen}>
-          <Typography sx={subtext}>{sizeState}</Typography>
-          <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
-        </Button>
+        {user ? (
+          <Button
+            sx={button}
+            className="button"
+            onClick={() => modalOpen(product.product.no)}>
+            <Typography sx={subtext}>{sizeState}</Typography>
+            <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
+          </Button>
+        ) : (
+          <LinkStyle to="/login">
+            <Typography sx={subtext}>{sizeState}!</Typography>
+            <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
+          </LinkStyle>
+        )}
         <Modal
           open={open}
           onClose={handleClose}
@@ -98,18 +137,24 @@ const DetailSizeModal = () => {
                 overflowX: "hidden",
               }}>
               <Box sx={{ minHeight: "488px", padding: "0 32px" }}>
-                <Grid container className="content" sx={{}}>
-                  {size.map(size => (
-                    <Grid key={size.no} item xs={3.75} sx={{ margin: "4px" }}>
-                      <SizeButton
-                        onClick={handleButton}
-                        size={size.size}
-                        price={size.price}
-                        reg_datetime={size.reg_datetime}
-                        value={size.size}
-                      />
-                    </Grid>
-                  ))}
+                <Grid container className="content">
+                  {sizes
+                    ? sizes.map(size => (
+                        <Grid
+                          key={size.no}
+                          item
+                          xs={3.75}
+                          sx={{ margin: "4px" }}>
+                          <SizeButton
+                            onClick={handleButton}
+                            size={size.size}
+                            price={size.price}
+                            reg_datetime={size.reg_datetime}
+                            value={size.size}
+                          />
+                        </Grid>
+                      ))
+                    : null}
                 </Grid>
               </Box>
             </Box>
