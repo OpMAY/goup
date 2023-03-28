@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import {Hr} from '../../common/js/style'
+import { Hr } from '../../common/js/style'
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import {useRecoilState, useRecoilValue} from 'recoil';
-import {modalOpenAtom, modalProductAtom, sizeAtom} from '../../atoms/atom'
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { modalOpenAtom, modalProductAtom, sizeAtom } from '../../atoms/atom'
 
 const Box = styled.div`
   position: absolute;
@@ -85,6 +85,7 @@ const Box = styled.div`
     color: rgba(34, 34, 34, .8);
     border-radius: 5px;
     margin: 24px 0 32px;
+    cursor: pointer;
   }
 `
 
@@ -98,60 +99,66 @@ const ModalImgBox = styled.div`
 `
 
 const SizeModal = () => {
-    const [open, setOpen] = useRecoilState(modalOpenAtom);
-    const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
-    const [sizes, setSizes] = useRecoilState(sizeAtom);
+  const [open, setOpen] = useRecoilState(modalOpenAtom);
+  const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
+  const [sizes, setSizes] = useRecoilState(sizeAtom);
+  const [checkBtn, setCheckBtn] = useState(false)
 
-    const handleClose = () => {
-        setOpen(false)
-        setModalProduct(null);
-    };
-    return (
-        <>
-            {
-                modalProduct != null ? <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box align="center">
-                        <div className='modal-header'>
-                            <h2 className='title'>관심 상품 추가</h2>
+  const handleClose = () => {
+    setOpen(false)
+    setModalProduct(null);
+  };
+
+  const onCheck = () => {
+
+  }
+  return (
+    <>
+      {
+        modalProduct != null ? <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box align="center">
+            <div className='modal-header'>
+              <h2 className='title'>관심 상품 추가</h2>
+            </div>
+            <div className='modal-body'>
+              <div className='list-info'>
+                <ModalImgBox modalBg={modalProduct.image.url}></ModalImgBox>
+                <div className='info'>
+                  <p className='name-en'>{modalProduct.en_name}</p>
+                  <p className='name-ko'>{modalProduct.kor_name}</p>
+                </div>
+              </div>
+              <Hr margin="10px 0 8px"></Hr>
+              <div className='scroll-body'>
+                <Grid container>
+                  {
+                    sizes.map((size, i) => (
+                      <Grid item xs={4} key={i}>
+                        <div className='size-box'>
+                          <button type='button' className='size-btn' onClick={() => setCheckBtn(true)}>
+                            <span className='size-name'>{size.size}</span><br />
+                            {
+                                null ? <BookmarkIcon sx={{ width: 16, height: 16 }} /> : <BookmarkBorderIcon sx={{ width: 16, height: 16 }} />
+                            }
+                          </button>
                         </div>
-                        <div className='modal-body'>
-                            <div className='list-info'>
-                                <ModalImgBox modalBg={modalProduct.image.url}></ModalImgBox>
-                                <div className='info'>
-                                    <p className='name-en'>{modalProduct.en_name}</p>
-                                    <p className='name-ko'>{modalProduct.kor_name}</p>
-                                </div>
-                            </div>
-                            <Hr margin="10px 0 8px"></Hr>
-                            <div className='scroll-body'>
-                                <Grid container>
-                                    {
-                                        sizes.map(size => (
-                                            <Grid item xs={4}>
-                                                <div className='size-box'>
-                                                    <button type='button' className='size-btn'>
-                                                        <span className='size-name'>{size.size}</span><br/>
-                                                        <i className='bokkmark-icon'><BookmarkBorderIcon
-                                                            sx={{width: 16, height: 16}}/></i>
-                                                    </button>
-                                                </div>
-                                            </Grid>
-                                        ))
-                                    }
-                                </Grid>
-                            </div>
-                            <button className='check' onClick={handleClose}>확인</button>
-                        </div>
-                    </Box>
-                </Modal> : null
-            }
-        </>
-    )
+                      </Grid>
+                    ))
+                  }
+                </Grid>
+              </div>
+              <button className='check' onClick={handleClose}>확인</button>
+            </div>
+          </Box>
+        </Modal> : null
+      }
+    </>
+  )
 }
 
 export default SizeModal
