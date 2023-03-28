@@ -21,7 +21,6 @@ const Shop = () => {
 
         }, token, setToken).then((res) => {
             setProduct(res.data.data.products);
-
         })
     }, [])
     return (
