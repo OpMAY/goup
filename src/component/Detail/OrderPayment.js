@@ -204,7 +204,7 @@ const OrderPayment = () => {
           <TabPanel sx={panelStyle} value="1">
             <Box sx={{ height: "1000px" }}>
               <PriceInputBox>
-                <dt>구매 희망가</dt>
+                <dt>구매 희망가??</dt>
                 <dd>
                   <input
                     placeholder="희망가 입력"
