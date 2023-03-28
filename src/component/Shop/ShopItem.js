@@ -102,7 +102,7 @@ const ShopItem = ({product, idx}) => {
     }
 
     const modalOpen = (no) => {
-        axiosGetFunction('/api/kream/product/size/' + no, {}, token, setToken).then((res) => {
+        axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
             console.log(res);
             setSizes(res.data.data.sizes);
             setModalProduct(product);
