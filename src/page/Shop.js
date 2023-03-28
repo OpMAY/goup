@@ -1,13 +1,15 @@
 import React, {useEffect} from 'react'
 import ItemAll from '../component/Shop/ItemAll';
 import {useRecoilState} from "recoil";
-import {tokenAtom, productAtom} from "../atoms/atom";
+import {tokenAtom, productAtom, modalOpenAtom} from "../atoms/atom";
 import {axiosGetFunction} from "../module/CustomAxios";
+import SizeModal from "../component/Shop/SizeModal";
 
 
 const Shop = () => {
     const [token, setToken] = useRecoilState(tokenAtom);
     const [product, setProduct] = useRecoilState(productAtom)
+    const [modalOpen, setModalOpen] = useRecoilState(modalOpenAtom);
 
     useEffect(() => {
         axiosGetFunction('/api/kream/product/shop', {
@@ -26,7 +28,7 @@ const Shop = () => {
     return (
         <>
             <ItemAll/>
-
+            <SizeModal/>
         </>
     )
 }
