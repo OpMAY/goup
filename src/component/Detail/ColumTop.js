@@ -3,12 +3,18 @@ import styled from "styled-components";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import BuySellButton from "./BuySellButton";
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { userAtom } from "../../atoms/atom";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import DetailSizeModal from "../modal/DetailSizeModal";
 import DetailBookMarkModal from "../modal/DetailBookMarkModal";
-import { productAtom, productDetailAtom } from "../../atoms/atom";
+import {
+  sizeStateAtom,
+  paramAtom,
+  tokenAtom,
+  productDetailAtom,
+} from "../../atoms/atom";
+import { axiosGetFunction } from "../../module/CustomAxios";
+import { Typography } from "@mui/material";
 
 const DetailMainTitle = styled.div`
   font-size: 18px;
@@ -105,8 +111,30 @@ const WishButton = styled(Link)`
 
 const ColumTop = () => {
   const productDetail = useRecoilValue(productDetailAtom);
+  const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
+  const [token, setToken] = useRecoilState(tokenAtom);
+  const param = useRecoilValue(paramAtom);
+
+  const oneSize = {
+    fontSize: "16px",
+    fontWeight: 700,
+    textAlign: "center",
+  };
 
   console.log("columtop", productDetail);
+
+  useEffect(() => {
+    axiosGetFunction(
+      `/api/kream/product/size/` + param,
+      { user_no: 1 },
+      token,
+      setToken
+    ).then(res => {
+      const target = res.data.data.sizes[0].size;
+      target === "ONE SIZE" && setSizeState(target);
+    });
+  }, []);
+
   return (
     <div>
       <DetailMainTitle>
@@ -119,19 +147,19 @@ const ColumTop = () => {
       <div className="product_figure_wrap">
         <SizeInfo>
           <div className="title">사이즈</div>
-          {/* 아래, onesize 또는 모달 버튼이 뜸 */}
-          {/* <div className="detail">ONE SIZE</div> */}
-          <DetailSizeModal />
-          {/* <button className="button">
-            <p>모든 사이즈</p>
-            <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
-          </button> */}
+          {sizeState === "ONE SIZE" ? (
+            <Typography sx={oneSize}>ONE SIZE</Typography>
+          ) : (
+            <DetailSizeModal product={productDetail} />
+          )}
         </SizeInfo>
         <RecentPrice>
           <div className="title">최근 거래가</div>
           {productDetail.recent_order_price ? (
             <div>
-              <div className="detail">{productDetail.recent_order_price.toLocaleString()}원</div>
+              <div className="detail">
+                {productDetail.recent_order_price.toLocaleString()}원
+              </div>
               <p>40,000원(+7.8%)</p>
             </div>
           ) : (

@@ -9,12 +9,14 @@ import {
   modalProductAtom,
   tokenAtom,
   sizeAtom,
+  paramAtom,
 } from "../../atoms/atom";
 import { useRecoilState } from "recoil";
 import { Hr } from "../../common/js/style";
 import Grid from "@mui/material/Grid";
 import SizeModal from "./SizeModal";
 import { axiosGetFunction } from "../../module/CustomAxios";
+import { Link } from "react-router-dom";
 
 const ItemBlcok = styled.div`
   p {
@@ -73,7 +75,6 @@ const ItemBlcok = styled.div`
   }
 `;
 
-
 const ImgBox = styled.div`
   height: 230px;
   background-image: url(${props => props.backgroundImage});
@@ -83,6 +84,7 @@ const ImgBox = styled.div`
 // modal style
 
 const ShopItem = ({ product, idx }) => {
+  const [param, setParam] = useRecoilState(paramAtom);
   // modal
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useRecoilState(modalOpenAtom);
@@ -106,14 +108,17 @@ const ShopItem = ({ product, idx }) => {
   };
 
   const modalOpen = no => {
-    axiosGetFunction("/api/kream/product/size/" + no, {}, token, setToken).then(
-      res => {
-        console.log(res);
-        setSizes(res.data.data.sizes);
-        setModalProduct(product);
-        setOpen(true);
-      }
-    );
+    axiosGetFunction(
+      "/api/kream/product/size/" + no,
+      { user_no: 1 },
+      token,
+      setToken
+    ).then(res => {
+      console.log(res);
+      setSizes(res.data.data.sizes);
+      setModalProduct(product);
+      setOpen(true);
+    });
   };
 
   function addComma(number) {
@@ -134,7 +139,14 @@ const ShopItem = ({ product, idx }) => {
   return (
     <>
       <ItemBlcok>
-        <ImgBox backgroundImage={product.image.url}></ImgBox>
+        <div
+          onClick={() => {
+            setParam(product.no);
+          }}>
+          <Link to={`/product/${product.no}`}>
+            <ImgBox backgroundImage={product.image.url}></ImgBox>
+          </Link>
+        </div>
         <div>
           <div className="product-info">
             <p className="name">{product.brand.name}</p>

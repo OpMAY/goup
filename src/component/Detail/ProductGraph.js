@@ -28,7 +28,6 @@ const ProductContainer = styled(Box)`
       .size_select {
         width: 140px;
         border: none;
-        background-color: red;
         .default_option {
         }
       }
