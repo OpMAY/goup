@@ -52,3 +52,9 @@ export const tokenAtom = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+
+export const modalOpenAtom = atom({
+  key: "open",
+  default: false
+})
