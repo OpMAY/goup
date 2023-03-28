@@ -17,14 +17,14 @@ import Detail from "./page/Detail";
 import Style from "./page/Style";
 import My from "./page/My";
 import Kakao from "./module/Kakao";
-import {useRecoilState} from "recoil";
-import {tokenAtom, userAtom} from "./atoms/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { tokenAtom, userAtom } from "./atoms/atom";
 import BuySelect from "./component/Detail/BuySelect";
 
 function App() {
-   const [getUser, setUser] = useRecoilState(userAtom);
-    const [token, setToken] = useRecoilState(tokenAtom);
-    console.log('token ? ', token);
+  const [getUser, setUser] = useRecoilState(userAtom);
+  const [token, setToken] = useRecoilState(tokenAtom);
+  console.log("token ? ", token);
   return (
     <div className="App">
       <Header></Header>
@@ -32,9 +32,9 @@ function App() {
         {/*<Route path="" element={}/>*/}
         <Route path="/" element={<Product />} />
         <Route path="/product/:id" element={<Detail />} />
-        <Route path="/buy/select" element={<BuySelect path="select" />} />
+        <Route path="/buy/select/:id" element={<BuySelect path="select" />} />
         <Route path="/buy/:id" element={<BuySelect path="order" />} />
-        <Route path="/buy/check" element={<BuySelect path="check" />} />
+        <Route path="/buy/check/:id" element={<BuySelect path="check" />} />
         <Route path="/style" element={<Style />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
