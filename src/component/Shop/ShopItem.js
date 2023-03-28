@@ -3,11 +3,12 @@ import styled from 'styled-components'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import Modal from '@mui/material/Modal';
-import {productAtom, modalOpenAtom} from '../../atoms/atom';
+import {productAtom, modalOpenAtom, modalProductAtom, tokenAtom, sizeAtom} from '../../atoms/atom';
 import {useRecoilState} from 'recoil';
 import {Hr} from '../../common/js/style'
 import Grid from '@mui/material/Grid';
 import SizeModal from './SizeModal';
+import {axiosGetFunction} from "../../module/CustomAxios";
 
 const ItemBlcok = styled.div`
   p {
@@ -84,7 +85,10 @@ const ShopItem = ({product, idx}) => {
     const [open, setOpen] = useRecoilState(modalOpenAtom);
     // item book mark
     const toggle = product._wish;
-    const [products, setProducts] = useRecoilState(productAtom)
+    const [products, setProducts] = useRecoilState(productAtom);
+    const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
+    const [token, setToken] = useRecoilState(tokenAtom);
+    const [sizes, setSizes] = useRecoilState(sizeAtom);
 
     const confirmClcik = () => {
       const sample = {...product};
@@ -95,6 +99,31 @@ const ShopItem = ({product, idx}) => {
       setProducts(newList);
       console.log(sample._wish)
       handleClose()
+    }
+
+    const modalOpen = (no) => {
+        axiosGetFunction('/api/kream/product/size/' + no, {}, token, setToken).then((res) => {
+            console.log(res);
+            setSizes(res.data.data.sizes);
+            setModalProduct(product);
+            setOpen(true);
+        });
+    }
+
+    function addComma(number) {
+        let len;
+        let point;
+        let str;
+        const number_string = number + '';
+        point = number_string.length % 3;
+        len = number_string.length;
+        str = number_string.substring(0, point);
+        while (point < len) {
+            if (str !== '') str += ',';
+            str += number_string.substring(point, point + 3);
+            point += 3;
+        }
+        return str;
     }
     return (
         <>
@@ -107,11 +136,13 @@ const ShopItem = ({product, idx}) => {
                       <p className='item-detail-kr'>{product.kor_name}</p>
                   </div>
                   <div className='price-info'>
-                      <p className='price'>{product.price} 원</p>
+                      <p className='price'>{product.price != null ? addComma(product.price) : '-'} 원</p>
                       <p className='desc'>즉시 구매가</p>
                   </div>
                   <div className='icon-box'>
-                      <div className='save' onClick={() => setOpen(true)}>
+                      <div className='save' onClick={() => {
+                          modalOpen(product.no)
+                      }}>
                           {
                               !toggle ? <BookmarkBorderIcon/> : <BookmarkIcon/>
                           }
@@ -119,10 +150,10 @@ const ShopItem = ({product, idx}) => {
                   </div>
               </div>
           </ItemBlcok>
-          <SizeModal 
-          product={product}
-          confirmClcik={confirmClcik}
-          />
+          {/*<SizeModal */}
+          {/*product={product}*/}
+          {/*confirmClcik={confirmClcik}*/}
+          {/*/>*/}
         </>
     )
 }
