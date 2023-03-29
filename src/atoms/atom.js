@@ -78,3 +78,13 @@ export const elementLoadingHeightAtom = atom({
     key : 'elementLoadingHeight',
     default: 0
 })
+
+export const productCursorAtom = atom({
+    key : 'productCursor',
+    default : 1
+})
+
+export const productTotalCountAtom = atom({
+    key : 'productTotalCount',
+    default : 0
+})

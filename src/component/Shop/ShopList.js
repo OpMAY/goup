@@ -1,12 +1,20 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 import Grid from '@mui/material/Unstable_Grid2';
 import ShoplItem from './ShopItem';
 import {useRecoilState, useRecoilValue} from 'recoil';
-import {productAtom, loadingAtom, needLoadingAtom, elementLoadingHeightAtom, tokenAtom} from '../../atoms/atom';
+import {
+    productAtom,
+    loadingAtom,
+    needLoadingAtom,
+    elementLoadingHeightAtom,
+    tokenAtom,
+    productCursorAtom, productTotalCountAtom
+} from '../../atoms/atom';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import Loding from './Loding';
 import {axiosGetFunction} from "../../module/CustomAxios";
+import useIntersectionObserver from "../../module/Observer";
 
 const ListBlock = styled.div`
   width: 100%;
@@ -31,40 +39,48 @@ const ShopList = () => {
     const [needLoading, setNeedLoading] = useRecoilState(needLoadingAtom);
     const [elementLoadingHeight, setElementLoadingHeight] = useRecoilState(elementLoadingHeightAtom);
     const [token, setToken] = useRecoilState(tokenAtom)
-
+    const target = useRef(null);
+    const [cursor, setCursor] = useRecoilState(productCursorAtom);
+    const productTotalCount = useRecoilValue(productTotalCountAtom);
+    const [observe, unobserve] = useIntersectionObserver(() => {
+        setCursor((cursor) => cursor + 1);
+    })
 
     useEffect(() => {
-        window.addEventListener('scroll', () => {
-            // console.log(Math.floor(window.scrollY))
-            console.log(elementLoadingHeight);
-            if (needLoading && elementLoadingHeight > 0) {
-                if (!loading && Math.floor(window.scrollY) >= elementLoadingHeight) {
-                    setLoading(true)
-                    axiosGetFunction('/api/kream/product/shop', {
-                        // brands: '1,2', // 브랜드
-                        // genders: '', // 성별
-                        // categories: '', // 카테고리
-                        // keyword: '', // 검색어
-                        // size_list: '', // 사이즈
-                        // price: '', // 금액
-                        cursor: 2
-                    }, token, setToken).then((res) => {
-                        console.log(res);
-                        setLoading(false);
-                        setNeedLoading(false);
-                        const newProduct = [...products].push(res.data.data.products)
-                        setProducts(newProduct);
-                    })
-                } else if (loading && Math.floor(window.scrollY) < elementLoadingHeight) {
-                    setLoading(false)
-                }
-            }
-        })
-        const itemElement = document.querySelector(`.${ListBlock.styledComponentId}> div:not(.${ShopSort.styledComponentId})`);
-        if (itemElement.scrollHeight > 0) {
-            setElementLoadingHeight(itemElement.scrollHeight - 414);
+        if (cursor === 1) observe(target.current);
+        if (products.length === productTotalCount) unobserve(target.current);
+    }, [products])
+
+    useEffect(() => {
+        if (products.length < productTotalCount) {
+            setLoading(true);
+            axiosGetFunction('/api/kream/product/shop', {
+                // brands: '1,2', // 브랜드
+                // genders: '', // 성별
+                // categories: '', // 카테고리
+                // keyword: '', // 검색어
+                // size_list: '', // 사이즈
+                // price: '', // 금액
+                cursor: cursor
+            }, token, setToken).then((res) => {
+                console.log(res);
+                const newProduct = [...products].map(p => {
+                    return p;
+                });
+                newProduct.push(...res.data.data.products);
+                setProducts(newProduct);
+                setLoading(false);
+            })
         }
-    })
+    }, [cursor])
+
+    useEffect(() => {
+        if (loading) {
+            unobserve(target.current);
+        } else {
+            observe(target.current);
+        }
+    }, [loading])
     return (
         <ListBlock>
             <ShopSort>
@@ -74,9 +90,11 @@ const ShopList = () => {
                     <ImportExportIcon/>
                 </div>
             </ShopSort>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} onClick={() => {
+                console.log(products)
+            }}>
                 {
-                    products !== null ? products.map((v, i) => (
+                    products !== null && Array.isArray(products) ? products.map((v, i) => (
                         <Grid xs={3} key={i}>
                             <ShoplItem product={v} idx={i}/>
                         </Grid>
@@ -84,9 +102,11 @@ const ShopList = () => {
                 }
 
             </Grid>
-            {
-                loading ? <Loding/> : null
-            }
+            <div ref={target}>
+                {
+                    loading ? <Loding/> : null
+                }
+            </div>
         </ListBlock>
     )
 }

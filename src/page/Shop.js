@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import ItemAll from '../component/Shop/ItemAll';
 import {useRecoilState} from "recoil";
-import {tokenAtom, productAtom, modalOpenAtom, loadingAtom} from "../atoms/atom";
+import {tokenAtom, productAtom, modalOpenAtom, loadingAtom, productTotalCountAtom} from "../atoms/atom";
 import {axiosGetFunction} from "../module/CustomAxios";
 import SizeModal from "../component/Shop/SizeModal";
 
@@ -11,6 +11,7 @@ const Shop = () => {
     const [product, setProduct] = useRecoilState(productAtom)
     const [modalOpen, setModalOpen] = useRecoilState(modalOpenAtom);
     const [loading, setLoading] = useRecoilState(loadingAtom);
+    const [productTotalCount, setProductTotalCount] = useRecoilState(productTotalCountAtom);
 
     useEffect(() => {
         setLoading(true);
@@ -22,6 +23,7 @@ const Shop = () => {
             // size_list: '', // 사이즈
             // price: '', // 금액
         }, token, setToken).then((res) => {
+            setProductTotalCount(res.data.data.count);
             setProduct(res.data.data.products);
             setLoading(false);
         })
