@@ -19,8 +19,6 @@ const Shop = () => {
             // keyword: '', // 검색어
             // size_list: '', // 사이즈
             // price: '', // 금액
-            cursor: 2
-
         }, token, setToken).then((res) => {
             setProduct(res.data.data.products);
         })

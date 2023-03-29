@@ -7,6 +7,7 @@ const Side = styled.div`
   width: 210px;
   padding-right: 20px;
   position: sticky;
+  top:103px;
   h4{
     margin:0;
     padding: 16px 0;

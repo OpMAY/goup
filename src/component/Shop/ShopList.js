@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Grid from '@mui/material/Unstable_Grid2';
 import ShoplItem from './ShopItem';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { productAtom } from '../../atoms/atom';
+import { productAtom,loadingAtom } from '../../atoms/atom';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
+import Loding from './Loding';
 
 const ListBlock = styled.div`
   width: 100%;
+  position: relative;
 `
 const ShopSolt = styled.div`
   display: flex;
@@ -20,8 +22,22 @@ const ShopSolt = styled.div`
   }
 `
 
+
 const ShopList = () => {
   const [product, setProduct] = useRecoilState(productAtom)
+  const [loading, setLoading] = useRecoilState(loadingAtom);
+
+  
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      console.log(Math.floor(window.scrollY))
+      if(Math.floor(window.scrollY) >= 540){
+        setLoading(true)
+      }else{
+        setLoading(false)
+      }
+    })
+  })
   return (
     <ListBlock>
       <ShopSolt>
@@ -39,7 +55,11 @@ const ShopList = () => {
             </Grid>
           )) : null
         }
+        
       </Grid>
+      {
+        loading ? <Loding/> :  null
+      }
     </ListBlock>
   )
 }

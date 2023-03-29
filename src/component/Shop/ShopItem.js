@@ -5,9 +5,6 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import Modal from '@mui/material/Modal';
 import {productAtom, modalOpenAtom, modalProductAtom, tokenAtom, sizeAtom} from '../../atoms/atom';
 import {useRecoilState} from 'recoil';
-import {Hr} from '../../common/js/style'
-import Grid from '@mui/material/Grid';
-import SizeModal from './SizeModal';
 import {axiosGetFunction} from "../../module/CustomAxios";
 
 const ItemBlcok = styled.div`
@@ -18,7 +15,7 @@ const ItemBlcok = styled.div`
   .product-info {
     padding: 8px 4px 0;
     margin-bottom: 12px;
-    height: 71px;
+    height: 85px;
 
     .name {
       font-size: 13px;
@@ -31,11 +28,24 @@ const ItemBlcok = styled.div`
       font-size: 13px;
       color: #222;
       margin-bottom: 2px;
+      display: -webkit-box;
+      word-wrap: break-word;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      
     }
 
     .item-detail-kr {
       font-size: 11px;
       color: rgba(34, 34, 34, .5);
+      display: -webkit-box;
+      word-wrap: break-word;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 
