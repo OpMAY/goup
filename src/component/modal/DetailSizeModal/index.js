@@ -39,9 +39,8 @@ const DetailSizeModal = ({ product }) => {
   };
 
   const handleButton = e => {
-    setSizeState(()=>e.target.value);
+    setSizeState(() => e.target.value);
   };
-
 
   const modalOpen = no => {
     axiosGetFunction(
@@ -94,6 +93,7 @@ const DetailSizeModal = ({ product }) => {
   return (
     <>
       <div>
+        {/* 원사이즈가 아니면 모든 사이즈로 바꿈. */}
         {user ? (
           <Button
             sx={button}
@@ -104,7 +104,7 @@ const DetailSizeModal = ({ product }) => {
           </Button>
         ) : (
           <LinkStyle to="/login">
-            <Typography sx={subtext}>{sizeState}!</Typography>
+            <Typography sx={subtext}>{sizeState}</Typography>
             <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
           </LinkStyle>
         )}

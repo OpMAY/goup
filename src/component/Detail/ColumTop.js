@@ -112,7 +112,6 @@ const WishButton = styled(Link)`
 const ColumTop = () => {
   const productDetail = useRecoilValue(productDetailAtom);
   const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
-  const [token, setToken] = useRecoilState(tokenAtom);
   const param = useRecoilValue(paramAtom);
 
   const oneSize = {
@@ -121,19 +120,19 @@ const ColumTop = () => {
     textAlign: "center",
   };
 
-  console.log("columtop", productDetail);
+  console.log("columtop", productDetail, "사이즈 스테이트", sizeState);
 
-  useEffect(() => {
-    axiosGetFunction(
-      `/api/kream/product/size/` + param,
-      { user_no: 1 },
-      token,
-      setToken
-    ).then(res => {
-      const target = res.data.data.sizes[0].size;
-      target === "ONE SIZE" && setSizeState(target);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axiosGetFunction(
+  //     `/api/kream/product/size/` + param,
+  //     { user_no: 1 },
+  //     token,
+  //     setToken
+  //   ).then(res => {
+  //     const target = res.data.data.sizes[0].size;
+  //     target === "ONE SIZE" && setSizeState(target);
+  //   });
+  // }, []);
 
   return (
     <div>

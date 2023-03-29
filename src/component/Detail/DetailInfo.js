@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Inner } from "../../common/js/style";
 import ColumTop from "./ColumTop";
@@ -14,8 +14,17 @@ import { Navigation, Pagination, EffectFade } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useRecoilValue } from "recoil";
-import { productAtom, productDetailAtom } from "../../atoms/atom";
+import { useRecoilValue, useRecoilState } from "recoil";
+import {
+  sizeAtom,
+  productAtom,
+  sizeStateAtom,
+  productDetailAtom,
+  paramAtom,
+  tokenAtom,
+  userAtom,
+} from "../../atoms/atom";
+import { axiosGetFunction } from "../../module/CustomAxios";
 
 const LeftSection = styled.div`
   flex-direction: column;
@@ -136,7 +145,36 @@ const DetailContainer = styled.div`
 const DetailInfo = () => {
   const productDetail = useRecoilValue(productDetailAtom);
   console.log("DetailInfo", productDetail);
+  const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
+  const [size, setSize] = useRecoilState(sizeAtom);
+  const param = useRecoilValue(paramAtom);
+  const [token, setToken] = useRecoilState(tokenAtom);
+  const user = useRecoilValue(userAtom);
 
+  // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
+  useEffect(() => {
+    axiosGetFunction(
+      `/api/kream/product/size/` + param,
+      { user_no: 1 },
+      token,
+      setToken
+    ).then(res => {
+      console.log('size',res.data.data.sizes);
+      console.log('sizeState', res.data.data.sizes[0].size);
+      setSize(res.data.data.sizes);
+      res.data.data.sizes[0].size === 'ONE SIZE' && 
+      setSizeState( res.data.data.sizes[0].size);
+    });
+  }, []);
+
+  //로그인(사이즈가 원사이즈인지? 여러 사이즈인지)
+  //모든 사이즈는 언제 size에들어와야 하는가?-> 사이즈 모달을 선택했을 때 columTop에서(회원,비회원 공통)
+  //sizestate는 detailInfo 에 들어가자마자 확인할 수 있음(회원,비회원 공통)
+
+  //ㅁ dETAILINFO 사이즈를 다 넣어줌. (회원, 비회원 공통)
+  //ㅁ columTop 이미 가져온 size 배열 활용해서 USER로 조건-회원(모달클릭시 모달생성), 비회원(모달 클릭시 로그인페이지)
+
+  console.log(111, size, sizeState);
   return (
     <>
       <Inner padding="30px 40px 120px;">
@@ -188,7 +226,7 @@ const DetailInfo = () => {
                 </a>
               </BannerBox>
               <div>
-                <ProductGraph />
+                {user? <ProductGraph /> : <h1>로그인해야 볼 수 있습니다</h1>}
                 <ConfirmWrap />
                 <PointGuide />
                 <MeditationNotice />
