@@ -13,19 +13,19 @@ const BuySellButtonContainer = styled.div`
 `;
 
 const BuySellButton = () => {
-  const getUser = useRecoilValue(userAtom);
+  const user = useRecoilValue(userAtom);
   const param = useRecoilValue(paramAtom);
 
   return (
     <BuySellButtonContainer>
       <BtnDivision
-        link={getUser ? `/buy/select/${param}?size=` : "/login"}
+        link={user ? `/buy/select/${param}?size=` : "/login"}
         title="구매"
         price="112,123"
         background="rgb(239, 98, 83)"
       />
       <BtnDivision
-        link={getUser ? `/sell/select/${param}?size=` : "/login"}
+        link={user ? `/sell/select/${param}?size=` : "/login"}
         title="판매"
         price="112,123"
         background="rgb(65, 185, 121)"

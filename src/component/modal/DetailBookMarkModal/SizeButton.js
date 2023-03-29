@@ -6,6 +6,7 @@ const Button = styled.button`
   &:focus {
     border: 1px solid #222;
   }
+
   text-align: center;
   height: 50px;
   color: #222;
@@ -20,7 +21,7 @@ const Button = styled.button`
   .top {
     font-size: 14px;
   }
-  .bottom{
+  .bottom {
     width: 16px;
     height: 16px;
   }

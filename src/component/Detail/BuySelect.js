@@ -8,7 +8,7 @@ const Container = styled.div`
   background-color: #fafafa;
   display: flex;
   justify-content: center;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   .box {
     margin: 20px 0 160px;
     width: 700px;
@@ -16,12 +16,12 @@ const Container = styled.div`
     background-color: #fff;
     box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
   }
-  .box_2{
-    margin: 20px 0 160px;
+  .box_2 {
+    margin-top: 20px;
     width: 780px;
     padding: 20px 40px 160px;
-    background-color: #fff;
-    border: 1px solid green;
+    /* background-color: #fff; */
+    /* border: 1px solid green; */
   }
 `;
 

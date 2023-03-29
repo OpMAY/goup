@@ -9,8 +9,8 @@ const Button = styled.div`
   flex-direction: column;
   border-radius: 10px;
   padding: 16px 18px;
-  margin-top: 20px;
-  background-color: #333;
+  /* margin-top: 20px; */
+  background-color: #222;
   a {
     text-decoration: none;
     color: #fff;
@@ -32,7 +32,7 @@ const Button = styled.div`
 
 const OrderButton = ({ type }) => {
   const param = useRecoilValue(paramAtom);
-  const size = useRecoilValue(sizeStateAtom)
+  const size = useRecoilValue(sizeStateAtom);
   return (
     <Button>
       {type === "buy_step1" && (
@@ -44,6 +44,16 @@ const OrderButton = ({ type }) => {
       {type === "buy_step2" && (
         <Link to="/buy/id">
           <p className="status pending">구매 계속</p>
+        </Link>
+      )}
+      {type === "buy_step3" && (
+        <Link to={`/buy/id/?size=${size}`}>
+          <p className="status keepBid">구매 입찰 계속</p>
+        </Link>
+      )}
+      {type === "buy_step4" && (
+        <Link to={`/buy/id/?size=${size}`}>
+          <p className="status keepBuy">즉시 구매 계속</p>
         </Link>
       )}
     </Button>
