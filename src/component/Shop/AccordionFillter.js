@@ -3,10 +3,11 @@ import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import styled from "styled-components";
-import {isToggleAtom} from "../../atoms/atom";
+import {isToggleAtom, tokenAtom} from "../../atoms/atom";
 import {useRecoilState} from "recoil";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import {axiosGetFunction} from "../../module/CustomAxios";
 
 
 const BtnBox = styled.div`
@@ -30,8 +31,21 @@ const BtnBox = styled.div`
 const AccordionFillter = () => {
     const [open, setOpen] = useState(false)
     const [isToggle, setIsToggle] = useRecoilState(isToggleAtom);
+    const [categories, setCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
     const arr = [{}, {}, {}, {}, {}, {}, {}, {}]
     const [checked, setChecked] = useState([false, false, false, false, false, false, false, false, false]);
+    const [token, setToken] = useRecoilState(tokenAtom);
+
+    useEffect(() => {
+        axiosGetFunction('/api/kream/product/shop/filter', {}, token, setToken).then((res) => {
+            setCategories(res.data.data.filters.categories);
+            setBrands(res.data.data.filters.brands);
+
+            console.log(categories)
+            console.log(brands)
+        })
+    }, [])
 
     const controlToggle = () => {
         setIsToggle(!isToggle);
@@ -54,9 +68,9 @@ const AccordionFillter = () => {
             console.log(checked);
             setChecked([...checked]);
         }
-        if(event.target.checked){
+        if (event.target.checked) {
             setOpen(true);
-        } else{
+        } else {
             setOpen(false)
         }
     }
@@ -64,25 +78,26 @@ const AccordionFillter = () => {
     const children = (
         <Box sx={{display: 'flex', flexDirection: 'column', ml: 3}}>
             {
-                open ? 
-                arr.map((a, i) => (
-                    <FormControlLabel
-                        label="스니커즈"
-                        control={<Checkbox checked={checked[i + 1]} data-index={i + 1} onChange={handleChange}/>}
-                        key={i}
-                    />
-                )) : null
+                open ?
+                    arr.map((a, i) => (
+                        <FormControlLabel
+                            label="스니커즈"
+                            control={<Checkbox checked={checked[i + 1]} data-index={i + 1} onChange={handleChange}/>}
+                            key={i}
+                        />
+                    )) : null
             }
         </Box>
     );
 
     return (
         <>
+            {/* 카테고리 */}
             <div className='menu' data-type={'category'}>
                 <BtnBox>
                     <h4>카테고리</h4>
                     <button className="plus" onClick={controlToggle}> {
-                        isToggle ? <RemoveCircleIcon /> : <AddCircleIcon />
+                        isToggle ? <RemoveCircleIcon/> : <AddCircleIcon/>
                     } </button>
                 </BtnBox>
                 {
@@ -99,6 +114,35 @@ const AccordionFillter = () => {
                                 />
                                 {children}
                             </ul>
+                        </>
+                        : null
+                }
+            </div>
+            {/* 브랜드 */}
+            <div className='menu' data-type={'brand'}>
+                <BtnBox>
+                    <h4>브랜드</h4>
+                    <button className="plus" onClick={controlToggle}> {
+                        isToggle ? <RemoveCircleIcon/> : <AddCircleIcon/>
+                    } </button>
+                </BtnBox>
+                {
+                    isToggle ?
+                        <>
+                            {
+                                brands != null && brands.length !== 0 ? brands.map(brand => (
+                                    <ul className='list'>
+                                        <FormControlLabel
+                                            label={brand.name}
+                                            control={
+                                                <Checkbox
+                                                    checked={checked[0]}
+                                                    onChange={handleAll}/>
+                                            }
+                                        />
+                                    </ul>
+                                )) : null
+                            }
                         </>
                         : null
                 }

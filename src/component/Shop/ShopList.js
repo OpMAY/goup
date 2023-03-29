@@ -15,6 +15,7 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 import Loding from './Loding';
 import {axiosGetFunction} from "../../module/CustomAxios";
 import useIntersectionObserver from "../../module/Observer";
+import Sorting from "./Sorting";
 
 const ListBlock = styled.div`
   width: 100%;
@@ -85,10 +86,7 @@ const ShopList = () => {
         <ListBlock>
             <ShopSort>
                 <p>상품 {products !== null ? products.length : 0}</p>
-                <div className='item_solt'>
-                    <p>인기순 </p>
-                    <ImportExportIcon/>
-                </div>
+                <Sorting></Sorting>
             </ShopSort>
             <Grid container spacing={2} onClick={() => {
                 console.log(products)
