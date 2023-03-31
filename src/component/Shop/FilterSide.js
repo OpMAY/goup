@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{} from 'react';
 import styled from 'styled-components';
 import AccordionFillter from './AccordionFillter';
 
@@ -32,8 +32,6 @@ const Side = styled.div`
 `
 
 const FilterSide = () => {
-  const [expanded, setExpanded] = useState("panel1");
-
   return (
     <aside>
       <Side>

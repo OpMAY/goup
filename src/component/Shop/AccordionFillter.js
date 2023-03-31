@@ -41,10 +41,8 @@ const AccordionFillter = () => {
         axiosGetFunction('/api/kream/product/shop/filter', {}, token, setToken).then((res) => {
             setCategories(res.data.data.filters.categories);
             setBrands(res.data.data.filters.brands);
-
-            console.log(categories)
-            console.log(brands)
         })
+        
     }, [])
 
     const controlToggle = () => {
@@ -55,6 +53,9 @@ const AccordionFillter = () => {
         checked[0] = false;
         checked[event.target.closest('span').dataset['index']] = event.target.checked;
         setChecked([...checked]);
+        console.log([...checked])
+        console.log('brands:', brands)
+        console.log('categories:' ,categories)
     }
 
     const handleAll = (event) => {
@@ -65,7 +66,6 @@ const AccordionFillter = () => {
                     checked[index] = false;
                 }
             })
-            console.log(checked);
             setChecked([...checked]);
         }
         if (event.target.checked) {
@@ -74,22 +74,28 @@ const AccordionFillter = () => {
             setOpen(false)
         }
     }
-
+    // categories 중복값 찾기
+    // const findDuplicates = categories => categories.filters((item, i) => item.indexOf(item) !== i);
+    // const duplicates = findDuplicates(categories)
+    // console.log(duplicates)
+    const result = categories.filter(word => word.length > 6);
+    console.log(result)
     const children = (
         <Box sx={{display: 'flex', flexDirection: 'column', ml: 3}}>
             {
                 open ?
-                    arr.map((a, i) => (
+                categories.map((a, i) => (
                         <FormControlLabel
-                            label="스니커즈"
-                            control={<Checkbox checked={checked[i + 1]} data-index={i + 1} onChange={handleChange}/>}
+                            label={a.parent_name}
+                            control={<Checkbox checked={checked[i + 1]}
+                            data-index={i + 1} 
+                            onChange={handleChange}/>}
                             key={i}
                         />
                     )) : null
             }
         </Box>
     );
-
     return (
         <>
             {/* 카테고리 */}
@@ -130,14 +136,16 @@ const AccordionFillter = () => {
                     isToggle ?
                         <>
                             {
-                                brands != null && brands.length !== 0 ? brands.map(brand => (
-                                    <ul className='list'>
+                                brands != null && brands.length !== 0 ? brands.map((brand, i) => (
+                                    <ul className='list' key={i}>
                                         <FormControlLabel
                                             label={brand.name}
                                             control={
                                                 <Checkbox
-                                                    checked={checked[0]}
-                                                    onChange={handleAll}/>
+                                                    checked={checked[i]}
+                                                    onChange={handleAll}
+                                            
+                                                    />
                                             }
                                         />
                                     </ul>
