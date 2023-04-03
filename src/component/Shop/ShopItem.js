@@ -1,11 +1,22 @@
 import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import Modal from '@mui/material/Modal';
-import {productAtom, modalOpenAtom, modalProductAtom, tokenAtom, sizeAtom} from '../../atoms/atom';
-import {useRecoilState} from 'recoil';
-import {axiosGetFunction} from "../../module/CustomAxios";
+import styled from "styled-components";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import Modal from "@mui/material/Modal";
+import {
+  productAtom,
+  modalOpenAtom,
+  modalProductAtom,
+  tokenAtom,
+  sizeAtom,
+  paramAtom,
+} from "../../atoms/atom";
+import { useRecoilState } from "recoil";
+import { Hr } from "../../common/js/style";
+import Grid from "@mui/material/Grid";
+import SizeModal from "./SizeModal";
+import { axiosGetFunction } from "../../module/CustomAxios";
+import { Link } from "react-router-dom";
 
 const ItemBlcok = styled.div`
   p {
@@ -59,7 +70,7 @@ const ItemBlcok = styled.div`
 
     .desc {
       font-size: 11px;
-      color: rgba(34, 34, 34, .5);
+      color: rgba(34, 34, 34, 0.5);
     }
   }
 
@@ -69,24 +80,21 @@ const ItemBlcok = styled.div`
     justify-content: space-between;
 
     .save {
-
     }
 
     .save {
       cursor: pointer;
     }
   }
-
-`
+`;
 
 const ImgBox = styled.div`
   height: 230px;
   background-image: url(${props => props.backgroundImage});
   background-size: contain;
   background-repeat: no-repeat;
-`
+`;
 // modal style
-
 
 
 const ShopItem = ({product, idx}) => {
