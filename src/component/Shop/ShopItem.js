@@ -19,6 +19,7 @@ import { axiosGetFunction } from "../../module/CustomAxios";
 import { Link } from "react-router-dom";
 
 const ItemBlcok = styled.div`
+  position: relative;
   p {
     margin: 0;
   }
@@ -75,9 +76,11 @@ const ItemBlcok = styled.div`
   }
 
   .icon-box {
+    position: relative;
     padding: 12px 4px 0 0;
     display: flex;
     justify-content: space-between;
+    z-index: 1000;
 
     .save {
     }
@@ -94,10 +97,17 @@ const ImgBox = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
 `;
-// modal style
+const LinkStyle = styled(Link)`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`
 
 
 const ShopItem = ({product, idx}) => {
+  console.log('paramAtom:', paramAtom)
     // modal
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useRecoilState(modalOpenAtom);
@@ -107,6 +117,7 @@ const ShopItem = ({product, idx}) => {
     const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
     const [token, setToken] = useRecoilState(tokenAtom);
     const [sizes, setSizes] = useRecoilState(sizeAtom);
+    const [param, setPram] = useRecoilState(paramAtom)
 
     useEffect(() => {
         // console.log('shopitem : ', product);
@@ -147,9 +158,14 @@ const ShopItem = ({product, idx}) => {
         }
         return str;
     }
+    console.log(product.no)
+    const pageMove = () => {
+      setPram(product.no)
+    }
     return (
         <>
           <ItemBlcok>
+            <LinkStyle to={`/product/${param}`} onClick={pageMove}></LinkStyle>
               <ImgBox backgroundImage={product.image.url}></ImgBox>
               <div>
                   <div className='product-info'>
