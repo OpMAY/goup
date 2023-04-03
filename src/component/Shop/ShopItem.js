@@ -153,7 +153,7 @@ const ShopItem = ({product, idx}) => {
               <ImgBox backgroundImage={product.image.url}></ImgBox>
               <div>
                   <div className='product-info'>
-                      <p className='name'>{product.no}</p>
+                      <p className='name'>{product.brand.name}</p>
                       <p className='item-detail'>{product.en_name}</p>
                       <p className='item-detail-kr'>{product.kor_name}</p>
                   </div>

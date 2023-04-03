@@ -85,7 +85,7 @@ const ShopList = () => {
     return (
         <ListBlock>
             <ShopSort>
-                <p>상품 {products !== null ? products.length : 0}</p>
+                <p>상품 {productTotalCount}</p>
                 <Sorting></Sorting>
             </ShopSort>
             <Grid container spacing={2} onClick={() => {

@@ -51,6 +51,7 @@ const AccordionFillter = () => {
                 }
                 tmp.push(tmp_lv2);
             }
+            console.log(tmp)
             setChecked(tmp);
             setOpen(open_tmp);
             setBrands(res.data.data.filters.brands);
@@ -92,35 +93,6 @@ const AccordionFillter = () => {
     // console.log(duplicates)
     console.log('categories : ', categories);
     console.log(checked);
-    const category =
-        (categories != null && categories.length > 0) && checked.length > 0 ? categories.map((a, i) => (
-            <>
-                <ul className='list'>
-                    <FormControlLabel
-                        label={a.name}
-                        control={
-                            <Checkbox
-                                checked={checked[i][0]}
-                                onChange={handleAll}/>
-                        }
-                    />
-                    <Box sx={{display: 'flex', flexDirection: 'column', ml: 3}}>
-                        {
-                            a.items.map((child, idx) => (
-                                open[i] ?
-                                    <FormControlLabel
-                                        label={child.name}
-                                        control={<Checkbox checked={checked[i][idx + 1]}
-                                                           data-index={child.no}
-                                                           onChange={handleChange}/>}
-                                        key={child.no}
-                                    /> : null
-                            ))
-                        }
-                    </Box>
-                </ul>
-            </>
-        )) : null;
 
     return (
         <>
@@ -135,7 +107,36 @@ const AccordionFillter = () => {
                 {
                     isToggle ?
                         <>
-                            {category}
+                            {
+                                (categories != null && categories.length > 0) && checked.length > 0 ? categories.map((a, i) => (
+                                    <>
+                                        <ul className='list'>
+                                            <FormControlLabel
+                                                label={a.name}
+                                                control={
+                                                    <Checkbox
+                                                        checked={checked[i][0]}
+                                                        onChange={handleAll}/>
+                                                }
+                                            />
+                                            <Box sx={{display: 'flex', flexDirection: 'column', ml: 3}}>
+                                                {
+                                                    a.items.map((child, idx) => (
+                                                        open[i] ?
+                                                            <FormControlLabel
+                                                                label={child.name}
+                                                                control={<Checkbox checked={checked[i][idx + 1]}
+                                                                                   data-index={child.no}
+                                                                                   onChange={handleChange}/>}
+                                                                key={child.no}
+                                                            /> : null
+                                                    ))
+                                                }
+                                            </Box>
+                                        </ul>
+                                    </>
+                                )) : null
+                            }
                         </>
                         : null
                 }
