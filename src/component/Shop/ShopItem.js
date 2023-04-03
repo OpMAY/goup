@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from 'react'
 import styled from "styled-components";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -26,7 +26,7 @@ const ItemBlcok = styled.div`
   .product-info {
     padding: 8px 4px 0;
     margin-bottom: 12px;
-    height: 71px;
+    height: 85px;
 
     .name {
       font-size: 13px;
@@ -39,11 +39,24 @@ const ItemBlcok = styled.div`
       font-size: 13px;
       color: #222;
       margin-bottom: 2px;
+      display: -webkit-box;
+      word-wrap: break-word;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      
     }
 
     .item-detail-kr {
       font-size: 11px;
-      color: rgba(34, 34, 34, 0.5);
+      color: rgba(34, 34, 34, .5);
+      display: -webkit-box;
+      word-wrap: break-word;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 
@@ -83,99 +96,88 @@ const ImgBox = styled.div`
 `;
 // modal style
 
-const ShopItem = ({ product, idx }) => {
-  const [param, setParam] = useRecoilState(paramAtom);
-  // modal
-  const handleClose = () => setOpen(false);
-  const [open, setOpen] = useRecoilState(modalOpenAtom);
-  // item book mark
-  const toggle = product._wish;
-  const [products, setProducts] = useRecoilState(productAtom);
-  const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
-  const [token, setToken] = useRecoilState(tokenAtom);
-  const [sizes, setSizes] = useRecoilState(sizeAtom);
 
-  const confirmClcik = () => {
-    const sample = { ...product };
-    sample._wish = !sample._wish;
-    const newList = [...products].map((v, i) => {
-      if (i === idx) return sample;
-      else return v;
-    });
-    setProducts(newList);
-    console.log(sample._wish);
-    handleClose();
-  };
+const ShopItem = ({product, idx}) => {
+    // modal
+    const handleClose = () => setOpen(false);
+    const [open, setOpen] = useRecoilState(modalOpenAtom);
+    // item book mark
+    const toggle = product._wish;
+    const [products, setProducts] = useRecoilState(productAtom);
+    const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
+    const [token, setToken] = useRecoilState(tokenAtom);
+    const [sizes, setSizes] = useRecoilState(sizeAtom);
 
-  const modalOpen = no => {
-    axiosGetFunction(
-      "/api/kream/product/size/" + no,
-      { user_no: 1 },
-      token,
-      setToken
-    ).then(res => {
-      console.log(res);
-      setSizes(res.data.data.sizes);
-      setModalProduct(product);
-      setOpen(true);
-    });
-  };
+    useEffect(() => {
+        // console.log('shopitem : ', product);
+    })
 
-  function addComma(number) {
-    let len;
-    let point;
-    let str;
-    const number_string = number + "";
-    point = number_string.length % 3;
-    len = number_string.length;
-    str = number_string.substring(0, point);
-    while (point < len) {
-      if (str !== "") str += ",";
-      str += number_string.substring(point, point + 3);
-      point += 3;
+    const confirmClcik = () => {
+      const sample = {...product};
+      sample._wish = !sample._wish;
+      const newList = [...products].map((v, i) => {
+          if (i === idx) return sample; else return v;
+      })
+      setProducts(newList);
+      console.log(sample._wish)
+      handleClose()
     }
-    return str;
-  }
-  return (
-    <>
-      <ItemBlcok>
-        <div
-          onClick={() => {
-            setParam(product.no);
-          }}>
-          <Link to={`/product/${product.no}`}>
-            <ImgBox backgroundImage={product.image.url}></ImgBox>
-          </Link>
-        </div>
-        <div>
-          <div className="product-info">
-            <p className="name">{product.brand.name}</p>
-            <p className="item-detail">{product.en_name}</p>
-            <p className="item-detail-kr">{product.kor_name}</p>
-          </div>
-          <div className="price-info">
-            <p className="price">
-              {product.price != null ? addComma(product.price) : "-"} 원
-            </p>
-            <p className="desc">즉시 구매가</p>
-          </div>
-          <div className="icon-box">
-            <div
-              className="save"
-              onClick={() => {
-                modalOpen(product.no);
-              }}>
-              {!toggle ? <BookmarkBorderIcon /> : <BookmarkIcon />}
-            </div>
-          </div>
-        </div>
-      </ItemBlcok>
-      {/*<SizeModal */}
-      {/*product={product}*/}
-      {/*confirmClcik={confirmClcik}*/}
-      {/*/>*/}
-    </>
-  );
-};
 
-export default ShopItem;
+    const modalOpen = (no) => {
+        axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
+            console.log(res);
+            setSizes(res.data.data.sizes);
+            setModalProduct(product);
+            setOpen(true);
+        });
+    }
+
+    function addComma(number) {
+        let len;
+        let point;
+        let str;
+        const number_string = number + '';
+        point = number_string.length % 3;
+        len = number_string.length;
+        str = number_string.substring(0, point);
+        while (point < len) {
+            if (str !== '') str += ',';
+            str += number_string.substring(point, point + 3);
+            point += 3;
+        }
+        return str;
+    }
+    return (
+        <>
+          <ItemBlcok>
+              <ImgBox backgroundImage={product.image.url}></ImgBox>
+              <div>
+                  <div className='product-info'>
+                      <p className='name'>{product.no}</p>
+                      <p className='item-detail'>{product.en_name}</p>
+                      <p className='item-detail-kr'>{product.kor_name}</p>
+                  </div>
+                  <div className='price-info'>
+                      <p className='price'>{product.price != null ? addComma(product.price) : '-'} 원</p>
+                      <p className='desc'>즉시 구매가</p>
+                  </div>
+                  <div className='icon-box'>
+                      <div className='save' onClick={() => {
+                          modalOpen(product.no)
+                      }}>
+                          {
+                              !toggle ? <BookmarkBorderIcon/> : <BookmarkIcon/>
+                          }
+                      </div>
+                  </div>
+              </div>
+          </ItemBlcok>
+          {/*<SizeModal */}
+          {/*product={product}*/}
+          {/*confirmClcik={confirmClcik}*/}
+          {/*/>*/}
+        </>
+    )
+}
+
+export default ShopItem

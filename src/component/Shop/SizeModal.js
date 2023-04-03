@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import {Hr} from '../../common/js/style'
 import Grid from '@mui/material/Grid';
@@ -6,7 +6,8 @@ import Modal from '@mui/material/Modal'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {useRecoilState, useRecoilValue} from 'recoil';
-import {modalOpenAtom, modalProductAtom, sizeAtom} from '../../atoms/atom'
+import {modalOpenAtom, modalProductAtom, productAtom, sizeAtom, tokenAtom} from '../../atoms/atom'
+import {axiosPostFunction} from "../../module/CustomAxios";
 
 const Box = styled.div`
   position: absolute;
@@ -85,6 +86,7 @@ const Box = styled.div`
     color: rgba(34, 34, 34, .8);
     border-radius: 5px;
     margin: 24px 0 32px;
+    cursor: pointer;
   }
 `
 
@@ -101,11 +103,60 @@ const SizeModal = () => {
     const [open, setOpen] = useRecoilState(modalOpenAtom);
     const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
     const [sizes, setSizes] = useRecoilState(sizeAtom);
+    const [checkBtn, setCheckBtn] = useState(false);
+    const [products, setProducts] = useRecoilState(productAtom);
+    const [token, setToken] = useRecoilState(tokenAtom);
 
     const handleClose = () => {
         setOpen(false)
         setModalProduct(null);
     };
+
+    const onCheck = (this_size) => {
+        /**
+         * 1. 클릭한 놈을 sizes에서 찾아서 상태 변환
+         * 2. 확인을 누르면 서버에 요청을 해
+         * 3. 요청 완료 후 최종 결과
+         *    => modal을 닫고
+         *    =>
+         * */
+        const sample = {...this_size};
+        sample._wish = !sample._wish;
+        const newList = [...sizes].map(size => {
+            if (size.no === this_size.no) return sample; else return size;
+        });
+        setSizes(newList);
+    }
+
+    const handleConfirm = () => {
+        // 통신
+        const body = {}
+        body.user_no = 1;
+        body.product_no = modalProduct.no;
+        const result = sizes.filter((element, index, array) => {
+            return element._wish === true
+        });
+        const wishes = [];
+        result.map(size => {
+            wishes.push({
+                size_no : size.no,
+                user_no : body.user_no
+            })
+        })
+        body.wishes = wishes;
+        axiosPostFunction('/api/kream/product/wish', body, false, token, setToken).then((res) => {
+            console.log(res);
+            if(res.data.status === 'OK') {
+                const this_product = {...modalProduct};
+                this_product._wish = res.data.data.status;
+                const productFormattedList = [...products].map(product => {
+                    if(this_product.no === product.no) return this_product; else return product;
+                });
+                setProducts(productFormattedList);
+                handleClose();
+            }
+        })
+    }
     return (
         <>
             {
@@ -131,13 +182,16 @@ const SizeModal = () => {
                             <div className='scroll-body'>
                                 <Grid container>
                                     {
-                                        sizes.map(size => (
-                                            <Grid item xs={4}>
+                                        sizes.map((size, i) => (
+                                            <Grid item xs={4} key={i}>
                                                 <div className='size-box'>
-                                                    <button type='button' className='size-btn'>
+                                                    <button type='button' className='size-btn'
+                                                            onClick={() => onCheck(size)}>
                                                         <span className='size-name'>{size.size}</span><br/>
-                                                        <i className='bokkmark-icon'><BookmarkBorderIcon
-                                                            sx={{width: 16, height: 16}}/></i>
+                                                        {
+                                                            size._wish ? <BookmarkIcon sx={{width: 16, height: 16}}/> :
+                                                                <BookmarkBorderIcon sx={{width: 16, height: 16}}/>
+                                                        }
                                                     </button>
                                                 </div>
                                             </Grid>
@@ -145,7 +199,7 @@ const SizeModal = () => {
                                     }
                                 </Grid>
                             </div>
-                            <button className='check' onClick={handleClose}>확인</button>
+                            <button className='check' onClick={handleConfirm}>확인</button>
                         </div>
                     </Box>
                 </Modal> : null
