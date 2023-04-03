@@ -33,7 +33,6 @@ const AccordionFillter = () => {
     const [isToggle, setIsToggle] = useRecoilState(isToggleAtom);
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
-    const arr = [{}, {}, {}, {}, {}, {}, {}, {}]
     const [checked, setChecked] = useState([]);
     const [token, setToken] = useRecoilState(tokenAtom);
 
@@ -91,8 +90,10 @@ const AccordionFillter = () => {
     // const findDuplicates = categories => categories.filters((item, i) => item.indexOf(item) !== i);
     // const duplicates = findDuplicates(categories)
     // console.log(duplicates)
+    console.log('categories : ', categories);
+    console.log(checked);
     const category =
-        categories.map((a, i) => (
+        (categories != null && categories.length > 0) && checked.length > 0 ? categories.map((a, i) => (
             <>
                 <ul className='list'>
                     <FormControlLabel
@@ -119,7 +120,7 @@ const AccordionFillter = () => {
                     </Box>
                 </ul>
             </>
-        ));
+        )) : null;
 
     return (
         <>
