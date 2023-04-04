@@ -16,7 +16,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DetailMoreBidModal from "../modal/DetailMoreBidModal";
 import { useRecoilValue } from "recoil";
-import { sizeStateAtom } from "../../atoms/atom";
+import { productDetailAtom, sizeStateAtom } from "../../atoms/atom";
 
 const ProductContainer = styled(Box)`
   .head {
@@ -95,6 +95,7 @@ const ProductGraph = ({ size }) => {
   const sizeState = useRecoilValue(sizeStateAtom);
   const [value, setValue] = useState("1");
   const [listValue, setListValue] = useState("1");
+  const product = useRecoilValue(productDetailAtom);
   console.log("ProductGraph SIZE", size);
 
   const handleChange = (event, newValue) => {
@@ -145,29 +146,94 @@ const ProductGraph = ({ size }) => {
             </TabList>
           </Box>
           <Box sx={{ height: "200px" }}>
+            {/* 1 */}
             <TabPanel sx={panelStyle} value="1">
               <Box sx={{ height: "200px" }}>
-                <MyResponsiveLine />
+                <MyResponsiveLine
+                  data={[
+                    {
+                      id: "1개월",
+                      color: "hsl(269, 70%, 50%)",
+                      data: product.price_history.history_month.map(
+                        (item, idx) => {
+                          return { x: idx, y: item.price + idx * 1000 };
+                        }
+                      ),
+                    },
+                  ]}
+                />
               </Box>
             </TabPanel>
-            <TabPanel value="2" sx={panelStyle}>
+            {/* 3 */}
+            <TabPanel sx={panelStyle} value="2">
               <Box sx={{ height: "200px" }}>
-                <MyResponsiveLine />
+                <MyResponsiveLine
+                  data={[
+                    {
+                      id: "3개월",
+                      color: "hsl(269, 70%, 50%)",
+                      data: product.price_history.history_quarter.map(
+                        (item, idx) => {
+                          return { x: idx, y: item.price + idx * 1000 };
+                        }
+                      ),
+                    },
+                  ]}
+                />
               </Box>
             </TabPanel>
-            <TabPanel value="3" sx={panelStyle}>
+            {/* 6 */}
+            <TabPanel sx={panelStyle} value="3">
               <Box sx={{ height: "200px" }}>
-                <MyResponsiveLine />
+                <MyResponsiveLine
+                  data={[
+                    {
+                      id: "6개월",
+                      color: "hsl(269, 70%, 50%)",
+                      data: product.price_history.history_half.map(
+                        (item, idx) => {
+                          return { x: idx, y: item.price + idx * 1000 };
+                        }
+                      ),
+                    },
+                  ]}
+                />
               </Box>
             </TabPanel>
-            <TabPanel value="4" sx={panelStyle}>
+            {/* 1년 */}
+            <TabPanel sx={panelStyle} value="4">
               <Box sx={{ height: "200px" }}>
-                <MyResponsiveLine />
+                <MyResponsiveLine
+                  data={[
+                    {
+                      id: "1년",
+                      color: "hsl(269, 70%, 50%)",
+                      data: product.price_history.history_year.map(
+                        (item, idx) => {
+                          return { x: idx, y: item.price + idx * 1000 };
+                        }
+                      ),
+                    },
+                  ]}
+                />
               </Box>
             </TabPanel>
-            <TabPanel value="5" sx={panelStyle}>
+            {/* all */}
+            <TabPanel sx={panelStyle} value="5">
               <Box sx={{ height: "200px" }}>
-                <MyResponsiveLine />
+                <MyResponsiveLine
+                  data={[
+                    {
+                      id: "전체",
+                      color: "hsl(269, 70%, 50%)",
+                      data: product.price_history.history_all.map(
+                        (item, idx) => {
+                          return { x: idx, y: item.price + idx * 1000 };
+                        }
+                      ),
+                    },
+                  ]}
+                />
               </Box>
             </TabPanel>
           </Box>

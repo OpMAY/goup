@@ -41,11 +41,15 @@ const BtnDivisionStyle = styled(Link)`
 
 const BtnDivision = ({ link, title, price, background }) => {
   return (
-    <BtnDivisionStyle className="buy" to={link} background={background}>
+    <BtnDivisionStyle className={title} to={link} background={background}>
       <strong className="title">{title}</strong>
       <div className="price">
         <span className="amount">{price}원</span>
-        <span className="desc">즉시 구매가</span>
+        {title === "구매" ? (
+          <span className="desc">즉시 구매가</span>
+        ) : (
+          <span className="desc">즉시 판매가</span>
+        )}
       </div>
     </BtnDivisionStyle>
   );
