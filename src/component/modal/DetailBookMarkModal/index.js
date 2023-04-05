@@ -11,12 +11,13 @@ import SizeButton from "./SizeButton";
 import { Link } from "react-router-dom";
 import { BsBookmark } from "react-icons/bs";
 import BookmarkItem from "../DetailMoreBidModal/BookmarkItem";
-import { useRecoilState } from "recoil";
-import { userAtom } from "../../../atoms/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { productDetailAtom, userAtom } from "../../../atoms/atom";
 
 const DetailBookMarkModal = () => {
   const [getUser, setUser] = useRecoilState(userAtom);
-
+  const productDetail = useRecoilValue(productDetailAtom);
+  console.log("===", productDetail);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -89,7 +90,7 @@ const DetailBookMarkModal = () => {
         onClick={handleClickOpen}>
         <BsBookmark size="20px"></BsBookmark>
         <span className="btn_text">관심상품</span>
-        <span className="wish_count">1,231</span>
+        <span className="wish_count">{productDetail.wishes}</span>
       </WishButton>
       <Modal
         open={open}
