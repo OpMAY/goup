@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Inner } from "../../common/js/style";
 import ColumTop from "./ColumTop";
@@ -292,6 +292,7 @@ const DetailInfo = () => {
   const [token, setToken] = useRecoilState(tokenAtom);
   const user = useRecoilValue(userAtom);
 
+  console.log(111, size, sizeState);
   // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
   useEffect(() => {
     axiosGetFunction(
@@ -307,7 +308,24 @@ const DetailInfo = () => {
         setSizeState(res.data.data.sizes[0].size);
     });
   }, []);
+  const [ScrollY, setScrollY] = useState(0); // 스크롤값을 저장하기 위한 상태
+  const handleFollow = () => {
+    setScrollY(window.pageYOffset); // window 스크롤 값을 ScrollY에 저장
+  };
 
+  useEffect(() => {
+    console.log("ScrollY is ", ScrollY); // ScrollY가 변화할때마다 값을 콘솔에 출력
+  }, [ScrollY]);
+
+  useEffect(() => {
+    const watch = () => {
+      window.addEventListener("scroll", handleFollow);
+    };
+    watch(); // addEventListener 함수를 실행
+    return () => {
+      window.removeEventListener("scroll", handleFollow); // addEventListener 함수를 삭제
+    };
+  });
   const Container = styled.div`
     .content_top {
       border: 2px solid green;
@@ -346,56 +364,6 @@ const DetailInfo = () => {
             background-color: transparent;
             border: 1px dotted orange;
           }
-          .column_box {
-            position: fixed;
-            top: 130px;
-            /* width 가 반응형으로 움직이니까 560으로 고정 안 해도 된다. */
-            .swiper {
-              .swiper-wrapper {
-                /* position: static; */
-                .swiper-slide {
-                  position: relative;
-                  .item_inner {
-                    .product_image {
-                      border: 1px solid black;
-                      /* background-repeat: no-repeat; */
-                      /* background-size: contain; */
-                      height: 560px;
-                      width: 560px;
-                      background-color: rgb(246, 238, 237);
-                      background-image: url("/images/img0.png");
-                      overflow: hidden;
-                      position: relative;
-                    }
-                  }
-                }
-              }
-              .swiper-button-prev {
-                &:after {
-                  font-size: 24px;
-                  color: rgba(34, 34, 34, 0.2);
-                }
-              }
-              .swiper-button-next {
-                &:after {
-                  font-size: 24px;
-                  color: rgba(34, 34, 34, 0.2);
-                }
-              }
-              .swiper-pagination {
-                display: flex;
-                max-width: 528px;
-                margin: 0 16px 20px;
-                span {
-                  height: 2px;
-                  background-color: #222;
-                  flex: 1;
-                  border-radius: 0;
-                  margin: 0;
-                }
-              }
-            }
-          }
         }
         .column_fixed {
         }
@@ -410,7 +378,59 @@ const DetailInfo = () => {
       height: 800px;
     }
   `;
-  console.log(111, size, sizeState);
+
+  const ColumnBox = styled.div`
+    position: ${props => props.position};
+    top: ${props => props.top};
+    bottom: ${props => props.bottom};
+    /* width 가 반응형으로 움직이니까 560으로 고정 안 해도 된다. */
+    .swiper {
+      .swiper-wrapper {
+        /* position: static; */
+        .swiper-slide {
+          position: relative;
+          .item_inner {
+            .product_image {
+              border: 1px solid black;
+              /* background-repeat: no-repeat; */
+              /* background-size: contain; */
+              height: 560px;
+              width: 560px;
+              background-color: rgb(246, 238, 237);
+              background-image: url("/images/img0.png");
+              overflow: hidden;
+              position: relative;
+            }
+          }
+        }
+      }
+      .swiper-button-prev {
+        &:after {
+          font-size: 24px;
+          color: rgba(34, 34, 34, 0.2);
+        }
+      }
+      .swiper-button-next {
+        &:after {
+          font-size: 24px;
+          color: rgba(34, 34, 34, 0.2);
+        }
+      }
+      .swiper-pagination {
+        display: flex;
+        max-width: 528px;
+        margin: 0 16px 20px;
+        span {
+          height: 2px;
+          background-color: #222;
+          flex: 1;
+          border-radius: 0;
+          margin: 0;
+        }
+      }
+    }
+  `;
+
   return (
     <Container>
       <div className="content content_top">
@@ -418,7 +438,11 @@ const DetailInfo = () => {
         <div className="column_bind">
           <div className="column column_fixed column_left">
             <div className="spread">{/* stay empty */}</div>
-            <div className="column_box">
+            <ColumnBox
+              className="column_box"
+              position={ScrollY < 1100 ? "fixed;" : "absolute;"}
+              top={ScrollY < 1100 ? "140px;" : "auto;"}
+              bottom={ScrollY < 1100 ? "auto;" : "0px;"}>
               <Swiper
                 pagination={{ clickable: true }}
                 navigation={true}
@@ -432,7 +456,7 @@ const DetailInfo = () => {
                   </SwiperSlide>
                 ))}
               </Swiper>
-            </div>
+            </ColumnBox>
           </div>
           <div className="column column_right">b</div>
         </div>
