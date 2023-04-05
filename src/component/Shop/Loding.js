@@ -9,9 +9,9 @@ export const LodingSpinner = styled.div`
 `;
 const Loding = () => {
   return (
-      <LodingSpinner>
-          <img src={Spinner} art="로딩중 입니다."></img>
-      </LodingSpinner>
+    <LodingSpinner>
+      <img src={Spinner} art="로딩중 입니다."></img>
+    </LodingSpinner>
   )
 }
 

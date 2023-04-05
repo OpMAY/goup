@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect } from 'react'
 import styled from "styled-components";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import Modal from "@mui/material/Modal";
 import {
   productAtom,
   modalOpenAtom,
@@ -12,14 +11,11 @@ import {
   paramAtom,
 } from "../../atoms/atom";
 import { useRecoilState } from "recoil";
-import { Hr } from "../../common/js/style";
-import Grid from "@mui/material/Grid";
-import SizeModal from "./SizeModal";
 import { axiosGetFunction } from "../../module/CustomAxios";
 import { Link } from "react-router-dom";
 
 const ItemBlcok = styled.div`
-  position: relative;
+   position: relative;
   p {
     margin: 0;
   }
@@ -106,94 +102,82 @@ const LinkStyle = styled(Link)`
 `
 
 
-const ShopItem = ({product, idx}) => {
-  console.log('paramAtom:', paramAtom)
-    // modal
-    const handleClose = () => setOpen(false);
-    const [open, setOpen] = useRecoilState(modalOpenAtom);
-    // item book mark
-    const toggle = product._wish;
-    const [products, setProducts] = useRecoilState(productAtom);
-    const [modalProduct, setModalProduct] = useRecoilState(modalProductAtom);
-    const [token, setToken] = useRecoilState(tokenAtom);
-    const [sizes, setSizes] = useRecoilState(sizeAtom);
-    const [param, setPram] = useRecoilState(paramAtom)
+const ShopItem = ({ product, idx }) => {
+  // modal
+  const handleClose = () => setOpen(false);
+  const [open, setOpen] = useRecoilState(modalOpenAtom);
+  // item book mark
+  const toggle = product._wish;
+  const [products, setProducts] = useRecoilState(productAtom);
+  const setModalProduct = useRecoilState(modalProductAtom);
+  const [token, setToken] = useRecoilState(tokenAtom);
+  const [sizes, setSizes] = useRecoilState(sizeAtom);
+  const [param, setPram] = useRecoilState(paramAtom)
 
-    useEffect(() => {
-        // console.log('shopitem : ', product);
-    })
+  // const confirmClcik = () => {
+  //   const sample = {...product};
+  //   sample._wish = !sample._wish;
+  //   const newList = [...products].map((v, i) => {
+  //       if (i === idx) return sample; else return v;
+  //   })
+  //   setProducts(newList);
+  //   handleClose()
+  // } 
 
-    const confirmClcik = () => {
-      const sample = {...product};
-      sample._wish = !sample._wish;
-      const newList = [...products].map((v, i) => {
-          if (i === idx) return sample; else return v;
-      })
-      setProducts(newList);
-      console.log(sample._wish)
-      handleClose()
-    }
+  const modalOpen = (no) => {
+    axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
+      setSizes(res.data.data.sizes);
+      setModalProduct(product);
+      setOpen(true);
+    });
+  }
 
-    const modalOpen = (no) => {
-        axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
-            console.log(res);
-            setSizes(res.data.data.sizes);
-            setModalProduct(product);
-            setOpen(true);
-        });
+  function addComma(number) {
+    let len;
+    let point;
+    let str;
+    const number_string = number + '';
+    point = number_string.length % 3;
+    len = number_string.length;
+    str = number_string.substring(0, point);
+    while (point < len) {
+      if (str !== '') str += ',';
+      str += number_string.substring(point, point + 3);
+      point += 3;
     }
-
-    function addComma(number) {
-        let len;
-        let point;
-        let str;
-        const number_string = number + '';
-        point = number_string.length % 3;
-        len = number_string.length;
-        str = number_string.substring(0, point);
-        while (point < len) {
-            if (str !== '') str += ',';
-            str += number_string.substring(point, point + 3);
-            point += 3;
-        }
-        return str;
-    }
-    console.log(product.no)
-    const pageMove = () => {
-      setPram(product.no)
-    }
-    return (
-        <>
-          <ItemBlcok>
-            <LinkStyle to={`/product/${param}`} onClick={pageMove}></LinkStyle>
-              <ImgBox backgroundImage={product.image.url}></ImgBox>
-              <div>
-                  <div className='product-info'>
-                      <p className='name'>{product.brand.name}</p>
-                      <p className='item-detail'>{product.en_name}</p>
-                      <p className='item-detail-kr'>{product.kor_name}</p>
-                  </div>
-                  <div className='price-info'>
-                      <p className='price'>{product.price != null ? addComma(product.price) : '-'} 원</p>
-                      <p className='desc'>즉시 구매가</p>
-                  </div>
-                  <div className='icon-box'>
-                      <div className='save' onClick={() => {
-                          modalOpen(product.no)
-                      }}>
-                          {
-                              !toggle ? <BookmarkBorderIcon/> : <BookmarkIcon/>
-                          }
-                      </div>
-                  </div>
-              </div>
-          </ItemBlcok>
-          {/*<SizeModal */}
-          {/*product={product}*/}
-          {/*confirmClcik={confirmClcik}*/}
-          {/*/>*/}
-        </>
-    )
+    return str;
+  }
+  const pageMove = () => {
+    setPram(product.no)
+  }
+  return (
+    <>
+      <ItemBlcok>
+        <LinkStyle to={`/product/${param}`} onClick={pageMove}></LinkStyle>
+        <ImgBox backgroundImage={product.image.url}></ImgBox>
+        <div>
+          <div className='product-info'>
+            <p className='name'>{product.brand.name}</p>
+            <p className='item-detail'>{product.en_name}</p>
+            <p className='item-detail-kr'>{product.kor_name}</p>
+          </div>
+          <div className='price-info'>
+            <p className='price'>{product.price != null ? addComma(product.price) : '-'} 원</p>
+            <p className='desc'>즉시 구매가</p>
+          </div>
+          <div className='icon-box'>
+            <div className='save' onClick={() => {
+              modalOpen(product.no)
+            }}>
+              {
+                !toggle ? <BookmarkBorderIcon /> : <BookmarkIcon />
+              }
+            </div>
+          </div>
+        </div>
+      </ItemBlcok>
+    </>
+  )
 }
 
 export default ShopItem
