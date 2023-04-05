@@ -1,19 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import BuySellButton from "./BuySellButton";
 import { Link } from "react-router-dom";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { RiArrowDropDownFill } from "react-icons/ri";
 import DetailSizeModal from "../modal/DetailSizeModal";
 import DetailBookMarkModal from "../modal/DetailBookMarkModal";
-import {
-  sizeStateAtom,
-  paramAtom,
-  tokenAtom,
-  productDetailAtom,
-} from "../../atoms/atom";
-import { axiosGetFunction } from "../../module/CustomAxios";
+import { sizeStateAtom, productDetailAtom } from "../../atoms/atom";
 import { Typography } from "@mui/material";
 
 const DetailMainTitle = styled.div`
@@ -83,56 +75,42 @@ const RecentPrice = styled.div`
     font-size: 13px;
     color: rgb(241, 87, 70);
     margin: 0px;
+    text-align: right;
   }
 `;
 
-const WishButton = styled(Link)`
-  text-decoration: none;
-  align-items: center;
-  background-color: #fff;
-  border-radius: 10px;
-  border: 1px solid rgb(235, 235, 235);
-  padding: 0 25px;
-  color: #333333;
-  margin-top: 12px;
-  display: flex;
-  line-height: 60px;
-  gap: 4px;
-  font-size: 15px;
-  justify-content: center;
-  .btn_text {
-    box-sizing: border-box;
-    text-align: center;
-  }
-  .wish_count {
-    font-weight: 600;
-  }
-`;
+// const WishButton = styled(Link)`
+//   text-decoration: none;
+//   align-items: center;
+//   background-color: #fff;
+//   border-radius: 10px;
+//   border: 1px solid rgb(235, 235, 235);
+//   padding: 0 25px;
+//   color: #333333;
+//   margin-top: 12px;
+//   display: flex;
+//   line-height: 60px;
+//   gap: 4px;
+//   font-size: 15px;
+//   justify-content: center;
+//   .btn_text {
+//     box-sizing: border-box;
+//     text-align: center;
+//   }
+//   .wish_count {
+//     font-weight: 600;
+//   }
+// `;
 
 const ColumTop = () => {
   const productDetail = useRecoilValue(productDetailAtom);
   const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
-  const param = useRecoilValue(paramAtom);
 
   const oneSize = {
     fontSize: "16px",
     fontWeight: 700,
     textAlign: "center",
   };
-
-  console.log("columtop", productDetail, "사이즈 스테이트", sizeState);
-
-  // useEffect(() => {
-  //   axiosGetFunction(
-  //     `/api/kream/product/size/` + param,
-  //     { user_no: 1 },
-  //     token,
-  //     setToken
-  //   ).then(res => {
-  //     const target = res.data.data.sizes[0].size;
-  //     target === "ONE SIZE" && setSizeState(target);
-  //   });
-  // }, []);
 
   return (
     <div>
@@ -159,12 +137,21 @@ const ColumTop = () => {
               <div className="detail">
                 {productDetail.recent_order_price.toLocaleString()}원
               </div>
-              <p>40,000원(+7.8%)</p>
+              <p>
+                {productDetail.recent_2nd_order_price -
+                  productDetail.recent_order_price}
+                (
+                {((productDetail.recent_order_price -
+                  productDetail.recent_2nd_order_price) /
+                  productDetail.recent_2nd_order_price) *
+                  100}
+                %)
+              </p>
             </div>
           ) : (
             <div>
-              <div className="detail">- 원</div>
-              <p>(0%)</p>
+              <div className="detail">-</div>
+              <p>-</p>
             </div>
           )}
         </RecentPrice>
