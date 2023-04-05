@@ -2,16 +2,16 @@ import React from "react";
 // styled-component
 import styled from "styled-components";
 // Common style
-import {Inner} from "../common/js/style";
+import { Inner } from "../common/js/style";
 // logo 경로
 import logo from "../common/images/logo.png";
 // react icon
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 // tab custom css
 import "../common/css/custom.css";
 import SearchModal from "./modal/SearchModal";
-import {useRecoilState} from "recoil";
-import {userAtom} from "../atoms/atom";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../atoms/atom";
 
 const HeaderBlock = styled.header`
   position: sticky;
@@ -95,63 +95,64 @@ const NavBlock = styled.div`
 `;
 
 const Header = () => {
-    const [getUser, setUser] = useRecoilState(userAtom);
-    
-    const logoutClick = () => { 
-      setUser(null); 
-      window.location.reload();
-      window.location.href('http://localhost:3000');
-    }
-    return (
-        <HeaderBlock>
-            <Inner padding="0 40px;">
-                <Top>
-                    <ul>
-                        <li>
-                            <Link to="/">고객센터</Link>
-                        </li>
-                        <li>
-                            <Link to="/my/wish">관심상품1</Link>
-                        </li>
-                        <li>
-                          {
-                            getUser === null ? 
-                            <Link to='/login'>로그인</Link> 
-                            : 
-                            <Link to="/" onClick={() => logoutClick()}>로그아웃</Link>
-                          }
-                        </li>
-                    </ul>
-                </Top>
-                <Navbar>
-                    <div>
-                        <a href="/">
-                            <img width="120px" src={logo} alt="logo"></img>
-                        </a>
-                    </div>
-                    <NavBlock>
-                        <nav>
-                            <ul>
-                                <li>
-                                    <a href="/">HOME</a>
-                                </li>
-                                <li>
-                                    <Link to="/style">STYLE</Link>
-                                </li>
-                                <li>
-                                    <Link to="/shop">SHOP</Link>
-                                </li>
-                                <li>
-                                    <Link to="/login">MY</Link>
-                                </li>
-                            </ul>
-                        </nav>
-                        <SearchModal/>
-                    </NavBlock>
-                </Navbar>
-            </Inner>
-        </HeaderBlock>
-    );
+  const [getUser, setUser] = useRecoilState(userAtom);
+
+  const logoutClick = () => {
+    setUser(null);
+    window.location.reload();
+    window.location.href("http://localhost:3000");
+  };
+  return (
+    <HeaderBlock>
+      <Inner padding="0 40px;">
+        <Top>
+          <ul>
+            <li>
+              <Link to="/">고객센터</Link>
+            </li>
+            <li>
+              <Link to="/my/wish">관심상품1</Link>
+            </li>
+            <li>
+              {getUser === null ? (
+                <Link to="/login">로그인</Link>
+              ) : (
+                <Link to="/" onClick={() => logoutClick()}>
+                  로그아웃
+                </Link>
+              )}
+            </li>
+          </ul>
+        </Top>
+        <Navbar>
+          <div>
+            <a href="/">
+              <img width="120px" src={logo} alt="logo"></img>
+            </a>
+          </div>
+          <NavBlock>
+            <nav>
+              <ul>
+                <li>
+                  <a href="/">HOME</a>
+                </li>
+                <li>
+                  <Link to="/style">STYLE</Link>
+                </li>
+                <li>
+                  <Link to="/shop">SHOP</Link>
+                </li>
+                <li>
+                  <Link to="/my">MY</Link>
+                </li>
+              </ul>
+            </nav>
+            <SearchModal />
+          </NavBlock>
+        </Navbar>
+      </Inner>
+    </HeaderBlock>
+  );
 };
 
 export default Header;

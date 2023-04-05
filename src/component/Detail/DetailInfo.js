@@ -6,6 +6,7 @@ import ProjectInfoWrap from "./ProjectInfoWrap";
 import DeliveryWrap from "./DeliveryWrap";
 import { BsArrowRight } from "react-icons/bs";
 import ProductGraph from "./ProductGraph";
+import { Box } from "@mui/material";
 import ConfirmWrap from "./ConfirmWrap";
 import PointGuide from "./PointGuide";
 import MeditationNotice from "./MeditationNotice";
@@ -26,120 +27,260 @@ import {
 } from "../../atoms/atom";
 import { axiosGetFunction } from "../../module/CustomAxios";
 
-const LeftSection = styled.div`
-  flex-direction: column;
-  flex: 1;
-  padding-right: 39.5px;
-  .product_image {
-    background-color: yellow;
-  }
-`;
+// const DetailContainer = styled.div`
+//   /* display: flex; */
+//   position: relative;
+//   .left_section {
+//     /* flex-direction: column; */
+//     /* flex: 1; */
+//     /* width: 50%; */
+//     float: left;
+//     padding-right: 3.334%;
+//     .left_info {
+//       position: static;
+//       .product_image_container {
+//         width: 50%;
+//         position: fixed;
+//         .swiper {
+//           z-index: 0;
+//           .swiper-wrapper {
+//             z-index: 0;
+//             .swiper-slide {
+//               .product_image {
+//                 /* width: 560px; */
+//                 background-repeat: no-repeat;
+//                 background-size: contain;
+//                 height: 560px;
+//                 background-color: transparent;
+//               }
+//             }
+//           }
+//           .swiper-pagination {
+//             display: flex;
+//             max-width: 528px;
+//             margin: 0 16px 20px;
+//             span {
+//               height: 2px;
+//               background-color: #222;
+//               flex: 1;
+//               border-radius: 0;
+//               margin: 0;
+//             }
+//           }
+//           .swiper-button-prev {
+//             &:after {
+//               font-size: 24px;
+//               color: rgba(34, 34, 34, 0.2);
+//             }
+//           }
+//           .swiper-button-next {
+//             &:after {
+//               font-size: 24px;
+//               color: rgba(34, 34, 34, 0.2);
+//             }
+//           }
+//         }
+//       }
+//       .alert_box {
+//         display: flex;
+//         align-items: center;
+//         padding: 12px;
+//         margin-top: 20px;
+//         border: 1px solid #ebebeb;
+//         border-radius: 10px;
+//         box-shadow: 0 2px 6px rgb(0 0 0 / 12%);
+//         .content {
+//           font-size: 12px;
+//           .title {
+//             display: flex;
+//             span {
+//               background-color: #ff8824;
+//               color: #fff;
+//               line-height: 12px;
+//               font-weight: 600;
+//               margin-right: 4px;
+//               padding: 3px 5px 2px;
+//               border-radius: 2px;
+//             }
+//             p {
+//               margin: 0;
+//               font-size: 13px;
+//               font-weight: 600;
+//             }
+//           }
+//           .detail {
+//             margin-top: 4px;
+//             color: rgba(34, 34, 34, 0.5);
+//           }
+//         }
+//         .arrow_icon {
+//           margin-left: auto;
+//           width: 25px;
+//           height: 21px;
+//         }
+//       }
+//     }
+//   }
+//   .right_section {
+//     /* flex-direction: column; */
+//     /* flex: 1; */
+//     /* overflow-y: scroll; */
+//     /* height: 800px; */
+//     float: right;
+//     width: 50%;
+//     /* position: relative; */
+//     border-left: 1px solid #ebebeb;
+//     padding-left: 3.334%;
+//     ::-webkit-scrollbar {
+//       display: none;
+//     }
+//     .banner_box {
+//       margin-top: 20px;
+//       a {
+//         background-color: rgb(39, 39, 39);
+//         display: flex;
 
-const RightSection = styled.div`
-  flex-direction: column;
-  flex: 1;
-  overflow-y: scroll;
-  height: 800px;
-  border-left: 1px solid #ebebeb;
-  padding-left: 39.5px;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
+//         height: 80px;
+//         justify-content: center;
+//         img {
+//         }
+//       }
+//     }
+//   }
+// `;
 
-const BannerBox = styled.div`
-  margin-top: 20px;
-  a {
-    background-color: rgb(39, 39, 39);
-    display: flex;
+const Div = styled.div`
+  padding: 30px 40px 120px;
+  overflow: hidden;
+  max-width: 1280px;
+  margin: 0 auto;
+  .column_bind {
+    /* height: 2000px; */
+    /* display: flex; */
+    position: relative;
+    .left_section {
+      /* flex-direction: column; */
+      /* flex: 1; */
+      width: 50%;
+      float: left;
+      padding-right: 3.334%;
+      .left_info {
+        position: static;
+        .product_image_container {
+          /* width: 50%; */
+          /* position: fixed; */
+          .swiper {
+            /* z-index: 0; */
+            /* position: relative; */
+            /* position: fixed; */
+            .swiper-wrapper {
+              z-index: -1;
+              /* position: relative; */
+              .swiper-slide {
+                /* position: relative; */
+                .product_image {
+                  /* position: absolute; */
+                  /* width: 560px; */
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                  height: 560px;
+                  background-color: transparent;
+                }
+              }
+            }
+            .swiper-pagination {
+              display: flex;
+              max-width: 528px;
+              margin: 0 16px 20px;
+              span {
+                height: 2px;
+                background-color: #222;
+                flex: 1;
+                border-radius: 0;
+                margin: 0;
+              }
+            }
+            .swiper-button-prev {
+              &:after {
+                font-size: 24px;
+                color: rgba(34, 34, 34, 0.2);
+              }
+            }
+            .swiper-button-next {
+              &:after {
+                font-size: 24px;
+                color: rgba(34, 34, 34, 0.2);
+              }
+            }
+          }
+        }
+        .alert_box {
+          display: flex;
+          align-items: center;
+          padding: 12px;
+          margin-top: 20px;
+          border: 1px solid #ebebeb;
+          border-radius: 10px;
+          box-shadow: 0 2px 6px rgb(0 0 0 / 12%);
+          .content {
+            font-size: 12px;
+            .title {
+              display: flex;
+              span {
+                background-color: #ff8824;
+                color: #fff;
+                line-height: 12px;
+                font-weight: 600;
+                margin-right: 4px;
+                padding: 3px 5px 2px;
+                border-radius: 2px;
+              }
+              p {
+                margin: 0;
+                font-size: 13px;
+                font-weight: 600;
+              }
+            }
+            .detail {
+              margin-top: 4px;
+              color: rgba(34, 34, 34, 0.5);
+            }
+          }
+          .arrow_icon {
+            margin-left: auto;
+            width: 25px;
+            height: 21px;
+          }
+        }
+      }
+    }
+    .right_section {
+      /* flex-direction: column; */
+      /* flex: 1; */
+      /* overflow-y: scroll; */
+      /* height: 800px; */
+      float: right;
+      width: 50%;
+      /* position: relative; */
+      border-left: 1px solid #ebebeb;
+      padding-left: 3.334%;
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      .banner_box {
+        margin-top: 20px;
+        a {
+          background-color: rgb(39, 39, 39);
+          display: flex;
 
-    height: 80px;
-    justify-content: center;
-    img {
+          height: 80px;
+          justify-content: center;
+          img {
+          }
+        }
+      }
     }
   }
-`;
-
-const LeftInfo = styled.div`
-  .product_image_container {
-    width: 560px;
-    .swiper {
-      .swiper-slide {
-        .product_image {
-          background-repeat: no-repeat;
-          background-size: contain;
-          height: 560px;
-          background-color: transparent;
-        }
-      }
-      .swiper-pagination {
-        display: flex;
-        max-width: 528px;
-        margin: 0 16px 20px;
-        span {
-          height: 2px;
-          background-color: #222;
-          flex: 1;
-          border-radius: 0;
-          margin: 0;
-        }
-      }
-      .swiper-button-prev {
-        &:after {
-          font-size: 24px;
-          color: rgba(34, 34, 34, 0.2);
-        }
-      }
-      .swiper-button-next {
-        &:after {
-          font-size: 24px;
-          color: rgba(34, 34, 34, 0.2);
-        }
-      }
-    }
-  }
-  .alert_box {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    margin-top: 20px;
-    border: 1px solid #ebebeb;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 12%);
-    .content {
-      font-size: 12px;
-      .title {
-        display: flex;
-        span {
-          background-color: #ff8824;
-          color: #fff;
-          line-height: 12px;
-          font-weight: 600;
-          margin-right: 4px;
-          padding: 3px 5px 2px;
-          border-radius: 2px;
-        }
-        p {
-          margin: 0;
-          font-size: 13px;
-          font-weight: 600;
-        }
-      }
-      .detail {
-        margin-top: 4px;
-        color: rgba(34, 34, 34, 0.5);
-      }
-    }
-    .arrow_icon {
-      margin-left: auto;
-      width: 25px;
-      height: 21px;
-    }
-  }
-`;
-
-const DetailContainer = styled.div`
-  display: flex;
 `;
 
 const DetailInfo = () => {
@@ -159,83 +300,145 @@ const DetailInfo = () => {
       token,
       setToken
     ).then(res => {
-      console.log('size',res.data.data.sizes);
-      console.log('sizeState', res.data.data.sizes[0].size);
+      console.log("size", res.data.data.sizes);
+      console.log("sizeState", res.data.data.sizes[0].size);
       setSize(res.data.data.sizes);
-      res.data.data.sizes[0].size === 'ONE SIZE' && 
-      setSizeState( res.data.data.sizes[0].size);
+      res.data.data.sizes[0].size === "ONE SIZE" &&
+        setSizeState(res.data.data.sizes[0].size);
     });
   }, []);
 
-  //로그인(사이즈가 원사이즈인지? 여러 사이즈인지)
-  //모든 사이즈는 언제 size에들어와야 하는가?-> 사이즈 모달을 선택했을 때 columTop에서(회원,비회원 공통)
-  //sizestate는 detailInfo 에 들어가자마자 확인할 수 있음(회원,비회원 공통)
-
-  //ㅁ dETAILINFO 사이즈를 다 넣어줌. (회원, 비회원 공통)
-  //ㅁ columTop 이미 가져온 size 배열 활용해서 USER로 조건-회원(모달클릭시 모달생성), 비회원(모달 클릭시 로그인페이지)
-
+  const Container = styled.div`
+    .content_top {
+      border: 2px solid green;
+      max-width: 1280px;
+      overflow: hidden;
+      padding: 30px 40px 120px;
+      margin: 0 auto;
+      .blind {
+        overflow: hidden;
+        height: 1px;
+        width: 1px;
+      }
+      .column_bind {
+        position: relative;
+        border: 2px solid red;
+        &:after {
+          content: "";
+          clear: both;
+          display: block;
+        }
+        .column {
+          width: 50%;
+          border: 2px solid blue;
+          &:first-child {
+            float: left;
+            padding-right: 3.334%;
+          }
+          &:nth-child(2) {
+            position: relative;
+            float: right;
+            padding-left: 3.334%;
+          }
+          .spread {
+            height: 560px;
+            position: static;
+            background-color: transparent;
+            border: 1px dotted orange;
+          }
+          .column_box {
+            position: fixed;
+            top: 130px;
+            /* width 가 반응형으로 움직이니까 560으로 고정 안 해도 된다. */
+            .swiper {
+              .swiper-wrapper {
+                /* position: static; */
+                .swiper-slide {
+                  position: relative;
+                  .item_inner {
+                    .product_image {
+                      border: 1px solid black;
+                      /* background-repeat: no-repeat; */
+                      /* background-size: contain; */
+                      height: 560px;
+                      width: 560px;
+                      background-color: rgb(246, 238, 237);
+                      background-image: url("/images/img0.png");
+                      overflow: hidden;
+                      position: relative;
+                    }
+                  }
+                }
+              }
+              .swiper-button-prev {
+                &:after {
+                  font-size: 24px;
+                  color: rgba(34, 34, 34, 0.2);
+                }
+              }
+              .swiper-button-next {
+                &:after {
+                  font-size: 24px;
+                  color: rgba(34, 34, 34, 0.2);
+                }
+              }
+              .swiper-pagination {
+                display: flex;
+                max-width: 528px;
+                margin: 0 16px 20px;
+                span {
+                  height: 2px;
+                  background-color: #222;
+                  flex: 1;
+                  border-radius: 0;
+                  margin: 0;
+                }
+              }
+            }
+          }
+        }
+        .column_fixed {
+        }
+        .column_right {
+          height: 2000px;
+          background-color: green;
+        }
+      }
+    }
+    .content_bottom {
+      background-color: yellow;
+      height: 800px;
+    }
+  `;
   console.log(111, size, sizeState);
   return (
-    <>
-      <Inner padding="30px 40px 120px;">
-        <DetailContainer>
-          <LeftSection>
-            <LeftInfo>
-              <div className="product_image_container">
-                <Swiper
-                  pagination={{ clickable: true }}
-                  navigation={true}
-                  effect="fade"
-                  modules={[EffectFade, Pagination, Navigation]}>
-                  {productDetail.product.images.map((item, id) => (
-                    <SwiperSlide key={item.name}>
-                      <div
-                        className="product_image"
-                        style={{
-                          backgroundImage: `url(${item.url})`,
-                        }}></div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-              <div className="alert_box">
-                <div className="content">
-                  <div className="title">
-                    <span>주의</span>
-                    <p>판매 거래 주의사항</p>
-                  </div>
-                  <div className="detail">반드시 보유한 상품만 판매하세요.</div>
-                </div>
-                <span className="arrow_icon">
-                  <BsArrowRight size={25}></BsArrowRight>
-                </span>
-              </div>
-            </LeftInfo>
-          </LeftSection>
-          <RightSection>
-            <div>
-              <ColumTop />
-              <ProjectInfoWrap />
-              <DeliveryWrap />
-              <BannerBox>
-                <a href="?">
-                  <img
-                    src="https://ssl.pstatic.net/melona/libs/1432/1432951/13d10eb0c9e6e7bab3d5_20230227190423038.jpg"
-                    alt="`banner_image"
-                  />
-                </a>
-              </BannerBox>
-              <div>
-                {user? <ProductGraph /> : <h1>로그인해야 볼 수 있습니다</h1>}
-                <ConfirmWrap />
-                <PointGuide />
-                <MeditationNotice />
-              </div>
+    <Container>
+      <div className="content content_top">
+        <h2 className="blind">상품 상세</h2>
+        <div className="column_bind">
+          <div className="column column_fixed column_left">
+            <div className="spread">{/* stay empty */}</div>
+            <div className="column_box">
+              <Swiper
+                pagination={{ clickable: true }}
+                navigation={true}
+                effect="fade"
+                modules={[EffectFade, Pagination, Navigation]}>
+                {productDetail.product.images.map(item => (
+                  <SwiperSlide key={item.name}>
+                    <div className="item_inner">
+                      <div className="product_image"></div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
-          </RightSection>
-        </DetailContainer>
-      </Inner>
-    </>
+          </div>
+          <div className="column column_right">b</div>
+        </div>
+      </div>
+      <div className="content content_bottom">밑에 내용</div>
+    </Container>
   );
 };
 
