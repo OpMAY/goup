@@ -13,7 +13,7 @@ const MyResponsiveLine = ({ data }) => {
         stacked: true,
         reverse: false,
       }}
-      yFormat=" >-.2f"
+      yFormat=""
       axisTop={null}
       axisRight={{
         orient: "right",

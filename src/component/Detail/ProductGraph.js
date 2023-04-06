@@ -96,7 +96,60 @@ const ProductGraph = ({ size }) => {
   const [value, setValue] = useState("1");
   const [listValue, setListValue] = useState("1");
   const product = useRecoilValue(productDetailAtom);
-  console.log("ProductGraph SIZE", size);
+  // console.log(
+  //   "ProductGraph SIZE",
+  //   size,
+  //   product.price_history.history_quarter[0].target_date
+  // );
+
+  function getToday() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+    return year + "-" + month + "-" + day;
+  }
+
+  function getMonthAgo() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + date.getMonth()).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
+  function getThreeMonthAgo() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() - 2)).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
+  console.log("오늘은", getToday());
+  console.log("한달전", getMonthAgo());
+  console.log("세달전", getThreeMonthAgo());
+
+  let monthDate = getDatesStartToLast(getMonthAgo(), getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let quarterDate = getDatesStartToLast("2023-01-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let halfDate = getDatesStartToLast("2022-10-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let yearDate = getDatesStartToLast("2022-04-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let allDate = getDatesStartToLast("2022-04-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+
+  function getDatesStartToLast(startDate, lastDate) {
+    var regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+    if (!(regex.test(startDate) && regex.test(lastDate)))
+      return "Not Date Format";
+    var result = [];
+    var curDate = new Date(startDate);
+    while (curDate <= new Date(lastDate)) {
+      result.push(curDate.toISOString().split("T")[0]);
+      curDate.setDate(curDate.getDate() + 1);
+    }
+    return result;
+  }
 
   const handleChange = (event, newValue) => {
     console.log(1, event, newValue);
@@ -154,11 +207,16 @@ const ProductGraph = ({ size }) => {
                     {
                       id: "1개월",
                       color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_month.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      data: monthDate.map((dates, idx) => {
+                        return {
+                          x: dates,
+                          y: product.price_history.history_quarter.map(item => {
+                            return dates.includes(item.target_date)
+                              ? item.price
+                              : 0;
+                          }),
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -172,11 +230,16 @@ const ProductGraph = ({ size }) => {
                     {
                       id: "3개월",
                       color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_quarter.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      data: quarterDate.map((dates, idx) => {
+                        return {
+                          x: dates,
+                          y: product.price_history.history_quarter.map(item => {
+                            return dates.includes(item.target_date)
+                              ? item.price
+                              : 0;
+                          }),
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -190,11 +253,16 @@ const ProductGraph = ({ size }) => {
                     {
                       id: "6개월",
                       color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_half.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      data: halfDate.map((dates, idx) => {
+                        return {
+                          x: dates,
+                          y: product.price_history.history_quarter.map(item => {
+                            return dates.includes(item.target_date)
+                              ? item.price
+                              : 0;
+                          }),
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -208,11 +276,16 @@ const ProductGraph = ({ size }) => {
                     {
                       id: "1년",
                       color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_year.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      data: yearDate.map((dates, idx) => {
+                        return {
+                          x: dates,
+                          y: product.price_history.history_quarter.map(item => {
+                            return dates.includes(item.target_date)
+                              ? item.price
+                              : 0;
+                          }),
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -226,11 +299,16 @@ const ProductGraph = ({ size }) => {
                     {
                       id: "전체",
                       color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_all.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      data: allDate.map((dates, idx) => {
+                        return {
+                          x: dates,
+                          y: product.price_history.history_quarter.map(item => {
+                            return dates.includes(item.target_date)
+                              ? item.price
+                              : 0;
+                          }),
+                        };
+                      }),
                     },
                   ]}
                 />
