@@ -16,7 +16,7 @@ const Shop = () => {
     useEffect(() => {
         setLoading(true);
         axiosGetFunction('/api/kream/product/shop', {
-            // brands: '1,2', // 브랜드
+            brands: '',
             // genders: '', // 성별
             // categories: '', // 카테고리
             // keyword: '', // 검색어
