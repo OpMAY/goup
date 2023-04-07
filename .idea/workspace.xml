@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/atoms/atom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/atoms/atom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Shop/AccordionFillter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/AccordionFillter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Shop/ShopItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/ShopItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Shop/ShopList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/ShopList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/page/Shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/Shop.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +78,7 @@
       <workItem from="1679371613431" duration="9219000" />
       <workItem from="1679641541550" duration="13142000" />
       <workItem from="1680259543062" duration="1039000" />
+      <workItem from="1680831207517" duration="4183000" />
     </task>
     <servers />
   </component>

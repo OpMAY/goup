@@ -88,3 +88,8 @@ export const productTotalCountAtom = atom({
     key : 'productTotalCount',
     default : 0
 })
+
+export const urlParamsAtom = atom({
+    key: 'urlParams',
+    default : null
+})

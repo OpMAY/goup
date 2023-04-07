@@ -94,10 +94,9 @@ const AccordionFillter = () => {
   // 하위 카테고리 함수
   const handleChange = (e, i) => {
     const dataType = e.target.closest('.menu').dataset.type;
-    console.log(e)
-    console.log(e.target.value);
-    
+    console.log(e.target.value)
     if (dataType === 'category') {
+
       // ------ 상위 카테고리 --------
       const label = e.target.closest('label');
       if (label.parentNode.tagName === 'UL') {
@@ -122,7 +121,6 @@ const AccordionFillter = () => {
           if (idx === i) return e.target.checked; else return v;
         })
         setOpen(newOpen)
-        console.log(e.target)
       } else {
         // ------- 하위 카테고리 ---------
         console.log(dataType);
@@ -160,22 +158,22 @@ const AccordionFillter = () => {
           isToggle ?
             <>
               {
-                (categories != null && categories.length > 0) && checked.length > 0 ? categories.map((a, i) => (
+                (categories != null && categories.length > 0) && checked.length > 0 ? categories.map((categories, i) => (
                   <>
                     <ul className='list' >
                       <FormControlLabel
-                        label={a.name}
+                        label={categories.name}
                         control={
                           <Checkbox
                             checked={checked[i][0]}
                             onChange={(e) => { handleChange(e, i) }}
-                            value={a.no}
+                            value={categories.no}
                           />
                         }
                       />
                       <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
                         {
-                          a.items.map((child, idx) => (
+                          categories.items.map((child, idx) => (
                             open[i] ?
                               <FormControlLabel
                                 label={child.name}
