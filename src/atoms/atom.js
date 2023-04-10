@@ -21,6 +21,11 @@ export const paramAtom = atom({
     default: 1,
 });
 
+export const filterChangeAtom = atom({
+    key: 'filterChangeAtom',
+    default : false
+})
+
 export const sizeStateAtom = atom({
     key: "sizeState",
     default: "모든 사이즈",

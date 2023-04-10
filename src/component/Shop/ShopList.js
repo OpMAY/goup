@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Grid from '@mui/material/Unstable_Grid2';
-import ShoplItem from './ShopItem';
+import ShopItem from './ShopItem';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   productAtom,
@@ -11,7 +11,7 @@ import {
   tokenAtom,
   productCursorAtom, productTotalCountAtom, shopAxiosFilterAtom
 } from '../../atoms/atom';
-import Loding from './Loding';
+import Loading from './Loading';
 import { axiosGetFunction } from "../../module/CustomAxios";
 import useIntersectionObserver from "../../module/Observer";
 import Sorting from "./Sorting";
@@ -47,11 +47,11 @@ const ShopList = () => {
 
   useEffect(() => {
     if (cursor === 1) observe(target.current);
-    if (products.length === productTotalCount) unobserve(target.current);
+    if (products.length === productTotalCount || productTotalCount === 0) unobserve(target.current);
   }, [products])
 
   useEffect(() => {
-    if (products.length < productTotalCount) {
+    if (products.length < productTotalCount && cursor > 1) {
       setLoading(true);
       const newFilter = {...filter};
       newFilter.cursor = cursor;
@@ -85,7 +85,7 @@ const ShopList = () => {
         {
           products !== null && Array.isArray(products) ? products.map((v, i) => (
             <Grid xs={3} key={i}>
-              <ShoplItem product={v} idx={i} />
+              <ShopItem product={v} idx={i} />
             </Grid>
           )) : null
         }
@@ -93,7 +93,7 @@ const ShopList = () => {
       </Grid>
       <div ref={target}>
         {
-          loading ? <Loding /> : null
+          loading ? <Loading /> : null
         }
       </div>
     </ListBlock>

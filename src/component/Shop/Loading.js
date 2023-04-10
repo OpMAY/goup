@@ -7,12 +7,12 @@ export const LodingSpinner = styled.div`
     text-align: center;
     padding: 50px 0;
 `;
-const Loding = () => {
+const Loading = () => {
   return (
     <LodingSpinner>
-      <img src={Spinner} art="로딩중 입니다."></img>
+      <img src={Spinner} alt="로딩중 입니다."></img>
     </LodingSpinner>
   )
 }
 
-export default Loding
+export default Loading

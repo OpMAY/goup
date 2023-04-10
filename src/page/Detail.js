@@ -16,8 +16,10 @@ const Detail = () => {
 
   useEffect(() => {
     setProductDetail(null);
+    console.log(`${param}`);
     axiosGetFunction(`/api/kream/product/${param}`, {}, token, setToken).then(
       res => {
+        console.log(res);
         setProductDetail(res.data.data.product);
       }
     );

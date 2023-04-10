@@ -35,7 +35,7 @@ const FilterSide = () => {
   return (
     <aside>
       <Side>
-        <h4>필터</h4>
+        <h4>필터 <span></span></h4>
         <AccordionFillter></AccordionFillter>
       </Side>
     </aside>

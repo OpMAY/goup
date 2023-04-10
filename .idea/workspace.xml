@@ -8,7 +8,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/atoms/atom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/atoms/atom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Shop/AccordionFillter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/AccordionFillter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Shop/FilterSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/FilterSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Shop/ItemAll.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/ItemAll.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Shop/Loding.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/Loading.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Shop/ShopList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/ShopList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/CustomAxios.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/CustomAxios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/page/Detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/Detail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/page/Shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/Shop.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
