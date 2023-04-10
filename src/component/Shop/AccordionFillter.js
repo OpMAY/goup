@@ -198,6 +198,7 @@ const AccordionFillter = () => {
         const gender = params.get('gender');
         const price = params.get('price');
         const size = params.get('size');
+        const keyword = params.get('keyword');
         const brandsParams = brands !== null ? (brands.indexOf(',') !== -1 ? brands.split(',') : [brands]) : null;
         const categoryParams = categories !== null ? (categories.indexOf(',') !== -1 ? categories.split(',') : [categories]) : null;
         const sizeParams = size !== null ? (size.indexOf(',') !== -1 ? size.split(',') : [size]) : null;
@@ -207,7 +208,8 @@ const AccordionFillter = () => {
             categories: categoryParams,
             size: sizeParams,
             gender: genderParams,
-            price: price
+            price: price,
+            keyword: keyword
         };
         if (isToggle) {
             setToggle((prevState) => {

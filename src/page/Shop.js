@@ -37,6 +37,7 @@ const Shop = () => {
         const gender = params.get('gender');
         const price = params.get('price');
         const size = params.get('size');
+        const keyword = params.get('keyword');
         console.log(size);
         const filterObject = {};
         filterObject.brands = brands;
@@ -44,6 +45,7 @@ const Shop = () => {
         filterObject.gender = gender;
         filterObject.price = price;
         filterObject.size_list = size;
+        filterObject.keyword = keyword;
         Object.keys(filterObject).forEach(key => {
             if(filterObject[key] === null) {
                 delete filterObject[key]
@@ -79,12 +81,14 @@ const Shop = () => {
             const gender = params.get('gender');
             const price = params.get('price');
             const size = params.get('size');
+            const keyword = params.get('keyword');
             const filterObject = {};
             filterObject.brands = brands;
             filterObject.categories = categories;
             filterObject.gender = gender;
             filterObject.price = price;
             filterObject.size_list = size;
+            filterObject.keyword = keyword;
             Object.keys(filterObject).forEach(key => {
                 if(filterObject[key] === null) {
                     delete filterObject[key]

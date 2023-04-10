@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components';
 import {Inner} from '../../common/js/style';
 import FilterSide from '../../component/Shop/FilterSide';
 import ShopList from '../../component/Shop/ShopList';
 import ClearIcon from '@mui/icons-material/Clear';
+import {useNavigate} from "react-router-dom";
+import {useRecoilState} from "recoil";
+import {filterChangeAtom} from "../../atoms/atom";
 
 const ShopBlock = styled.div`
   display: flex;
@@ -49,6 +52,14 @@ const KeywordInput = styled.input.attrs(props => ({
     outline: none;
     box-shadow: none;
   }
+  
+  &::placeholder {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -.015em;
+    color: rgba(34,34,34,.3)
+  }
 `;
 
 const Delete = styled.button`
@@ -57,19 +68,116 @@ const Delete = styled.button`
   height: 24px;
   margin-top: 3px;
   margin-right: 3px;
+  padding: 0;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
 `
+
+function setFilterInit() {
+    const urlStr = window.location.search;
+    const params = new URLSearchParams(urlStr);
+    const brands = params.get('brands');
+    const categories = params.get('categories');
+    const gender = params.get('gender');
+    const price = params.get('price');
+    const size = params.get('size');
+    const keyword = params.get('keyword');
+    const brandsParams = brands !== null ? (brands.indexOf(',') !== -1 ? brands.split(',') : [brands]) : null;
+    const categoryParams = categories !== null ? (categories.indexOf(',') !== -1 ? categories.split(',') : [categories]) : null;
+    const sizeParams = size !== null ? (size.indexOf(',') !== -1 ? size.split(',') : [size]) : null;
+    const genderParams = gender !== null ? (gender.indexOf(',') !== -1 ? gender.split(',') : [gender]) : null;
+    return {
+        brands: brandsParams,
+        categories: categoryParams,
+        size: sizeParams,
+        gender: genderParams,
+        price: price,
+        keyword: keyword
+    };
+}
+
+
+
 
 
 const ItemAll = () => {
-    const urlStr = window.location.search;
-    const params = new URLSearchParams(urlStr);
-    const keyword = params.get('keyword');
-    console.log('k', keyword);
+    const filters = setFilterInit();
+    const [filterChange, setFilterChange] = useRecoilState(filterChangeAtom);
+    const [searchText, setSearchText] = useState(null);
+    const navigate = useNavigate();
+    useEffect(() => {
+        setSearchText(filters.keyword);
+    }, [])
+
+    const search = (e) => {
+        if (e.keyCode === 13 && searchText.length > 0) {
+            // WHEN KeyCode is ENTER
+            filters.keyword = searchText;
+            const params = new URLSearchParams();
+            if (filters.categories !== null) {
+                params.set('categories', filters.categories.toString());
+            }
+            if (filters.brands !== null) {
+                params.set('brands', filters.brands.toString());
+            }
+            if (filters.gender !== null) {
+                params.set('gender', filters.gender.toString());
+            }
+            if (filters.size !== null) {
+                params.set('size', filters.size.toString());
+            }
+            if (filters.price !== null) {
+                params.set('price', filters.price.toString());
+            }
+            params.set('keyword', filters.keyword);
+            // navigate([...params].length > 0 ? '?' + params.toString() : '');
+            navigate([...params].length > 0 ? '?' + params.toString() : '', {replace: true});
+            // Filter Change update 시 shop.js의 useEffect에서 해당 값을 Listen하고 있어서 데이터 새로 불러옴
+            setFilterChange(true);
+        }
+    }
+
+    const handleChange = (e) => {
+        setSearchText(e.target.value);
+    }
+
+    const resetInput = (e) => {
+        setSearchText('');
+        const params = new URLSearchParams();
+        if (filters.categories !== null) {
+            params.set('categories', filters.categories.toString());
+        }
+        if (filters.brands !== null) {
+            params.set('brands', filters.brands.toString());
+        }
+        if (filters.gender !== null) {
+            params.set('gender', filters.gender.toString());
+        }
+        if (filters.size !== null) {
+            params.set('size', filters.size.toString());
+        }
+        if (filters.price !== null) {
+            params.set('price', filters.price.toString());
+        }
+        // navigate([...params].length > 0 ? '?' + params.toString() : '');
+        navigate([...params].length > 0 ? '?' + params.toString() : '', {replace: true});
+        // Filter Change update 시 shop.js의 useEffect에서 해당 값을 Listen하고 있어서 데이터 새로 불러옴
+        setFilterChange(true);
+    }
+
     return (
         <Inner padding="0 40px;">
             <TitleDiv>
                 {
-                    keyword !== null ? <InputDiv><KeywordInput value={keyword}></KeywordInput><Delete><ClearIcon/></Delete></InputDiv> :
+                    searchText !== null ? <InputDiv><KeywordInput value={searchText} onChange={handleChange} placeholder="브랜드명, 모델명, 모델번호 등"
+                                                                       onKeyDown={search}></KeywordInput>{
+                        searchText.length > 0 ? <Delete
+                            onClick={resetInput}><ClearIcon/></Delete> : null
+                        }</InputDiv> :
                         <Title>SHOP</Title>
                 }
             </TitleDiv>
