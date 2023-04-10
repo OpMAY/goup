@@ -9,7 +9,7 @@ import {
   needLoadingAtom,
   elementLoadingHeightAtom,
   tokenAtom,
-  productCursorAtom, productTotalCountAtom
+  productCursorAtom, productTotalCountAtom, shopAxiosFilterAtom
 } from '../../atoms/atom';
 import Loding from './Loding';
 import { axiosGetFunction } from "../../module/CustomAxios";
@@ -43,6 +43,7 @@ const ShopList = () => {
   const [observe, unobserve] = useIntersectionObserver(() => {
     setCursor((cursor) => cursor + 1);
   })
+  const [filter, setFilter] = useRecoilState(shopAxiosFilterAtom);
 
   useEffect(() => {
     if (cursor === 1) observe(target.current);
@@ -52,15 +53,10 @@ const ShopList = () => {
   useEffect(() => {
     if (products.length < productTotalCount) {
       setLoading(true);
-      axiosGetFunction('/api/kream/product/shop', {
-        // brands: '1,2', // 브랜드
-        // genders: '', // 성별
-        // categories: '', // 카테고리
-        // keyword: '', // 검색어
-        // size_list: '', // 사이즈
-        // price: '', // 금액
-        cursor: cursor
-      }, token, setToken).then((res) => {
+      const newFilter = {...filter};
+      newFilter.cursor = cursor;
+      setFilter(newFilter);
+      axiosGetFunction('/api/kream/product/shop', newFilter, token, setToken).then((res) => {
         console.log(res);
         const newProduct = [...products].map(p => {
           return p;

@@ -93,3 +93,13 @@ export const urlParamsAtom = atom({
     key: 'urlParams',
     default : null
 })
+
+export const shopAxiosFilterAtom = atom({
+    key : 'shopAxiosFilter',
+    default : {}
+})
+
+export const shopInputFilterAtom = atom({
+    key: 'shopInputFilter',
+    default : {}
+})

@@ -1,7 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import ItemAll from '../component/Shop/ItemAll';
 import {useRecoilState} from "recoil";
-import {tokenAtom, productAtom, modalOpenAtom, loadingAtom, productTotalCountAtom, urlParamsAtom} from "../atoms/atom";
+import {
+    tokenAtom,
+    productAtom,
+    modalOpenAtom,
+    loadingAtom,
+    productTotalCountAtom,
+    urlParamsAtom,
+    shopAxiosFilterAtom, shopInputFilterAtom
+} from "../atoms/atom";
 import {axiosGetFunction} from "../module/CustomAxios";
 import SizeModal from "../component/Shop/SizeModal";
 
@@ -14,6 +22,7 @@ const Shop = () => {
     const [productTotalCount, setProductTotalCount] = useRecoilState(productTotalCountAtom);
     const [urlParams, setUrlParams] = useRecoilState(urlParamsAtom);
     const [brandP, setBrandsP] = useState([]);
+    const [filter, setFilter] = useRecoilState(shopAxiosFilterAtom);
 
     useEffect(() => {
         // 1. 파라미터 분석한거 기준으로 필터 체크 박스에 스테이트 넣는거
@@ -23,26 +32,32 @@ const Shop = () => {
         setLoading(true);
         const urlStr = window.location.search;
         const params = new URLSearchParams(urlStr);
-        console.log('brands', params.get('brands'))
-        console.log('categories', params.get('categories'))
-        console.log('gender', params.get('gender'))
-        console.log('price', params.get('price'))
-        const brandsParams = params.get('brands').split(',');
-        console.log(brandsParams)
-        setBrandsP([...brandsParams]);
-        console.log(brandP)
+        const brands = params.get('brands');
+        const categories = params.get('categories');
+        const gender = params.get('gender');
+        const price = params.get('price');
+        const size = params.get('size');
+        const filterObject = {};
+        filterObject.brands = brands;
+        filterObject.categories = categories;
+        filterObject.gender = gender;
+        filterObject.price = price;
+        filterObject.size = size;
+        console.log("filter, ", filterObject);
+        Object.keys(filterObject).forEach(key => {
+            if(filterObject[key] === null) {
+                delete filterObject[key]
+            }
+        })
+        console.log(filterObject);
+        setFilter(filterObject);
 
+        // 필터에 선택한 값 보여주기 위함
+        // filter parameter 값에 ,가 있으면 indexOf가 0 이상의 수를 return, 없으면 -1
 
 
         // 파라미터 분석 후 getFunction에 파라미터를 넣는다
-        axiosGetFunction('/api/kream/product/shop', {
-            brands: '',
-            // genders: '', // 성별
-            // categories: '', // 카테고리
-            // keyword: '', // 검색어
-            // size_list: '', // 사이즈
-            // price: '', // 금액
-        }, token, setToken).then((res) => {
+        axiosGetFunction('/api/kream/product/shop', filterObject, token, setToken).then((res) => {
             setProductTotalCount(res.data.data.count);
             setProduct(res.data.data.products);
             setLoading(false);
