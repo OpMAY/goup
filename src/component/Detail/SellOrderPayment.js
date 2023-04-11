@@ -10,6 +10,7 @@ import TabList from "@mui/lab/TabList";
 import Tab from "@mui/material/Tab";
 import Button from "@mui/material/Button";
 import OrderButton from "./OrderButton";
+import AddressChangeModal from "../modal/AddressChangeModal";
 import {
   productDetailAtom,
   sizeAtom,
@@ -25,8 +26,6 @@ import DeliveryIconBox from "./DeliveryIconBox";
 import CheckArea from "./CheckArea";
 import { axiosGetFunction } from "../../module/CustomAxios";
 import DeliveryRequireModal from "../modal/DeliveryRequireModal";
-import AddressChangeModal from "../modal/AddressChangeModal";
-import AddAddressModal from "../modal/AddAddressModal";
 
 const panelStyle = {
   padding: "0",
@@ -42,7 +41,7 @@ const tabListStyle = {
   },
 
   "& button.Mui-selected": {
-    backgroundColor: "#ef6253",
+    backgroundColor: "#41b979",
     color: "#fff",
     fontWeight: 700,
     height: "20px",
@@ -51,27 +50,12 @@ const tabListStyle = {
 
 const tabStyle = {
   color: "#fff",
-  // padding: "7px 0 9px",
-  // height:"36px"
 };
-
-// const tableCellHead = {
-//   color: "rgba(34,34,34,.5)",
-//   padding: "0 0 9px",
-//   fontSize: "12px",
-// };
-
-// const tableCell = {
-//   border: "none",
-//   padding: "9px 0 0",
-// };
 
 const OrderContainer = styled.div`
   background-color: #fff;
-  /* border: 1px solid pink; */
   .wrapper {
     padding: 32px 32px 0;
-    /* background-color: yellow; */
   }
   .section {
     .section_title {
@@ -84,6 +68,11 @@ const OrderContainer = styled.div`
         font-size: 18px;
         font-weight: 700;
         color: #222;
+      }
+      p {
+        margin: 0;
+        font-size: 13px;
+        color: rgba(34, 34, 34, 0.5);
       }
     }
     .final_info_box {
@@ -145,9 +134,6 @@ const BoxStyle = {
   textAlign: "center",
   padding: "28px 22px",
   flexGrow: 1,
-  // backgroundColor: "green",
-  // border: "1px solid red",
-  // mx: "32px",
 };
 
 const subText = {
@@ -160,16 +146,11 @@ const PriceInputBox = styled.dl`
   justify-content: space-between;
   padding-bottom: 10px;
   border-bottom: 2px solid #ebebeb;
-  /* dt {
-    color: "#222";
-    font-weight: 700;
-    font-size: "14px";
-  } */
   span {
     margin-top: 15px;
     font-size: 20px;
     font-weight: 700;
-    color: #f15746;
+    color: #31b46e;
     input {
       max-width: 200px;
       font-size: 24px;
@@ -194,7 +175,6 @@ const FinalInfoTable = styled.table`
   font-size: 13px;
 
   tr {
-    /* display: block; */
     color: #222;
     th {
       text-align: left;
@@ -222,30 +202,12 @@ const dateButton = {
   height: "42px",
   "&:hover": {
     border: "1px solid #d3d3d3",
-    // color: "gray",
     backgroundColor: "#ebebeb",
   },
   "&:focus": {
     border: "1px solid #222",
-    // color: "gray",
-    // backgroundColor: "#ebebeb",
   },
 };
-const PaymentContainerBid = styled.div`
-  div {
-    .front {
-      font-size: 15px;
-    }
-    .back {
-      font-size: 12px;
-      color: rgba(34, 34, 34, 0.5);
-      padding-left: 8px;
-    }
-  }
-  p {
-    font-size: 13px;
-  }
-`;
 
 const PaymentContainerBuy = styled.div`
   div {
@@ -260,10 +222,8 @@ const PaymentContainerBuy = styled.div`
     }
   }
   p {
-    font-size: 15px;
-  }
-  .normalPay {
-    font-weight: 700;
+    font-size: 13px;
+    color: rgba(34, 34, 34, 0.5);
   }
 `;
 
@@ -284,7 +244,7 @@ const CheckContainer = styled.div`
   }
 `;
 
-const OrderPayment = () => {
+const SellOrderPayment = () => {
   const [value, setValue] = useState("1");
   const [waitDate, setWaitDate] = useState(30);
   const [finalPage, setFinalPage] = useState(false);
@@ -297,17 +257,6 @@ const OrderPayment = () => {
   const [userAddress, setUserAddress] = useRecoilState(userAddressAtom);
   const [userPoint, setUserPoint] = useRecoilState(userPointAtom);
   const [wishPrice, setWishPrice] = useRecoilState(wishPriceAtom);
-  // console.log("1-1-1-1-1-1-1", wishPrice, userPoint);
-  console.log("🧧🎑🎑🎐🎐🎐🎏🎏", userAddress);
-  // console.log(
-  //   "오더페이먼트!!!!!!!!!!",
-  //   productDetail,
-  //   "사이즈--->",
-  //   sizeState,
-  //   size,
-  //   "waitDate",
-  //   waitDate
-  // );
 
   useEffect(() => {
     axiosGetFunction(
@@ -408,8 +357,8 @@ const OrderPayment = () => {
               TabIndicatorProps={{ hidden: true }}
               onChange={handleChange}
               aria-label="lab API tabs example">
-              <Tab sx={tabStyle} label="구매 입찰" value="1" />
-              <Tab sx={tabStyle} label="즉시 구매" value="2" />
+              <Tab sx={tabStyle} label="판매 입찰" value="1" />
+              <Tab sx={tabStyle} label="즉시 판매" value="2" />
             </TabList>
             {/* </Box> */}
             <Box>
@@ -423,10 +372,10 @@ const OrderPayment = () => {
                           onChange={event => {
                             setWishPrice(event.target.value);
                           }}
-                          placeholder="희망가 입력"
                           required
                           autoComplete="off"
                           value={wishPrice}
+                          placeholder="희망가 입력"
                           pattern="^\d{0,8}(\.\d{1,4})?$"
                         />
                         원
@@ -500,14 +449,14 @@ const OrderPayment = () => {
                     <Typography sx={subTitle}>총 결제금액</Typography>
                     <Typography
                       sx={{ fontSize: "16px", color: "rgba(34,34,34,.5)" }}>
-                      다음 화면에서 확인
+                      숫자 122,000원
                     </Typography>
                   </Stack>
                   <OrderButton
                     onClick={() => {
                       setFinalPage(!finalPage);
                     }}
-                    type="buy_step3"
+                    type="sell_step3"
                   />
                 </Box>
               </TabPanel>
@@ -515,7 +464,7 @@ const OrderPayment = () => {
                 <Box>
                   <Box>
                     <PriceInputBox>
-                      <Typography sx={subTitle}>즉시 구매가</Typography>
+                      <Typography sx={subTitle}>즉시 판매가</Typography>
                       <span>121,111 원</span>
                     </PriceInputBox>
                     <Typography
@@ -529,17 +478,21 @@ const OrderPayment = () => {
                   </Box>
                   <Hr margin="32px 0 16px" />
                   <Stack direction="row" justifyContent="space-between">
-                    <Typography sx={subTitle}>총 결제금액</Typography>
+                    <Typography sx={subTitle}>정산금액</Typography>
                     <Typography
-                      sx={{ fontSize: "16px", color: "rgba(34,34,34,.5)" }}>
-                      다음 화면에서 확인
+                      sx={{
+                        fontSize: "20px",
+                        fontWeight: 700,
+                        color: "#31b46e",
+                      }}>
+                      122,000원
                     </Typography>
                   </Stack>
                   <OrderButton
                     onClick={() => {
                       setFinalPage(!finalPage);
                     }}
-                    type="buy_step4"
+                    type="sell_step4"
                   />
                 </Box>
               </TabPanel>
@@ -549,14 +502,39 @@ const OrderPayment = () => {
       ) : (
         <>
           <Box sx={{ padding: "0 32px 32px" }}>
+            <div className="section account_box">
+              <div className="section_title">
+                <h3>판매 정산 계좌</h3>
+              </div>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ fontSize: "14px", padding: "0" }}>
+                  등록된 판매 정산 계좌가 없습니다.
+                  <br />새 계좌번호를 추가해주세요!
+                </Typography>
+                <Button
+                  sx={{
+                    backgroundColor: "#000",
+                    color: "#fff",
+                    fontSize: "12px",
+                    fontWeight: "700",
+                    padding: "0 16px",
+                    borderRadius: "10px",
+                    height: "36px",
+                  }}>
+                  계좌 추가
+                </Button>
+              </Stack>
+            </div>
+          </Box>
+          <Box sx={{ padding: "0 32px 32px" }}>
             <div className="section delivery_box">
               <div className="section_title">
-                <h3>배송 주소</h3>
-                <AddAddressModal/>
+                <h3>반송 주소</h3>
+                <p>+ 새 주소 추가</p>
               </div>
               <div className="delivery_info">
                 <table>
-                  <tr>
+                <tr>
                     <th>받는 분</th>
                     <td>{userAddress[0].name}</td>
                   </tr>
@@ -573,18 +551,13 @@ const OrderPayment = () => {
               </div>
               <DeliveryRequireModal />
               <div className="section_title">
-                <h3>배송 방법</h3>
+                <h3>발송 방법</h3>
               </div>
-              <DeliveryIconBox
-                order="false"
-                title="택배발송"
-                side="선불"
-                sub="착불 발송 시 정산금액에서 차감"
-              />
+              <DeliveryIconBox order="true" title="택배발송" side="선불" sub="착불 발송 시 정산금액에서 차감"/>
             </div>
             {/* <div className="check_box"></div> */}
           </Box>
-          <Box sx={{ padding: "32px 32px" }}>
+          {/* <Box sx={{ padding: "32px 32px" }}>
             <div className="section point_box">
               <div className="section_title">
                 <h3>포인트</h3>
@@ -613,24 +586,20 @@ const OrderPayment = () => {
                 {userPoint.point}P
               </Box>
             </div>
-          </Box>
+          </Box> */}
           <Box sx={{ padding: "32px 32px" }}>
             <div className="section final_info_box">
               <div className="section_title">
                 <h3>최종 주문 정보</h3>
               </div>
               <PriceInputBox>
-                <Typography sx={subTitle}>총 결제금액</Typography>
+                <Typography sx={subTitle}>정산금액</Typography>
                 <span>{Number(wishPrice) + 9000 + 3000}원</span>
               </PriceInputBox>
               <FinalInfoTable>
                 <tr>
-                  <th>구매 희망가</th>
-                  <td>{wishPrice}</td>
-                </tr>
-                <tr>
-                  <th>포인트</th>
-                  <td>-</td>
+                  <th>즉시 판매가</th>
+                  <td>{wishPrice ? wishPrice : "120,000원"}</td>
                 </tr>
                 <tr>
                   <th>검수비</th>
@@ -642,19 +611,45 @@ const OrderPayment = () => {
                 </tr>
                 <tr>
                   <th>배송비</th>
-                  <td>3,000</td>
-                </tr>
-                <tr className="bid_final_date">
-                  <th>입찰 마감 기한</th>
-                  <td>서울 강남구 ㅇㅇㅇ ㅇㅇㅇ동</td>
+                  <td>선불·판매자 부담</td>
                 </tr>
               </FinalInfoTable>
+            </div>
+          </Box>
+          <Box sx={{ padding: "0 32px 32px" }}>
+            <div className="section account_box">
+              <div className="section_title">
+                <h3>현금 영수증 정보</h3>
+              </div>
+              <Stack direction="row" justifyContent="space-between">
+                <Box sx={{ color: "rgba(34,34,34,.5)" }}>
+                  <Stack direction="row">
+                    <Typography sx={{ fontSize: "13px" }}>형태</Typography>
+                    <Typography sx={{ fontSize: "14px", marginLeft: "40px" }}>
+                      미신청
+                    </Typography>
+                  </Stack>
+                  <Typography sx={{ fontSize: "14px" }}>
+                    판매 거래 시 수수료에 대해 건별로 현금영수증을 발급합니다.
+                  </Typography>
+                </Box>
+                <Button
+                  sx={{
+                    border: "1px solid #d3d3d3",
+                    borderRadius: "10px",
+                    color: "gray",
+                    height: "36px",
+                    padding: "0",
+                  }}>
+                  변경
+                </Button>
+              </Stack>
             </div>
           </Box>
           <Box sx={{ padding: "32px 32px" }}>
             <div className="section payment_box">
               <div className="section_title">
-                <h3>결제 방법</h3>
+                <h3>패널티 결제 방법</h3>
               </div>
               {/* {"구매입찰" && <PaymentContainerBid>
                 <div>
@@ -683,28 +678,13 @@ const OrderPayment = () => {
               </PaymentContainerBid>} */}
               {"즉시구매" && (
                 <PaymentContainerBuy>
-                  <p>계좌 간편결제</p>
-                  <Button
-                    sx={{
-                      color: "rgba(34, 34, 34, 0.3)",
-                      border: "1px solid #ebebeb",
-                      margin: "0",
-                      width: "636px",
-                      padding: "20px 12px",
-                      textAlign: "left",
-                      display: "block",
-                      marginTop: "12px",
-                      borderRadius: "10px",
-                    }}>
-                    계좌를 등록해주세요
-                  </Button>
                   <div>
                     <span className="front">카드 간편결제</span>
                     <span className="back">일시불</span>
                   </div>
                   <Button
                     sx={{
-                      color: "rgba(34, 34, 34, 0.3)",
+                      color: "rgba(34, 34, 34, 0.8)",
                       border: "1px solid #ebebeb",
                       margin: "0",
                       width: "636px",
@@ -713,27 +693,16 @@ const OrderPayment = () => {
                       display: "block",
                       marginTop: "12px",
                       borderRadius: "10px",
+                      backgroundColor: "#fafafa",
                     }}>
                     카드를 등록해주세요
                   </Button>
-                  <div>
-                    <span className="front">일반 결제</span>
-                    <span className="back">일시불</span>
-                  </div>
-                  <Button
-                    sx={{
-                      color: "#222",
-                      border: "1px solid #ebebeb",
-                      margin: "0",
-                      width: "636px",
-                      padding: "20px 12px",
-                      textAlign: "left",
-                      display: "block",
-                      marginTop: "12px",
-                      borderRadius: "10px",
-                    }}>
-                    신용카드
-                  </Button>
+                  <p>
+                    - 페널티는 일시불만 지원하며, 카드사 홈페이지나 앱에서
+                    분할납부로 변경 가능합니다. 단, 카드사별 정책에 따라 분할
+                    납부 변경 시 수수료가 발생할 수 있습니다.
+                    <br />- 수수료(페널티, 착불배송비 등)가 정산되지 않을 경우, 별도 고시 없이 해당 금액을 결제 시도 할 수 있습니다.
+                  </p>
                 </PaymentContainerBuy>
               )}
             </div>
@@ -754,9 +723,9 @@ const OrderPayment = () => {
       <CheckArea /> */}
               <CheckArea title="구매 조건을 모두 확인하였으며, 거래 진행에 동의합니다" />
               <Stack direction="row" justifyContent="space-between">
-                <Typography sx={subTitle}>총 결제금액</Typography>
+                <Typography sx={subTitle}>정산금액</Typography>
                 <Typography
-                  sx={{ fontSize: "20px", color: "#f15746", fontWeight: 700 }}>
+                  sx={{ fontSize: "20px", color: "#31b46e", fontWeight: 700 }}>
                   {Number(wishPrice) + 9000 + 3000}원
                 </Typography>
               </Stack>
@@ -769,25 +738,31 @@ const OrderPayment = () => {
   );
 };
 
-export default OrderPayment;
+export default SellOrderPayment;
 
 const CHECK_TEXT = [
   {
     title:
-      "판매자의 판매거부, 배송지연, 미입고 등의 사유가 발생할 경우, 거래가 취소될 수 있습니다.",
+      "거래가 체결되면 일요일 · 공휴일을 제외하고 48시간 내에 KREAM으로 발송을 완료한 후, 발송 정보를 정확히 입력해야 합니다.",
     content:
-      "앱 알림 해제, 알림톡 차단, 전화번호 변경 후 미등록 시에는 거래 진행 상태 알림을 받을 수 없습니다.",
+      "착불 배송 시 판매 금액에서 차감 정산하며, 미정산 시 별도 고지없이 해당 금액을 결제 시도할 수 있습니다.",
   },
   {
     title:
-      "창고 보관을 선택한 경우, 구매자에게 배송되지 않고 KREAM 창고에 보관됩니다.",
+      "송장 번호 미기재·오입력 시 입고가 진행되지 않으며, 발송 후 5일(일요일·공휴일 제외) 내 미도착은 허위 정보 입력으로 간주하여 미입고 페널티를 부과합니다.",
     content:
-      "검수 합격 후 보관이 완료되면 창고 이용료(현재 첫 30일 무료)가 결제됩니다.",
+      "앱 알림 해제, 알림톡 차단, 전화번호 변경 후 미등록 시에는 거래 진행 상태 알림을 받을 수 없으며 이로 인한 거래 실패는 판매자의 책임입니다.",
+  },
+  {
+    title: "검수 기준과 페널티 및 이용 정책을 다시 한번 확인하였습니다.",
+    content:
+      "이용정책 위반 시, 판매 금액의 최대 15.0%의 페널티가 부과됩니다. 페널티 회피 시 이후 거래가 제한되며 별도 고지없이 해당 금액을 결제 시도할 수 있습니다. 이용정책 보기",
   },
   {
     title:
-      "‘바로 결제하기’ 를 선택하시면 즉시 결제가 진행되며, 단순 변심이나 실수에 의한 취소가 불가능합니다.",
-    content:
-      "본 거래는 개인간 거래로 전자상거래법(제17조)에 따른 청약철회(환불, 교환) 규정이 적용되지 않습니다.",
+      "‘바로 판매하기’ 를 선택하시면 즉시 거래가 체결되며, 단순 변심이나 실수에 의한 취소가 불가능합니다.",
+  },
+  {
+    title: "판매 조건을 모두 확인하였으며, 거래 진행에 동의합니다.",
   },
 ];

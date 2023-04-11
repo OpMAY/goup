@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import MultipleSelect from "../../Detail/MultiSizeSelect";
+import { useRecoilValue } from "recoil";
+import { productDetailAtom } from "../../../atoms/atom";
 
 const ProductItem = styled.div`
   display: flex;
@@ -27,6 +29,7 @@ const ProductItem = styled.div`
       color: #222;
       font-size: 14px;
       line-height: 17px;
+      width: 300px;
     }
     .en_name {
       margin-top: 2px;
@@ -64,12 +67,16 @@ const ProductItem = styled.div`
 `;
 
 const BookmarkItem = ({ sizeExist }) => {
+  const productDetail = useRecoilValue(productDetailAtom);
+  console.log(productDetail.product.images[0].url);
   return (
     <ProductItem className="product">
-      <div className="img"></div>
+      <div
+        className="img"
+        style={{ backgroundImage: `url(${productDetail.product.images[0].url})` }}></div>
       <div className="info">
-        <p className="en_name">Nike x Ambush Air 1231-123</p>
-        <p className="ko_name">나이키 엠부쉬 에어</p>
+        <p className="en_name">{productDetail.product.en_name}</p>
+        <p className="ko_name">{productDetail.product.kor_name}</p>
         {sizeExist && <MultipleSelect />}
       </div>
     </ProductItem>

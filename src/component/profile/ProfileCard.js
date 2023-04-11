@@ -40,7 +40,6 @@ const ProfileCard = () => {
               spacing="7px"
               sx={{ fontSize: "12px", marginTop: "12px" }}>
               <SubButton name="프로필 수정" />
-              <SubButton name="내 스타일" />
             </Stack>
           </Stack>
         </Box>

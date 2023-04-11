@@ -230,21 +230,23 @@ const DetailInfo = () => {
     setScrollY(window.pageYOffset);
   };
 
+
   // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
   useEffect(() => {
     axiosGetFunction(
       `/api/kream/product/size/` + param,
-      { user_no: true },
+      { user_no: 1 },
       token,
       setToken
     ).then(res => {
-      // console.log("size", res.data.data.sizes);
-      // console.log("sizeState", res.data.data.sizes[0].size);
       setSize(res.data.data.sizes);
       res.data.data.sizes[0].size === "ONE SIZE" &&
         setSizeState(res.data.data.sizes[0].size);
     });
   }, []);
+
+
+  console.log('->>>>>>>>>>>>',size)
 
   useEffect(() => {
     const watch = () => {
@@ -312,7 +314,7 @@ const DetailInfo = () => {
               </BannerBox>
               <div>
                 {user ? (
-                  <ProductGraph />
+                  <ProductGraph/>
                 ) : (
                   <>
                     <div className="login_alert_layer">
