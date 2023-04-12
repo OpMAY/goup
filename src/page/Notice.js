@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Inner } from "../common/js/style";
 import { Box, Stack, ListItem, Typography, Pagination } from "@mui/material";
 import NoticeList from "../component/profile/NoticeList";
@@ -6,7 +6,7 @@ import Faq from "../component/Notice/faq";
 
 const Notice = ({ path }) => {
   console.log(path);
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -27,6 +27,7 @@ const Notice = ({ path }) => {
               </Box>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, id) => (
                 <ListItem
+                  key={id}
                   sx={{
                     fontSize: "15px",
                     padding: "17px 0 19px",
@@ -43,6 +44,7 @@ const Notice = ({ path }) => {
                   size="large"
                   page={page}
                   defaultPage={1}
+                  sx={{ "& .MuiPagination-ul": { justifyContent: "center" } }}
                 />
               </Stack>
             </>
