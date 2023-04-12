@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useRecoilValue } from "recoil";
-import { sizeStateAtom } from "../../../atoms/atom";
+import { productSellAtom, sizeStateAtom } from "../../../atoms/atom";
 import { Button, Box } from "@mui/material";
 
 // const Button = styled.button`
@@ -37,8 +37,9 @@ const button = {
   border: "1px solid #ebebeb",
 };
 
-const SizeButton = ({ onClick, size, reg_datetime, price, value }) => {
+const SizeButton = ({ onClick, size, reg_datetime, price, value, state }) => {
   const sizeState = useRecoilValue(sizeStateAtom);
+
   return (
     <Button
       sx={button}
@@ -47,16 +48,7 @@ const SizeButton = ({ onClick, size, reg_datetime, price, value }) => {
       value={value}>
       {size}
       <br />
-      {price ? (
-        <Box
-          component="span"
-          sx={{ fontSize: "12px", color: "#f15746" }}
-          className="price">
-          {price}
-        </Box>
-      ) : (
-        "구매입찰"
-      )}
+      {price ? price : state}
     </Button>
   );
 };

@@ -12,13 +12,14 @@ import { Link } from "react-router-dom";
 import { BsBookmark } from "react-icons/bs";
 import BookmarkItem from "../DetailMoreBidModal/BookmarkItem";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { productDetailAtom, userAtom } from "../../../atoms/atom";
+import { productDetailAtom, sizeAtom, userAtom } from "../../../atoms/atom";
 
 const DetailBookMarkModal = () => {
   const [getUser, setUser] = useRecoilState(userAtom);
   const productDetail = useRecoilValue(productDetailAtom);
   console.log("===", productDetail);
   const [open, setOpen] = React.useState(false);
+  const size = useRecoilValue(sizeAtom);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,7 +86,7 @@ const DetailBookMarkModal = () => {
   return (
     <div>
       <WishButton
-        to={!getUser ? "#" : "/login"}
+        to={getUser ? "#" : "/login"}
         className="btn_wish"
         onClick={handleClickOpen}>
         <BsBookmark size="20px"></BsBookmark>
@@ -110,13 +111,14 @@ const DetailBookMarkModal = () => {
             }}>
             <Box sx={{ minHeight: "488px" }}>
               <Grid container className="content">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(
-                  (item, id) => (
-                    <Grid key={id} item xs={5.7} sx={{ margin: "4px" }}>
-                      <SizeButton onClick={handleClose} key={id} size={item} />
+                {size && size.map((sizes, id) => {
+                  console.log(sizes)
+                  return (
+                    <Grid key={sizes.no} item xs={5.7} sx={{ margin: "4px" }}>
+                      <SizeButton size={sizes.size} />
                     </Grid>
-                  )
-                )}
+                  );
+                })}
               </Grid>
             </Box>
           </Box>

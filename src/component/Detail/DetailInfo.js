@@ -26,6 +26,7 @@ import {
   userAtom,
 } from "../../atoms/atom";
 import { axiosGetFunction } from "../../module/CustomAxios";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   .content_top {
@@ -74,6 +75,43 @@ const Container = styled.div`
       .column_fixed {
       }
       .column_right {
+        div {
+          div {
+            .login_alert_layer {
+              z-index: 1;
+              position: absolute;
+              height: 640px;
+              width: 560px;
+              background-color: hsla(0, 0%, 100%, 0.8);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              .layer_content {
+                background-color: #fff;
+                width: 318px;
+                height: 150px;
+                border: 1px solid #d3d3d3;
+                text-align: center;
+                p {
+                  margin: 0;
+                  font-size: 14px;
+                  padding: 0;
+                  padding-top: 27px;
+                }
+                a {
+                  display: inline-block;
+                  background-color: #222;
+                  color: #fff;
+                  font-weight: 700;
+                  margin-top: 12px;
+                  padding: 12px 18px;
+                  border-radius: 12px;
+                  text-decoration: none;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -96,7 +134,7 @@ const ColumnBox = styled.div`
             height: 560px;
             width: 560px;
             background-color: rgb(246, 238, 237);
-            background-image: url("/images/img0.png");
+            background-size: contain;
             overflow: hidden;
             position: relative;
           }
@@ -192,21 +230,23 @@ const DetailInfo = () => {
     setScrollY(window.pageYOffset);
   };
 
+
   // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
   useEffect(() => {
     axiosGetFunction(
       `/api/kream/product/size/` + param,
-      { user_no: true },
+      { user_no: 1 },
       token,
       setToken
     ).then(res => {
-      // console.log("size", res.data.data.sizes);
-      // console.log("sizeState", res.data.data.sizes[0].size);
       setSize(res.data.data.sizes);
       res.data.data.sizes[0].size === "ONE SIZE" &&
         setSizeState(res.data.data.sizes[0].size);
     });
   }, []);
+
+
+  console.log('->>>>>>>>>>>>',size)
 
   useEffect(() => {
     const watch = () => {
@@ -216,7 +256,7 @@ const DetailInfo = () => {
     return () => {
       window.removeEventListener("scroll", handleFollow);
     };
-  },[]);
+  }, []);
 
   return (
     <Container>
@@ -238,7 +278,9 @@ const DetailInfo = () => {
                 {productDetail.product.images.map(item => (
                   <SwiperSlide key={item.name}>
                     <div className="item_inner">
-                      <div className="product_image"></div>
+                      <div
+                        className="product_image"
+                        style={{ backgroundImage: `url(${item.url})` }}></div>
                     </div>
                   </SwiperSlide>
                 ))}
@@ -271,7 +313,22 @@ const DetailInfo = () => {
                 </a>
               </BannerBox>
               <div>
-                {user ? <ProductGraph /> : <h1>로그인해야 볼 수 있습니다</h1>}
+                {user ? (
+                  <ProductGraph/>
+                ) : (
+                  <>
+                    <div className="login_alert_layer">
+                      <div className="layer_content">
+                        <p>
+                          모든 체결 거래는
+                          <br /> 로그인 후 확인 가능합니다.
+                        </p>
+                        <Link to="/login">로그인</Link>
+                      </div>
+                    </div>
+                    <ProductGraph />
+                  </>
+                )}
                 <ConfirmWrap />
                 <PointGuide />
                 <MeditationNotice />

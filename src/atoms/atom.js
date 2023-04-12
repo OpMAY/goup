@@ -88,3 +88,33 @@ export const productTotalCountAtom = atom({
     key : 'productTotalCount',
     default : 0
 })
+
+export const userAddressAtom = atom({
+    key : 'userAddress',
+    default : []
+})
+
+export const userPointAtom = atom({
+    key : 'userPoint',
+    default : []
+})
+
+export const productSellAtom = atom({
+    key : 'productSell',
+    default : []
+})
+
+export const productPurchaseAtom = atom({
+    key : 'productPurchase',
+    default : []
+})
+
+export const productOrderAtom = atom({
+    key : 'productOrder',
+    default : []
+})
+
+export const wishPriceAtom = atom({
+    key : 'wishPrice',
+    default : ""
+})

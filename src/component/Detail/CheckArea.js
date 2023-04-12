@@ -5,6 +5,7 @@ import { Checkbox } from "@mui/material";
 const CheckAreaBox = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items:center;
   padding: 20px 0;
   div {
     p {
@@ -26,17 +27,16 @@ const CheckAreaBox = styled.div`
   }
 `;
 
-const CheckArea = () => {
+const CheckArea = ({ title, content, no }) => {
+
   return (
     <CheckAreaBox>
       <div>
-        <p className="main_text">구매하려는 상품이 맞습니다.</p>
-        <p className="sub_text">
-          상품 이미지, 모델번호, 출시일, 상품명, 사이즈를 한 번 더 확인했습니다.
-        </p>
+        <p className="main_text">{title}</p>
+        {content ? <p className="sub_text">{content}</p> : null}
       </div>
       <Checkbox
-        // {clicked}
+        value={no}
         sx={{
           "& .MuiSvgIcon-root": { fontSize: 28 },
           color: "#ebebeb",

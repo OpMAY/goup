@@ -183,7 +183,7 @@ const Buying = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <MyResponsiveLine />
+          item one
         </TabPanel>
         <TabPanel value={value} index={1}>
           Item Two

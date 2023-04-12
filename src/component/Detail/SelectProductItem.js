@@ -2,7 +2,7 @@ import React from "react";
 import { AiFillThunderbolt } from "react-icons/ai";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { productDetailAtom } from "../../atoms/atom";
+import { productDetailAtom, sizeStateAtom } from "../../atoms/atom";
 
 const ProductItem = styled.div`
   display: flex;
@@ -65,24 +65,22 @@ const ProductItem = styled.div`
   }
 `;
 
-const SelectProductItem = ({ size }) => {
+const SelectProductItem = ({ state }) => {
   const productDetail = useRecoilValue(productDetailAtom);
-  console.log("SelectProductItem- productDetail", productDetail);
+  const sizeState = useRecoilValue(sizeStateAtom);
+
   return (
     <ProductItem className="product">
-      <div className="img" style={{backgroundImage:`url(${productDetail.product.images[0].url})`}}></div>
+      <div
+        className="img"
+        style={{
+          backgroundImage: `url(${productDetail.product.images[0].url})`,
+        }}></div>
       <div className="info">
         <p className="name">{productDetail.product.product_info.model_code}</p>
         <p className="en_name">{productDetail.product.en_name}</p>
         <p className="ko_name">{productDetail.product.kor_name}</p>
-        {
-          size && <span className="size">{size}</span>
-
-          // : (<span className="icon">
-          //     <AiFillThunderbolt size={12}></AiFillThunderbolt>
-          //     <p>빠른 배송</p>
-          //   </span>)
-        }
+        {sizeState && <span className="size">{sizeState}</span>}
       </div>
     </ProductItem>
   );
