@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Checkbox } from "@mui/material";
+import CheckingModal from "../modal/CheckingModal";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {checkAtom} from "../../atoms/atom";
 
 const CheckAreaBox = styled.div`
   display: flex;
@@ -28,6 +31,13 @@ const CheckAreaBox = styled.div`
 `;
 
 const CheckArea = ({ title, content, no }) => {
+    const [check, setCheck] = useRecoilState(checkAtom);
+
+    const handleCheck = (e) => {
+        const o = [...check];
+        o[e.target.value] = e.target.checked;
+        setCheck(o);
+    }
 
   return (
     <CheckAreaBox>
@@ -35,16 +45,20 @@ const CheckArea = ({ title, content, no }) => {
         <p className="main_text">{title}</p>
         {content ? <p className="sub_text">{content}</p> : null}
       </div>
-      <Checkbox
-        value={no}
-        sx={{
-          "& .MuiSvgIcon-root": { fontSize: 28 },
-          color: "#ebebeb",
-          "&.Mui-checked": {
-            color: "black",
-          },
-        }}
-      />
+        {
+            no === 0 ? <CheckingModal /> : <Checkbox
+                value={no}
+                checked={check[no]}
+                sx={{
+                    "& .MuiSvgIcon-root": { fontSize: 28 },
+                    color: "#ebebeb",
+                    "&.Mui-checked": {
+                        color: "black",
+                    },
+                }}
+                onClick={handleCheck}
+            />
+        }
     </CheckAreaBox>
   );
 };

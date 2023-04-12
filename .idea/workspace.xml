@@ -6,7 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/atoms/atom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/atoms/atom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/BuySellButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/BuySellButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/CheckArea.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/CheckArea.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Detail/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/DetailInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/OrderButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/OrderButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/SelectProductItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SelectProductItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellCheckContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellCheckContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Shop/ItemAll.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/ItemAll.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Shop/ShopItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/ShopItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/CheckingModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/CheckingModal/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/SizeButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/SizeButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/page/Detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/Detail.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

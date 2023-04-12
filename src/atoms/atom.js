@@ -152,3 +152,8 @@ export const wishPriceAtom = atom({
     key : 'wishPrice',
     default : ""
 })
+
+export const checkAtom = atom({
+    key : 'check',
+    default: [],
+})

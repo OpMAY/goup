@@ -17,6 +17,7 @@ const ProductItem = styled.div`
     background-repeat: no-repeat;
   }
   .info {
+    max-width: calc(100% - 80px);
     padding-left: 16px;
     display: flex;
     flex-direction: column;

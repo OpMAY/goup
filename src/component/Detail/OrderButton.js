@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { userAtom, paramAtom, sizeStateAtom } from "../../atoms/atom";
+import {userAtom, paramAtom, sizeStateAtom, checkAtom} from "../../atoms/atom";
 import { useRecoilValue } from "recoil";
 
-const Button = styled.div`
-  display: flex;
-  flex-direction: column;
+const Button = styled.button`
+  width: 100%;
   border-radius: 10px;
   padding: 16px 18px;
   /* margin-top: 20px; */
@@ -28,14 +27,29 @@ const Button = styled.div`
       color: rgba(255, 255, 255, 0.8);
     }
   }
+  
+  &:disabled {
+    background-color: grey;
+  }
 `;
 
 const OrderButton = ({ type, onClick }) => {
   const param = useRecoilValue(paramAtom);
   const size = useRecoilValue(sizeStateAtom);
+  const check = useRecoilValue(checkAtom);
+
+  const btnDisable = () => {
+    if(!(check[0] && check[1] && check[2] && check[3] && check[4])) {
+      return 'disabled'
+    } else {
+      return null;
+    }
+  }
 
   return (
-    <Button onClick={onClick}>
+      <Button
+          disabled={btnDisable}
+          onClick={onClick}>
       {type === "buy_step1" && (
         <Link to={`/buy/check/${param}?size=${size}&type=buy`}>
           <p className="status pending">구매입찰</p>

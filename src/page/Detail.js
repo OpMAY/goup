@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import DetailInfo from "../component/Detail/DetailInfo";
-import { useRecoilValue, useRecoilState } from "recoil";
+import {useRecoilValue, useRecoilState, useSetRecoilState} from "recoil";
 import {
   productDetailAtom,
   paramAtom,
@@ -12,17 +12,22 @@ import { axiosGetFunction } from "../module/CustomAxios";
 const Detail = () => {
   const [token, setToken] = useRecoilState(tokenAtom);
   const [productDetail, setProductDetail] = useRecoilState(productDetailAtom);
-  const param = useRecoilValue(paramAtom);
+  const setParam = useSetRecoilState(paramAtom)
 
   useEffect(() => {
     setProductDetail(null);
-    console.log(`${param}`);
-    axiosGetFunction(`/api/kream/product/${param}`, {}, token, setToken).then(
-      res => {
-        console.log(res);
-        setProductDetail(res.data.data.product);
-      }
-    );
+    const lastPath = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+    if(lastPath) {
+      setParam(lastPath);
+      axiosGetFunction(`/api/kream/product/${lastPath}`, {}, token, setToken).then(
+          res => {
+            console.log(res);
+            setProductDetail(res.data.data.product);
+          }
+      );
+    } else {
+
+    }
   }, []);
 
   return <>{productDetail ? <DetailInfo /> : <h1>상품이 없습니다.</h1>}</>;

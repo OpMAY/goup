@@ -74,12 +74,13 @@ const Navbar = styled.nav`
       &:last-child {
         padding-right: 40px;
       }
-
+      
       a {
         color: #222;
         text-decoration: none;
         font-size: 18px;
       }
+      
     }
   }
 `;
@@ -99,8 +100,7 @@ const Header = () => {
 
   const logoutClick = () => {
     setUser(null);
-    window.location.reload();
-    window.location.href("http://localhost:3000");
+    window.location.href = "http://localhost:3000";
   };
   return (
     <HeaderBlock>

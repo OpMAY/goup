@@ -23,13 +23,13 @@ const BuySellButton = () => {
       <BtnDivision
         link={user ? `/buy/select/${param}?size=` : "/login"}
         title="구매"
-        price={productDetail.direct_purchase_price.toLocaleString()}
+        price={productDetail.direct_purchase_price != null ? productDetail.direct_purchase_price.toLocaleString() : '- '}
         background="rgb(239, 98, 83)"
       />
       <BtnDivision
         link={user ? `/sell/select/${param}?size=` : "/login"}
         title="판매"
-        price={productDetail.direct_sell_price.toLocaleString()}
+        price={productDetail.direct_sell_price!= null ? productDetail.direct_sell_price.toLocaleString() : '- '}
         background="rgb(65, 185, 121)"
       />
     </BuySellButtonContainer>

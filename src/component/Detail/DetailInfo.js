@@ -340,7 +340,7 @@ const DetailInfo = () => {
           </div>
         </div>
       </div>
-      <div className="content content_bottom">밑에 내용</div>
+      {/*<div className="content content_bottom">밑에 내용</div>*/}
     </Container>
   );
 };

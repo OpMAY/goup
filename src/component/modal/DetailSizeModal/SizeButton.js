@@ -48,7 +48,7 @@ const SizeButton = ({ onClick, size, reg_datetime, price, value, state }) => {
       value={value}>
       {size}
       <br />
-      {price ? price : state}
+      {price ? price.toLocaleString() + '원' : state}
     </Button>
   );
 };

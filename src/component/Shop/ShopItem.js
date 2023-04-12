@@ -151,7 +151,7 @@ const ShopItem = ({ product, idx }) => {
   return (
     <>
       <ItemBlcok>
-        <LinkStyle to={`/product/${param}`} onClick={pageMove}></LinkStyle>
+        <LinkStyle to={`/product/${product.no}`} onClick={pageMove}></LinkStyle>
         <ImgBox backgroundImage={product.image.url}></ImgBox>
         <div>
           <div className='product-info'>
