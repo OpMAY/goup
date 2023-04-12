@@ -158,3 +158,8 @@ export const qnaAtom = atom({
     default : []
 })
 
+export const NoticeAtom = atom({
+    key : 'notice',
+    default : []
+})
+
