@@ -248,10 +248,6 @@ const DetailInfo = () => {
         setSizeState(res.data.data.sizes[0].size);
     });
   }, []);
-  const [ScrollY, setScrollY] = useState(0); // 스크롤값을 저장하기 위한 상태
-  const handleFollow = () => {
-    setScrollY(window.pageYOffset); // window 스크롤 값을 ScrollY에 저장
-  };
 
   console.log('->>>>>>>>>>>>',size)
 
