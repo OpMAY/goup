@@ -1,9 +1,13 @@
 import React from "react";
-import { Tab, Tabs, Box, Button, Typography, Stack } from "@mui/material";
+import { Tab, Stack, Tabs, Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import styled from "styled-components";
 import { RiArrowDropDownFill } from "react-icons/ri";
-import MyResponsiveLine from "../../Detail/MyResponsiveLine";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Link } from "react-router-dom";
 
 const PeriodNotice = styled.ul`
   margin: 0;
@@ -69,6 +73,46 @@ const PurchaseBox = styled.div`
   }
 `;
 
+function getToday() {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = ("0" + (1 + date.getMonth())).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
+  return year + "-" + month + "-" + day;
+}
+const dateButton = {
+  backgroundColor: "#fff",
+  color: "rgba(34,34,34,.8)",
+  fontSize: "13px",
+  padding: "2px 4px",
+  boxShadow: "none",
+  border: "1px solid #ebebeb",
+  borderRadius: "0",
+  "&:hover": { backgroundColor: "#fff", boxShadow: "none" },
+};
+
+const checkButton = {
+  backgroundColor: "#222",
+  color: "#fff",
+  fontSize: "13px",
+  padding: "2px 4px",
+  boxShadow: "none",
+  border: "1px solid #ebebeb",
+  borderRadius: "0",
+  "&:hover": { backgroundColor: "#222", boxShadow: "none" },
+};
+
+const picker = {
+  "& .MuiInputBase-root": {},
+  "& .MuiInputBase-input": {
+    width: "82px",
+    fontSize: "13px",
+    color: "rgba(34,34,34,.8)",
+    padding: "8px 0 4px 8px",
+    borderColor: "#ebebeb",
+  },
+};
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -81,7 +125,38 @@ function TabPanel(props) {
       {...other}>
       {value === index && (
         <Box>
-          <Box sx={{ backgroundColor: "orange" }}> 기간 Box</Box>
+          <Stack
+            gap={3}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ padding: "14px 0" }}>
+            <Stack direction="row" gap={0.5}>
+              <Button sx={dateButton} variant="contained">
+                최근 2개월
+              </Button>
+              <Button sx={dateButton} variant="contained">
+                4개월
+              </Button>
+              <Button sx={dateButton} variant="contained">
+                6개월
+              </Button>
+            </Stack>
+            <Stack direction="row">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* <DemoContainer components={["DatePicker"]}>
+                <DemoItem> */}
+                <DatePicker sx={picker} defaultValue={dayjs(getToday())} />
+                ~
+                <DatePicker sx={picker} defaultValue={dayjs(getToday())} />
+                {/* </DemoItem>
+              </DemoContainer> */}
+              </LocalizationProvider>
+              <Button sx={checkButton} variant="contained">
+                조회
+              </Button>
+            </Stack>
+          </Stack>
           <PeriodNotice>
             <li>한 번에 조회 가능한 기간은 최대 6개월입니다.</li>
             <li>기간별 조회 결과는 입찰일 기준으로 노출됩니다.</li>
@@ -99,7 +174,7 @@ function TabPanel(props) {
             </div>
             <div className="purchase_content">
               <p>구매 입찰 내역이 없습니다.</p>
-              <a href="#">SHOP 바로가기</a>
+              <Link to="/shop">SHOP 바로가기</Link>
             </div>
           </PurchaseBox>
 
@@ -127,6 +202,12 @@ const boldText = {
   fontWeight: "700",
   lineHeight: "24px",
   color: "#222",
+};
+const boldText2 = {
+  fontSize: "20px",
+  fontWeight: "700",
+  lineHeight: "24px",
+  color: "#f15746",
 };
 
 const headline = {
@@ -156,8 +237,8 @@ const Buying = () => {
             <Tab
               label={
                 <>
-                  <Typography sx={boldText}>0</Typography>
-                  <Typography sx={subText}>판매 입찰</Typography>
+                  <Typography sx={boldText2}>0</Typography>
+                  <Typography sx={subText}>구매 입찰</Typography>
                 </>
               }
               {...a11yProps(0)}
@@ -183,13 +264,13 @@ const Buying = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          item one
+          {/* item one */}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Item Two
+          {/* Item Two */}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          {/* Item Three */}
         </TabPanel>
       </Box>
     </>
@@ -197,11 +278,3 @@ const Buying = () => {
 };
 
 export default Buying;
-
-//       <Typography sx={{ fontSize: "16px", fontWeight: "700", width: "160px" }}>
-// {top}
-// </Typography>
-// <Typography
-//   sx={{ fontSize: "13px", width: "160px", color: "rgba(34,34,34,.5)" }}>
-//   {bottom}
-// </Typography>
