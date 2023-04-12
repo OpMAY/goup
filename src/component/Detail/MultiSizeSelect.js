@@ -1,5 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { sizeAtom, sizeStateAtom } from "../../atoms/atom";
 
 const SelectList = styled.span`
   padding-top: 10px;
@@ -9,19 +11,24 @@ const SelectList = styled.span`
 `;
 
 export default function MultipleSelect() {
+  const sizeState = useRecoilValue(sizeStateAtom);
+  const size = useRecoilValue(sizeAtom);
+  console.log("🎡🎠", size, sizeState);
   const handleSize = e => {
-    console.log(e.target.value);
+    console.log("지금 클릭한 거 값은", e.target.value);
   };
   return (
     <SelectList>
       <select onChange={handleSize} name="size" id="size-select">
-        <option value="all" defaultValue>
-          모든 사이즈
-        </option>
-        <option value="240">240</option>
-        <option value="245">245</option>
-        <option value="250">250</option>
-        <option value="255">255</option>
+          <option value="all">
+            {sizeState}
+          </option>
+        {size &&
+          size.map(sizes => (
+            <option key={sizes.no} value={sizes.size} defaultValue={sizeState === sizes.size ? true : false}>
+              {sizes.size}
+            </option>
+          ))}
       </select>
     </SelectList>
   );

@@ -15,8 +15,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DetailMoreBidModal from "../modal/DetailMoreBidModal";
-import { useRecoilValue } from "recoil";
-import { productDetailAtom, sizeStateAtom } from "../../atoms/atom";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { productDetailAtom, sizeAtom, sizeStateAtom } from "../../atoms/atom";
 
 const ProductContainer = styled(Box)`
   .head {
@@ -91,12 +91,64 @@ export const rows = [
   createData("Gingersdfsdbr22d", 356, 16.0, 49, 3.9),
 ];
 
-const ProductGraph = ({ size }) => {
-  const sizeState = useRecoilValue(sizeStateAtom);
+const ProductGraph = () => {
+  const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
   const [value, setValue] = useState("1");
   const [listValue, setListValue] = useState("1");
   const product = useRecoilValue(productDetailAtom);
-  console.log("ProductGraph SIZE", size);
+  const size = useRecoilValue(sizeAtom);
+  console.log(88, size);
+  // console.log("사이즈는 🎫🎫", sizeState, size.map(item=> console.log(item.size)));
+  // size.map(item => console.log(item.size))
+
+  function getToday() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+    return year + "-" + month + "-" + day;
+  }
+
+  function getMonthAgo() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + date.getMonth()).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
+  function getThreeMonthAgo() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() - 2)).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
+  // console.log("오늘은", getToday());
+  // console.log("한달전", getMonthAgo());
+  // console.log("세달전", getThreeMonthAgo());
+
+  let monthDate = getDatesStartToLast(getMonthAgo(), getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let quarterDate = getDatesStartToLast("2023-01-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let halfDate = getDatesStartToLast("2022-10-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let yearDate = getDatesStartToLast("2022-04-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let allDate = getDatesStartToLast("2022-04-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+
+  function getDatesStartToLast(startDate, lastDate) {
+    var regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+    if (!(regex.test(startDate) && regex.test(lastDate)))
+      return "Not Date Format";
+    var result = [];
+    var curDate = new Date(startDate);
+    while (curDate <= new Date(lastDate)) {
+      result.push(curDate.toISOString().split("T")[0]);
+      curDate.setDate(curDate.getDate() + 1);
+    }
+    return result;
+  }
 
   const handleChange = (event, newValue) => {
     console.log(1, event, newValue);
@@ -109,8 +161,7 @@ const ProductGraph = ({ size }) => {
   };
 
   const handleSize = e => {
-    console.log(e.target.value);
-    // setSize(e.target.value);
+    setSizeState(e.target.value);
   };
 
   return (
@@ -122,11 +173,12 @@ const ProductGraph = ({ size }) => {
             <option className="default_option" value="all" defaultValue>
               {sizeState}
             </option>
-            {SIZE_OPTION.map((itemSize, id) => (
-              <option key={id} value={itemSize}>
-                {itemSize}
-              </option>
-            ))}
+            {size &&
+              size.map((item, id) => (
+                <option key={id} value={item.size}>
+                  {item.size}
+                </option>
+              ))}
           </select>
         </span>
       </div>
@@ -153,12 +205,21 @@ const ProductGraph = ({ size }) => {
                   data={[
                     {
                       id: "1개월",
-                      color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_month.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      recent_price: product.recent_order_price,
+                      color: "hsl(2, 100%, 53%)",
+                      data: monthDate.map((dates, idx) => {
+                        let array = product.price_history.history_quarter
+                          .map(item => {
+                            return dates === item.target_date ? item.price : 0;
+                          })
+                          .filter(item => {
+                            return item !== 0;
+                          });
+                        return {
+                          x: dates,
+                          y: array.length > 0 ? array[0] : 0,
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -171,12 +232,21 @@ const ProductGraph = ({ size }) => {
                   data={[
                     {
                       id: "3개월",
-                      color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_quarter.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      recent_price: product.recent_order_price,
+                      color: "hsl(2, 100%, 53%)",
+                      data: quarterDate.map((dates, idx) => {
+                        let array = product.price_history.history_quarter
+                          .map(item => {
+                            return dates === item.target_date ? item.price : 0;
+                          })
+                          .filter(item => {
+                            return item !== 0;
+                          });
+                        return {
+                          x: dates,
+                          y: array.length > 0 ? array[0] : 0,
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -189,12 +259,21 @@ const ProductGraph = ({ size }) => {
                   data={[
                     {
                       id: "6개월",
-                      color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_half.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      recent_price: product.recent_order_price,
+                      color: "hsl(2, 100%, 53%)",
+                      data: halfDate.map((dates, idx) => {
+                        let array = product.price_history.history_quarter
+                          .map(item => {
+                            return dates === item.target_date ? item.price : 0;
+                          })
+                          .filter(item => {
+                            return item !== 0;
+                          });
+                        return {
+                          x: dates,
+                          y: array.length > 0 ? array[0] : 0,
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -207,12 +286,21 @@ const ProductGraph = ({ size }) => {
                   data={[
                     {
                       id: "1년",
-                      color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_year.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      recent_price: product.recent_order_price,
+                      color: "hsl(2, 100%, 53%)",
+                      data: yearDate.map((dates, idx) => {
+                        let array = product.price_history.history_quarter
+                          .map(item => {
+                            return dates === item.target_date ? item.price : 0;
+                          })
+                          .filter(item => {
+                            return item !== 0;
+                          });
+                        return {
+                          x: dates,
+                          y: array.length > 0 ? array[0] : 0,
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -225,12 +313,22 @@ const ProductGraph = ({ size }) => {
                   data={[
                     {
                       id: "전체",
-                      color: "hsl(269, 70%, 50%)",
-                      data: product.price_history.history_all.map(
-                        (item, idx) => {
-                          return { x: idx, y: item.price + idx * 1000 };
-                        }
-                      ),
+                      recent_price: product.recent_order_price,
+                      color: "hsl(2, 100%, 53%)",
+                      data: yearDate.map((dates, idx) => {
+                        let array = product.price_history.history_quarter
+                          .map(item => {
+                            // console.log(dates === item.target_date);
+                            return dates === item.target_date ? item.price : 0;
+                          })
+                          .filter(item => {
+                            return item !== 0;
+                          });
+                        return {
+                          x: dates,
+                          y: array.length > 0 ? array[0] : 0,
+                        };
+                      }),
                     },
                   ]}
                 />
@@ -273,20 +371,22 @@ const ProductGraph = ({ size }) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.slice(0, 5).map((row, id) => (
+                      {product.order_history.slice(0, 5).map((item, idx) => (
                         <TableRow
-                          key={id}
+                          key={idx}
                           sx={{
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}>
                           <TableCell sx={tableCell} component="th" scope="row">
-                            {row.name}
+                            {item.size}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {row.calories}
+                            {item.price}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {row.fat}
+                            {item.reg_datetime.year}/{" "}
+                            {item.reg_datetime.monthValue}/
+                            {item.reg_datetime.dayOfMonth}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -310,25 +410,25 @@ const ProductGraph = ({ size }) => {
                           판매 희망가
                         </TableCell>
                         <TableCell sx={tableCellHead} align="right">
-                          거래일
+                          수량
                         </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.slice(0, 5).map((row, id) => (
+                      {product.sell_history.slice(0, 5).map((item, idx) => (
                         <TableRow
-                          key={id}
+                          key={idx}
                           sx={{
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}>
                           <TableCell sx={tableCell} component="th" scope="row">
-                            {row.name}
+                            {item.size}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {row.calories}
+                            {item.price}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {row.fat}
+                            {item.count}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -352,21 +452,21 @@ const ProductGraph = ({ size }) => {
                           구매 희망가
                         </TableCell>
                         <TableCell sx={tableCellHead} align="right">
-                          거래일
+                          수량
                         </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.slice(0, 5).map((row, id) => (
-                        <TableRow key={id}>
+                      {product.sell_history.slice(0, 5).map((item, idx) => (
+                        <TableRow key={idx}>
                           <TableCell sx={tableCell} component="th" scope="row">
-                            {row.name}
+                            {item.size}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {row.calories}
+                            {item.price}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {row.fat}
+                            {item.count}
                           </TableCell>
                         </TableRow>
                       ))}

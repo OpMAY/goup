@@ -3,6 +3,9 @@ import styled from "styled-components";
 import BuySelectContainer from "./BuySelectContainer";
 import BuyCheckContainer from "./BuyCheckContainer";
 import OrderPayment from "./OrderPayment";
+import SellSelectContainer from "./SellSelectContainer";
+import SellCheckContainer from "./SellCheckContainer";
+import SellOrderPayment from "./SellOrderPayment";
 
 const Container = styled.div`
   background-color: #fafafa;
@@ -25,27 +28,42 @@ const Container = styled.div`
   }
 `;
 
-const BuySelect = ({ path }) => {
+const Select = ({ path }) => {
   console.log(path);
   return (
     <Container>
-      {path === "select" && (
+      {path === "purchase_select" && (
         <div className="box">
           <BuySelectContainer />
         </div>
       )}
-      {path === "check" && (
+      {path === "sell_select" && (
+        <div className="box">
+          <SellSelectContainer />
+        </div>
+      )}
+      {path === "purchase_check" && (
         <div className="box">
           <BuyCheckContainer />
         </div>
       )}
-      {path === "order" && (
+      {path === "sell_check" && (
+        <div className="box">
+          <SellCheckContainer />
+        </div>
+      )}
+      {path === "purchase_order" && (
         <div className="box_2">
           <OrderPayment />
+        </div>
+      )}
+      {path === "sell_order" && (
+        <div className="box_2">
+          <SellOrderPayment />
         </div>
       )}
     </Container>
   );
 };
 
-export default BuySelect;
+export default Select;

@@ -7,8 +7,12 @@ import IconButton from "@mui/material/IconButton";
 import { TfiClose } from "react-icons/tfi";
 import { Link } from "react-router-dom";
 import BookmarkItem from "./BookmarkItem";
-import { useRecoilState } from "recoil";
-import { userAtom } from "../../../atoms/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  productDetailAtom,
+  userAtom,
+  // sizeStateAtom,
+} from "../../../atoms/atom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,17 +20,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { rows } from "../../Detail/ProductGraph";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-
-const panelStyle = {
-  padding: "0",
-  height: "320px",
-  overflowY: "scroll",
-};
 
 const tabListStyle = {
   backgroundColor: "#f4f4f4",
@@ -51,15 +48,15 @@ const tableCell = {
 
 const DetailMoreBidModal = () => {
   const [value, setValue] = useState("1");
+  const [getUser, setUser] = useRecoilState(userAtom);
+  const [open, setOpen] = useState(false);
+  const product = useRecoilValue(productDetailAtom);
+  // const sizeState = useRecoilValue(sizeStateAtom);
 
   const handleChange = (event, newValue) => {
     console.log(1, event, newValue);
     setValue(newValue);
   };
-
-  const [getUser, setUser] = useRecoilState(userAtom);
-
-  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -82,13 +79,19 @@ const DetailMoreBidModal = () => {
 
   const style = {
     borderRadius: "16px",
-    bgcolor: "#fff",
+    backgroundColor: "#fff",
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 480,
     boxShadow: 24,
+  };
+
+  const panelStyle = {
+    padding: "0",
+    height: "320px",
+    // overflowY: product.order_history.length > 10 ? "scroll" : "none",
   };
 
   const MoreButton = styled(Link)`
@@ -111,10 +114,11 @@ const DetailMoreBidModal = () => {
       font-weight: 600;
     }
   `;
+  //
   return (
     <div>
       <MoreButton
-        to={!getUser ? "#" : "/login"}
+        to={getUser ? "#" : "/login"}
         className="btn_wish"
         onClick={handleClickOpen}>
         <span className="btn_text">입찰 내역 더보기</span>
@@ -182,9 +186,9 @@ const DetailMoreBidModal = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {rows.map(row => (
+                            {product.order_history.map((item, idx) => (
                               <TableRow
-                                key={row.name}
+                                key={idx}
                                 sx={{
                                   "&:last-child td, &:last-child th": {
                                     border: 0,
@@ -194,13 +198,15 @@ const DetailMoreBidModal = () => {
                                   sx={tableCell}
                                   component="th"
                                   scope="row">
-                                  {row.name}
+                                  {item.size}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {row.calories}
+                                  {item.price}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {row.fat}
+                                  {item.reg_datetime.year}/
+                                  {item.reg_datetime.monthValue}/
+                                  {item.reg_datetime.dayOfMonth}
                                 </TableCell>
                               </TableRow>
                             ))}
@@ -224,14 +230,14 @@ const DetailMoreBidModal = () => {
                                 판매 희망가
                               </TableCell>
                               <TableCell sx={tableCellHead} align="right">
-                                거래일
+                                수량
                               </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {rows.map(row => (
+                            {product.sell_history.map((item, idx) => (
                               <TableRow
-                                key={row.name}
+                                key={idx}
                                 sx={{
                                   "&:last-child td, &:last-child th": {
                                     border: 0,
@@ -241,13 +247,13 @@ const DetailMoreBidModal = () => {
                                   sx={tableCell}
                                   component="th"
                                   scope="row">
-                                  {row.name}
+                                  {item.size}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {row.calories}
+                                  {item.price}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {row.fat}
+                                  {item.count}
                                 </TableCell>
                               </TableRow>
                             ))}
@@ -274,24 +280,24 @@ const DetailMoreBidModal = () => {
                                 구매 희망가
                               </TableCell>
                               <TableCell sx={tableCellHead} align="right">
-                                거래일
+                                수량
                               </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {rows.map(row => (
-                              <TableRow key={row.name}>
+                            {product.sell_history.map((item, idx) => (
+                              <TableRow key={idx}>
                                 <TableCell
                                   sx={tableCell}
                                   component="th"
                                   scope="row">
-                                  {row.name}
+                                  {item.size}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {row.calories}
+                                  {item.price}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {row.fat}
+                                  {item.count}
                                 </TableCell>
                               </TableRow>
                             ))}

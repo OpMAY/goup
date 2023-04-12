@@ -30,11 +30,12 @@ const Button = styled.div`
   }
 `;
 
-const OrderButton = ({ type }) => {
+const OrderButton = ({ type, onClick }) => {
   const param = useRecoilValue(paramAtom);
   const size = useRecoilValue(sizeStateAtom);
+
   return (
-    <Button>
+    <Button onClick={onClick}>
       {type === "buy_step1" && (
         <Link to={`/buy/check/${param}?size=${size}&type=buy`}>
           <p className="status pending">구매입찰</p>
@@ -42,18 +43,38 @@ const OrderButton = ({ type }) => {
         </Link>
       )}
       {type === "buy_step2" && (
-        <Link to="/buy/id">
+        <Link to={`/buy/${param}`}>
           <p className="status pending">구매 계속</p>
         </Link>
       )}
       {type === "buy_step3" && (
-        <Link to={`/buy/id/?size=${size}`}>
+        <Link to={`/buy/${param}/?size=${size}`}>
           <p className="status keepBid">구매 입찰 계속</p>
         </Link>
       )}
       {type === "buy_step4" && (
-        <Link to={`/buy/id/?size=${size}`}>
+        <Link to={`/buy/${param}/?size=${size}`}>
           <p className="status keepBuy">즉시 구매 계속</p>
+        </Link>
+      )}
+      {type === "sell_step1" && (
+        <Link to={`/sell/check/${param}?size=${size}&type=sell`}>
+          <p className="status sell">판매 입찰</p>
+        </Link>
+      )}
+      {type === "sell_step2" && (
+        <Link to={`/sell/${param}`}>
+          <p className="status pending">판매 계속</p>
+        </Link>
+      )}
+      {type === "sell_step3" && (
+        <Link to={`/sell/${param}/?size=${size}`}>
+          <p className="status keepBid">판매 입찰 계속</p>
+        </Link>
+      )}
+      {type === "sell_step4" && (
+        <Link to={`/sell/${param}/?size=${size}`}>
+          <p className="status keepSell">즉시 판매 계속</p>
         </Link>
       )}
     </Button>

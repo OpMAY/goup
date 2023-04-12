@@ -25,44 +25,42 @@ const SelectContainer = styled.div`
   }
 `;
 
-const BuySelectContainer = () => {
-  const size = useRecoilValue(sizeAtom);
+const SellSelectContainer = () => {
   const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
-  const [productPurchase, setProductPurchase] =
-    useRecoilState(productPurchaseAtom);
-  const [productSell, setProductSell] = useRecoilState(productSellAtom);
   const user = useRecoilValue(userAtom);
   const param = useRecoilValue(paramAtom);
+  const [productSell, setProductSell] = useRecoilState(productSellAtom);
+  const [productPurchase, setProductPurchase] = useRecoilState(productPurchaseAtom);
 
   const handleButton = e => {
+    console.log('sell 버튼 누름~~~~',e);
     setSizeState(e.target.value);
-    console.log(sizeState);
   };
+
 
   useEffect(() => {
     axiosGetFunction(
       `/api/kream/product/size/${param}`,
-      { user_no: user, is_price: "y", type: "PURCHASE" },
+      { user_no: user, is_price: "y", type: "SELL" },
       token,
       setToken
     ).then(res => {
-      console.log(res.data.data.sizes);
-      setProductSell([]);
-      setProductPurchase(res.data.data.sizes);
+      console.log('SELL',res.data.data.sizes);
+      setProductPurchase([])
+      setProductSell(res.data.data.sizes);
     });
   }, []);
 
-  
-  console.log("1111",productPurchase, productSell) 
 
+  console.log("0000",productPurchase, productSell) 
   return (
     <SelectContainer>
-      <SelectProductItem state="purchase" />
+      <SelectProductItem state="sell"/>
       <Hr margin="20px 0 0;" />
       <Grid container className="size_container">
         <Grid container className="content" sx={{}}>
-          {productPurchase.map(size => (
+          {productSell.map(size => (
             <Grid key={size.no} item xs={3.75} sx={{ margin: "4px" }}>
               <SizeButton
                 onClick={handleButton}
@@ -70,16 +68,17 @@ const BuySelectContainer = () => {
                 price={size.price}
                 reg_datetime={size.reg_datetime}
                 value={size.size}
-                state="구매 입찰"
+                state="판매 입찰"
               />
             </Grid>
           ))}
         </Grid>
       </Grid>
       <Hr margin="0;" />
-      {sizeState !== "모든 사이즈" && <OrderButton type="buy_step1" />}
+      {/* <OrderButton type="sell_step1" /> */}
+      {sizeState !== "모든 사이즈" && <OrderButton type="sell_step1" />}
     </SelectContainer>
   );
 };
 
-export default BuySelectContainer;
+export default SellSelectContainer;

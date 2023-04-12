@@ -74,7 +74,6 @@ const DeliveryWrap = () => {
             <p className="company">
               <span className="badge_title">일반배송 </span>
               <span className="title">3,000원</span>
-              <span>아이콘</span>
             </p>
             <p className="sub_text">검수 후 배송 ・ 5-7일 내 도착 예정</p>
           </div>

@@ -26,246 +26,172 @@ import {
   userAtom,
 } from "../../atoms/atom";
 import { axiosGetFunction } from "../../module/CustomAxios";
+import { Link } from "react-router-dom";
 
-// const DetailContainer = styled.div`
-//   /* display: flex; */
-//   position: relative;
-//   .left_section {
-//     /* flex-direction: column; */
-//     /* flex: 1; */
-//     /* width: 50%; */
-//     float: left;
-//     padding-right: 3.334%;
-//     .left_info {
-//       position: static;
-//       .product_image_container {
-//         width: 50%;
-//         position: fixed;
-//         .swiper {
-//           z-index: 0;
-//           .swiper-wrapper {
-//             z-index: 0;
-//             .swiper-slide {
-//               .product_image {
-//                 /* width: 560px; */
-//                 background-repeat: no-repeat;
-//                 background-size: contain;
-//                 height: 560px;
-//                 background-color: transparent;
-//               }
-//             }
-//           }
-//           .swiper-pagination {
-//             display: flex;
-//             max-width: 528px;
-//             margin: 0 16px 20px;
-//             span {
-//               height: 2px;
-//               background-color: #222;
-//               flex: 1;
-//               border-radius: 0;
-//               margin: 0;
-//             }
-//           }
-//           .swiper-button-prev {
-//             &:after {
-//               font-size: 24px;
-//               color: rgba(34, 34, 34, 0.2);
-//             }
-//           }
-//           .swiper-button-next {
-//             &:after {
-//               font-size: 24px;
-//               color: rgba(34, 34, 34, 0.2);
-//             }
-//           }
-//         }
-//       }
-//       .alert_box {
-//         display: flex;
-//         align-items: center;
-//         padding: 12px;
-//         margin-top: 20px;
-//         border: 1px solid #ebebeb;
-//         border-radius: 10px;
-//         box-shadow: 0 2px 6px rgb(0 0 0 / 12%);
-//         .content {
-//           font-size: 12px;
-//           .title {
-//             display: flex;
-//             span {
-//               background-color: #ff8824;
-//               color: #fff;
-//               line-height: 12px;
-//               font-weight: 600;
-//               margin-right: 4px;
-//               padding: 3px 5px 2px;
-//               border-radius: 2px;
-//             }
-//             p {
-//               margin: 0;
-//               font-size: 13px;
-//               font-weight: 600;
-//             }
-//           }
-//           .detail {
-//             margin-top: 4px;
-//             color: rgba(34, 34, 34, 0.5);
-//           }
-//         }
-//         .arrow_icon {
-//           margin-left: auto;
-//           width: 25px;
-//           height: 21px;
-//         }
-//       }
-//     }
-//   }
-//   .right_section {
-//     /* flex-direction: column; */
-//     /* flex: 1; */
-//     /* overflow-y: scroll; */
-//     /* height: 800px; */
-//     float: right;
-//     width: 50%;
-//     /* position: relative; */
-//     border-left: 1px solid #ebebeb;
-//     padding-left: 3.334%;
-//     ::-webkit-scrollbar {
-//       display: none;
-//     }
-//     .banner_box {
-//       margin-top: 20px;
-//       a {
-//         background-color: rgb(39, 39, 39);
-//         display: flex;
-
-//         height: 80px;
-//         justify-content: center;
-//         img {
-//         }
-//       }
-//     }
-//   }
-// `;
-
-const Div = styled.div`
-  padding: 30px 40px 120px;
-  overflow: hidden;
-  max-width: 1280px;
-  margin: 0 auto;
-  .column_bind {
-    /* height: 2000px; */
-    /* display: flex; */
-    position: relative;
-    .left_section {
-      /* flex-direction: column; */
-      /* flex: 1; */
-      width: 50%;
-      float: left;
-      padding-right: 3.334%;
-      .left_info {
-        position: static;
-        .product_image_container {
-          /* width: 50%; */
-          /* position: fixed; */
-          .swiper {
-            /* z-index: 0; */
-            /* position: relative; */
-            /* position: fixed; */
-            .swiper-wrapper {
-              z-index: -1;
-              /* position: relative; */
-              .swiper-slide {
-                /* position: relative; */
-                .product_image {
-                  /* position: absolute; */
-                  /* width: 560px; */
-                  background-repeat: no-repeat;
-                  background-size: contain;
-                  height: 560px;
-                  background-color: transparent;
+const Container = styled.div`
+  .content_top {
+    max-width: 1280px;
+    overflow: hidden;
+    padding: 30px 40px 120px;
+    margin: 0 auto;
+    .blind {
+      overflow: hidden;
+      height: 1px;
+      width: 1px;
+    }
+    .column_bind {
+      position: relative;
+      &:after {
+        content: "";
+        clear: both;
+        display: block;
+      }
+      .column {
+        width: 50%;
+        &:first-child {
+          float: left;
+          padding-right: 3.334%;
+          &:before {
+            position: absolute;
+            content: "";
+            width: 1px;
+            background-color: rgba(34, 34, 34, 0.1);
+            left: 50%;
+            bottom: 0;
+            top: 0;
+          }
+        }
+        &:nth-child(2) {
+          position: relative;
+          float: right;
+          padding-left: 3.334%;
+        }
+        .spread {
+          height: 560px;
+          position: static;
+          background-color: transparent;
+        }
+      }
+      .column_fixed {
+      }
+      .column_right {
+        div {
+          div {
+            .login_alert_layer {
+              z-index: 1;
+              position: absolute;
+              height: 640px;
+              width: 560px;
+              background-color: hsla(0, 0%, 100%, 0.8);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              .layer_content {
+                background-color: #fff;
+                width: 318px;
+                height: 150px;
+                border: 1px solid #d3d3d3;
+                text-align: center;
+                p {
+                  margin: 0;
+                  font-size: 14px;
+                  padding: 0;
+                  padding-top: 27px;
+                }
+                a {
+                  display: inline-block;
+                  background-color: #222;
+                  color: #fff;
+                  font-weight: 700;
+                  margin-top: 12px;
+                  padding: 12px 18px;
+                  border-radius: 12px;
+                  text-decoration: none;
                 }
               }
             }
-            .swiper-pagination {
-              display: flex;
-              max-width: 528px;
-              margin: 0 16px 20px;
-              span {
-                height: 2px;
-                background-color: #222;
-                flex: 1;
-                border-radius: 0;
-                margin: 0;
-              }
-            }
-            .swiper-button-prev {
-              &:after {
-                font-size: 24px;
-                color: rgba(34, 34, 34, 0.2);
-              }
-            }
-            .swiper-button-next {
-              &:after {
-                font-size: 24px;
-                color: rgba(34, 34, 34, 0.2);
-              }
-            }
-          }
-        }
-        .alert_box {
-          display: flex;
-          align-items: center;
-          padding: 12px;
-          margin-top: 20px;
-          border: 1px solid #ebebeb;
-          border-radius: 10px;
-          box-shadow: 0 2px 6px rgb(0 0 0 / 12%);
-          .content {
-            font-size: 12px;
-            .title {
-              display: flex;
-              span {
-                background-color: #ff8824;
-                color: #fff;
-                line-height: 12px;
-                font-weight: 600;
-                margin-right: 4px;
-                padding: 3px 5px 2px;
-                border-radius: 2px;
-              }
-              p {
-                margin: 0;
-                font-size: 13px;
-                font-weight: 600;
-              }
-            }
-            .detail {
-              margin-top: 4px;
-              color: rgba(34, 34, 34, 0.5);
-            }
-          }
-          .arrow_icon {
-            margin-left: auto;
-            width: 25px;
-            height: 21px;
           }
         }
       }
     }
-    .right_section {
-      /* flex-direction: column; */
-      /* flex: 1; */
-      /* overflow-y: scroll; */
-      /* height: 800px; */
-      float: right;
-      width: 50%;
-      /* position: relative; */
-      border-left: 1px solid #ebebeb;
-      padding-left: 3.334%;
-      ::-webkit-scrollbar {
-        display: none;
+  }
+  .content_bottom {
+    background-color: yellow;
+    height: 800px;
+  }
+`;
+
+const ColumnBox = styled.div`
+  position: ${props => props.position};
+  top: ${props => props.top};
+  bottom: ${props => props.bottom};
+  .swiper {
+    .swiper-wrapper {
+      .swiper-slide {
+        position: relative;
+        .item_inner {
+          .product_image {
+            height: 560px;
+            width: 560px;
+            background-color: rgb(246, 238, 237);
+            background-size: contain;
+            overflow: hidden;
+            position: relative;
+          }
+        }
+      }
+    }
+    .swiper-button-prev {
+      &:after {
+        font-size: 24px;
+        color: rgba(34, 34, 34, 0.2);
+      }
+    }
+    .swiper-button-next {
+      &:after {
+        font-size: 24px;
+        color: rgba(34, 34, 34, 0.2);
+      }
+    }
+    .swiper-pagination {
+      display: flex;
+      max-width: 528px;
+      margin: 0 16px 20px;
+      span {
+        height: 2px;
+        background-color: #222;
+        flex: 1;
+        border-radius: 0;
+        margin: 0;
+      }
+    }
+  }
+  .alert_box {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-top: 20px;
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 12%);
+    .content {
+      font-size: 12px;
+      .title {
+        display: flex;
+        span {
+          background-color: #ff8824;
+          color: #fff;
+          line-height: 12px;
+          font-weight: 600;
+          margin-right: 4px;
+          padding: 3px 5px 2px;
+          border-radius: 2px;
+        }
+        p {
+          margin: 0;
+          font-size: 13px;
+          font-weight: 600;
+        }
       }
       .banner_box {
         margin-top: 20px;
@@ -283,14 +209,30 @@ const Div = styled.div`
   }
 `;
 
+const BannerBox = styled.div`
+  margin-top: 20px;
+  a {
+    background-color: rgb(39, 39, 39);
+    display: flex;
+    height: 80px;
+    justify-content: center;
+    img {
+    }
+  }
+`;
+
 const DetailInfo = () => {
   const productDetail = useRecoilValue(productDetailAtom);
-  console.log("DetailInfo", productDetail);
   const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
   const [size, setSize] = useRecoilState(sizeAtom);
   const param = useRecoilValue(paramAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
   const user = useRecoilValue(userAtom);
+  const [ScrollY, setScrollY] = useState(0);
+  const handleFollow = () => {
+    setScrollY(window.pageYOffset);
+  };
+
 
   console.log(111, size, sizeState);
   // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
@@ -301,8 +243,6 @@ const DetailInfo = () => {
       token,
       setToken
     ).then(res => {
-      console.log("size", res.data.data.sizes);
-      console.log("sizeState", res.data.data.sizes[0].size);
       setSize(res.data.data.sizes);
       res.data.data.sizes[0].size === "ONE SIZE" &&
         setSizeState(res.data.data.sizes[0].size);
@@ -313,123 +253,17 @@ const DetailInfo = () => {
     setScrollY(window.pageYOffset); // window 스크롤 값을 ScrollY에 저장
   };
 
-  useEffect(() => {
-    console.log("ScrollY is ", ScrollY); // ScrollY가 변화할때마다 값을 콘솔에 출력
-  }, [ScrollY]);
+  console.log('->>>>>>>>>>>>',size)
 
   useEffect(() => {
     const watch = () => {
       window.addEventListener("scroll", handleFollow);
     };
-    watch(); // addEventListener 함수를 실행
+    watch();
     return () => {
-      window.removeEventListener("scroll", handleFollow); // addEventListener 함수를 삭제
+      window.removeEventListener("scroll", handleFollow);
     };
-  });
-  const Container = styled.div`
-    .content_top {
-      border: 2px solid green;
-      max-width: 1280px;
-      overflow: hidden;
-      padding: 30px 40px 120px;
-      margin: 0 auto;
-      .blind {
-        overflow: hidden;
-        height: 1px;
-        width: 1px;
-      }
-      .column_bind {
-        position: relative;
-        border: 2px solid red;
-        &:after {
-          content: "";
-          clear: both;
-          display: block;
-        }
-        .column {
-          width: 50%;
-          border: 2px solid blue;
-          &:first-child {
-            float: left;
-            padding-right: 3.334%;
-          }
-          &:nth-child(2) {
-            position: relative;
-            float: right;
-            padding-left: 3.334%;
-          }
-          .spread {
-            height: 560px;
-            position: static;
-            background-color: transparent;
-            border: 1px dotted orange;
-          }
-        }
-        .column_fixed {
-        }
-        .column_right {
-          height: 2000px;
-          background-color: green;
-        }
-      }
-    }
-    .content_bottom {
-      background-color: yellow;
-      height: 800px;
-    }
-  `;
-
-  const ColumnBox = styled.div`
-    position: ${props => props.position};
-    top: ${props => props.top};
-    bottom: ${props => props.bottom};
-    /* width 가 반응형으로 움직이니까 560으로 고정 안 해도 된다. */
-    .swiper {
-      .swiper-wrapper {
-        /* position: static; */
-        .swiper-slide {
-          position: relative;
-          .item_inner {
-            .product_image {
-              border: 1px solid black;
-              /* background-repeat: no-repeat; */
-              /* background-size: contain; */
-              height: 560px;
-              width: 560px;
-              background-color: rgb(246, 238, 237);
-              background-image: url("/images/img0.png");
-              overflow: hidden;
-              position: relative;
-            }
-          }
-        }
-      }
-      .swiper-button-prev {
-        &:after {
-          font-size: 24px;
-          color: rgba(34, 34, 34, 0.2);
-        }
-      }
-      .swiper-button-next {
-        &:after {
-          font-size: 24px;
-          color: rgba(34, 34, 34, 0.2);
-        }
-      }
-      .swiper-pagination {
-        display: flex;
-        max-width: 528px;
-        margin: 0 16px 20px;
-        span {
-          height: 2px;
-          background-color: #222;
-          flex: 1;
-          border-radius: 0;
-          margin: 0;
-        }
-      }
-    }
-  `;
+  }, []);
 
   return (
     <Container>
@@ -440,9 +274,9 @@ const DetailInfo = () => {
             <div className="spread">{/* stay empty */}</div>
             <ColumnBox
               className="column_box"
-              position={ScrollY < 1100 ? "fixed;" : "absolute;"}
-              top={ScrollY < 1100 ? "140px;" : "auto;"}
-              bottom={ScrollY < 1100 ? "auto;" : "0px;"}>
+              position={ScrollY < 1430 ? "fixed;" : "absolute;"}
+              top={ScrollY < 1430 ? "140px;" : "auto;"}
+              bottom={ScrollY < 1430 ? "auto;" : "0px;"}>
               <Swiper
                 pagination={{ clickable: true }}
                 navigation={true}
@@ -451,14 +285,63 @@ const DetailInfo = () => {
                 {productDetail.product.images.map(item => (
                   <SwiperSlide key={item.name}>
                     <div className="item_inner">
-                      <div className="product_image"></div>
+                      <div
+                        className="product_image"
+                        style={{ backgroundImage: `url(${item.url})` }}></div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
+              <div className="alert_box">
+                <div className="content">
+                  <div className="title">
+                    <span>주의</span>
+                    <p>판매 거래 주의사항</p>
+                  </div>
+                  <div className="detail">반드시 보유한 상품만 판매하세요.</div>
+                </div>
+                <span className="arrow_icon">
+                  <BsArrowRight size={25}></BsArrowRight>
+                </span>
+              </div>
             </ColumnBox>
           </div>
-          <div className="column column_right">b</div>
+          <div className="column column_right">
+            <div>
+              <ColumTop />
+              <ProjectInfoWrap />
+              <DeliveryWrap />
+              <BannerBox>
+                <a href="?">
+                  <img
+                    src="https://ssl.pstatic.net/melona/libs/1432/1432951/13d10eb0c9e6e7bab3d5_20230227190423038.jpg"
+                    alt="`banner_image"
+                  />
+                </a>
+              </BannerBox>
+              <div>
+                {user ? (
+                  <ProductGraph/>
+                ) : (
+                  <>
+                    <div className="login_alert_layer">
+                      <div className="layer_content">
+                        <p>
+                          모든 체결 거래는
+                          <br /> 로그인 후 확인 가능합니다.
+                        </p>
+                        <Link to="/login">로그인</Link>
+                      </div>
+                    </div>
+                    <ProductGraph />
+                  </>
+                )}
+                <ConfirmWrap />
+                <PointGuide />
+                <MeditationNotice />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="content content_bottom">밑에 내용</div>
