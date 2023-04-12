@@ -62,6 +62,7 @@ function App() {
         <Route path="/my/receipt" element={<My path="receipt" />} />
         <Route path="/my/wish" element={<My path="wish" />} />
         <Route path="/notice" element={<Notice />} />
+        <Route path="/notice/:id" element={<Notice path="detail" />} />
         <Route path="/faq" element={<Notice path="faq" />} />
         <Route path="/oauth" element={<Kakao />} />
       </Routes>
