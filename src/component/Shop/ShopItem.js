@@ -10,7 +10,7 @@ import {
   sizeAtom,
   paramAtom,
 } from "../../atoms/atom";
-import { useRecoilState } from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import { axiosGetFunction } from "../../module/CustomAxios";
 import { Link } from "react-router-dom";
 
@@ -109,7 +109,7 @@ const ShopItem = ({ product, idx }) => {
   // item book mark
   const toggle = product._wish;
   const [products, setProducts] = useRecoilState(productAtom);
-  const setModalProduct = useRecoilState(modalProductAtom);
+  const setModalProduct = useSetRecoilState(modalProductAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
   const [sizes, setSizes] = useRecoilState(sizeAtom);
   const [param, setPram] = useRecoilState(paramAtom)
@@ -122,7 +122,7 @@ const ShopItem = ({ product, idx }) => {
   //   })
   //   setProducts(newList);
   //   handleClose()
-  // } 
+  // }
 
   const modalOpen = (no) => {
     axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {

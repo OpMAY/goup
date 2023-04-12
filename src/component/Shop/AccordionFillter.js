@@ -375,7 +375,7 @@ const AccordionFillter = () => {
             params.set('price', newFilter.price.toString());
         }
         // navigate([...params].length > 0 ? '?' + params.toString() : '');
-        navigate([...params].length > 0 ? '?' + params.toString() : '', {replace: true});
+        navigate([...params].length > 0 ? '?' + params.toString() : '');
         // Filter Change update 시 shop.js의 useEffect에서 해당 값을 Listen하고 있어서 데이터 새로 불러옴
         setFilterChange(true);
     }
