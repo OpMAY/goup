@@ -13,6 +13,7 @@ export const setDefaultAxios = () => {
 }
 
 const authFunction = async (token, setToken) => {
+    console.log('auth token setting...')
     return new Promise((resolve, reject) => {
         axios.get(DEFAULT_SERVER_URL + '/api/auth', {
             params: {
@@ -21,6 +22,7 @@ const authFunction = async (token, setToken) => {
         }).then((res) => {
             if (res.data.status === 'OK') {
                 setToken(res.data.data.key);
+                console.log('auth token set Complete')
                 resolve(res)
             } else {
                 reject(res)
@@ -29,11 +31,16 @@ const authFunction = async (token, setToken) => {
     })
 }
 
-export const axiosGetFunction = async (url, params, token, setToken) => {
+export const axiosGetFunction = async (url, params, token, setToken, additional_header = null) => {
     const config = {};
     config.headers = {
         contentType: 'application/x-www-form-urlencoded',
         authorization: 'bearer ' + token
+    }
+    if(additional_header) {
+        Object.keys(additional_header).forEach(key => {
+            config.headers[key] = additional_header[key];
+        });
     }
     config.params = params;
     return new Promise((resolve, reject) => {
@@ -42,10 +49,13 @@ export const axiosGetFunction = async (url, params, token, setToken) => {
                 await authFunction(token, setToken).then(() => {
                     config.headers['authorization'] = 'bearer ' + token;
                     axios.get(DEFAULT_SERVER_URL + url, config).then((res1) => {
+                        console.log('response : ',res1);
                         resolve(res1)
                     })
                 })
             } else if (res.data.status === 'OK') {
+                console.log('request success params : ', params);
+                console.log('response on GET', url, ' : ',res);
                 resolve(res);
             } else {
                 reject(res);
@@ -71,10 +81,12 @@ export const axiosPostFunction = async (url, formData, hasFile, token, setToken)
                     console.log(config)
                     config.headers['authorization'] = 'bearer ' + token;
                     axios.post(DEFAULT_SERVER_URL + url, formData, config).then((res2) => {
+                        console.log('response on POST', url, ' : ',res);
                         resolve(res2);
                     })
                 })
             } else if (res.data.status === 'OK') {
+                console.log('response on POST', url, ' : ',res);
                 resolve(res);
             } else {
                 reject(res);

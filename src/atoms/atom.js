@@ -21,6 +21,11 @@ export const paramAtom = atom({
     default: 1,
 });
 
+export const filterChangeAtom = atom({
+    key: 'filterChangeAtom',
+    default : false
+})
+
 export const sizeStateAtom = atom({
     key: "sizeState",
     default: "모든 사이즈",
@@ -87,6 +92,35 @@ export const productCursorAtom = atom({
 export const productTotalCountAtom = atom({
     key : 'productTotalCount',
     default : 0
+})
+
+export const urlParamsAtom = atom({
+    key: 'urlParams',
+    default : null
+})
+
+export const shopAxiosFilterAtom = atom({
+    key : 'shopAxiosFilter',
+    default : {}
+})
+
+export const shopInputFilterAtom = atom({
+    key: 'shopInputFilter',
+    default : {}
+})
+
+export const bannerAtom = atom({
+    key : 'banner',
+    default: []
+})
+
+export const mainItemAtom = atom({
+    key: 'mainItem',
+    default : {
+        droppedProducts: [],
+        popularProducts: [],
+        recommendBrands: [],
+    }
 })
 
 export const userAddressAtom = atom({

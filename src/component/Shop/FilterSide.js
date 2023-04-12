@@ -1,4 +1,4 @@
-import React,{} from 'react';
+import React, { } from 'react';
 import styled from 'styled-components';
 import AccordionFillter from './AccordionFillter';
 
@@ -35,7 +35,7 @@ const FilterSide = () => {
   return (
     <aside>
       <Side>
-        <h4>필터</h4>
+        <h4>필터 <span></span></h4>
         <AccordionFillter></AccordionFillter>
       </Side>
     </aside>

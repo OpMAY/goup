@@ -1,8 +1,14 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import BookMarkModal from '../../component/modal/BookMarkModal';
 import Button from '@mui/material/Button';
 import '../css/custom.css';
+import {Link} from "react-router-dom";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import {useRecoilState, useSetRecoilState} from "recoil";
+import {modalOpenAtom, modalProductAtom, sizeAtom, tokenAtom} from "../../atoms/atom";
+import {axiosGetFunction} from "../../module/CustomAxios";
 
 export const Inner = styled.div`
   width: 1280px;
@@ -14,7 +20,7 @@ export const Inner = styled.div`
 // MainItems
 const MainItems = styled.div`
   flex: 0 0 auto;
-
+  position: relative;
   margin-top: 16px;
   .productInfo{
     padding: 9px 0 0;
@@ -49,7 +55,7 @@ const MainItemImage = styled.div`
   height: 294px;
   background-image: url(${props => props.url});
   background-size: contain;
-  background-color: #000;
+  background-color: ${props => props.color};
   background-position: center;
   border-radius: 15px;
 
@@ -65,50 +71,69 @@ const MainItemImage = styled.div`
   }
 `
 
+const LinkStyle = styled(Link)`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+`
+
 const buttonStyle = {
   position: 'absolute',
   minWidth: "25px",
   height: "25px",
-  backgroundColor: "#fff",
+  backgroundColor: 'transparent',
   bottom: "10px",
   right: "10px",
   padding: "0",
   borderRadius: '50px',
-  "&:hover": {
-    backgroundColor: '#fff'
-  }
+  color: '#000',
 }
 export const MainItem = ({p}) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const setOpen = useSetRecoilState(modalOpenAtom);
+  const setModalProduct = useSetRecoilState(modalProductAtom);
+  const [token, setToken] = useRecoilState(tokenAtom);
+  const setSizes = useSetRecoilState(sizeAtom);
+  const modalOpen = (no) => {
+    axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
+      setSizes(res.data.data.sizes);
+      setModalProduct(res.data.data.product);
+      setOpen(true);
+    });
+  }
+
   return (
     <>
       <MainItems>
-        <MainItemImage url={p.images[0].url}>
-          <Button sx={buttonStyle} onClick={handleOpen}></Button>
+        <LinkStyle to={`/product/${p.no}`}></LinkStyle>
+        <MainItemImage color={p.brand.color} url={p.image.url}>
+          <LinkStyle to={`/product/${p.no}`}></LinkStyle>
+          <Button sx={buttonStyle} onClick={() => {modalOpen(p.no)}}>
+            {
+              p._wish ? <BookmarkIcon /> : <BookmarkBorderIcon />
+            }
+          </Button>
         </MainItemImage>
         {/* <img alt="Main Test Images" src="/images/img0.png"/> */}
         <div className='productInfo'>
-          <em>{p.title}</em>
-          <p className='name'>상세</p>
+          <em>{p.brand.name}</em>
+          <p className='name' style={{maxWidth : '294px'}}>{p.name}</p>
           <div className='price'>
-            <strong>금액</strong>
+            <strong>{addComma(p.price)}원</strong>
             <p>즉시 구매가</p>
           </div>
         </div>
       </MainItems>
-      <BookMarkModal 
-      open={open}
-      setOpen={setOpen}
-      handleClose={handleClose}
-      />
     </>
   )
 }
 
 const CardItem = styled.div` 
   flex: 0 0 19%;
+  cursor: pointer;
+  position: relative;
   p{
     margin: 8px 0;
     text-align: center;
@@ -117,19 +142,42 @@ const CardItem = styled.div`
 const CardImage = styled.div`
   background-image: url(${props => props.url});
   background-repeat: no-repeat;
-  background-color: #000;
+  background-color: ${props => props.color};
   background-size: contain;
   background-position: center;
   height: 100px;
   border-radius: 15px;
 `
+
+
 export const Card = ({item}) => {
   return(
     <CardItem>
-      <CardImage url={item.url}></CardImage>
-      <p>{item.title}</p>
+      <LinkStyle to={`/shop?brands=${item.no}`}></LinkStyle>
+      <CardImage url={item.image.url} color={item.color}></CardImage>
+      <p>{item.name}</p>
     </CardItem>
   )
+}
+
+function addComma(number) {
+  let len;
+  let point;
+  let str;
+  if(number !== null) {
+    const number_string = number + '';
+    point = number_string.length % 3;
+    len = number_string.length;
+    str = number_string.substring(0, point);
+    while (point < len) {
+      if (str !== '') str += ',';
+      str += number_string.substring(point, point + 3);
+      point += 3;
+    }
+  } else {
+    str = '- '
+  }
+  return str;
 }
 
 const GenderItem = styled.div`

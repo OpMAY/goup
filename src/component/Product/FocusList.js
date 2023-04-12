@@ -61,13 +61,13 @@ const FocusInfo = styled.div`
   }
 `
 
-const FocusList = ({title, subTitle}) => {
+const FocusList = ({title, subTitle, items}) => {
   return (
     <FocusInfo>
 			<h2>{title}</h2>
       <h3>{subTitle}</h3>
       <div className='cardBlcok'>
-        {arr.map((item, i)=>(
+        {items.map((item, i)=>(
           <Card
           item={item}
           key={i}

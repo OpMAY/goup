@@ -4,6 +4,11 @@
     margin-bottom: 0 !important;
 }
 
+.react-tabs__tab.tab-selected{
+    border-bottom: 3px solid #000;
+    font-weight: 700;
+}
+
 /* swiper custom */
 .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after, .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after{
     color: #fff;

@@ -193,15 +193,18 @@ const ColumnBox = styled.div`
           font-weight: 600;
         }
       }
-      .detail {
-        margin-top: 4px;
-        color: rgba(34, 34, 34, 0.5);
+      .banner_box {
+        margin-top: 20px;
+        a {
+          background-color: rgb(39, 39, 39);
+          display: flex;
+
+          height: 80px;
+          justify-content: center;
+          img {
+          }
+        }
       }
-    }
-    .arrow_icon {
-      margin-left: auto;
-      width: 25px;
-      height: 21px;
     }
   }
 `;
@@ -231,6 +234,7 @@ const DetailInfo = () => {
   };
 
 
+  console.log(111, size, sizeState);
   // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
   useEffect(() => {
     axiosGetFunction(
@@ -244,7 +248,10 @@ const DetailInfo = () => {
         setSizeState(res.data.data.sizes[0].size);
     });
   }, []);
-
+  const [ScrollY, setScrollY] = useState(0); // 스크롤값을 저장하기 위한 상태
+  const handleFollow = () => {
+    setScrollY(window.pageYOffset); // window 스크롤 값을 ScrollY에 저장
+  };
 
   console.log('->>>>>>>>>>>>',size)
 
