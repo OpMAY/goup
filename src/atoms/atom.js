@@ -108,3 +108,17 @@ export const shopInputFilterAtom = atom({
     key: 'shopInputFilter',
     default : {}
 })
+
+export const bannerAtom = atom({
+    key : 'banner',
+    default: []
+})
+
+export const mainItemAtom = atom({
+    key: 'mainItem',
+    default : {
+        droppedProducts: [],
+        popularProducts: [],
+        recommendBrands: [],
+    }
+})

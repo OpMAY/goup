@@ -166,6 +166,7 @@ const AccordionFillter = () => {
             // 가격 Filter Checked SET
             const priceItem = [false, false, false, false, false, false];
             console.log(filter.price);
+            // eslint-disable-next-line default-case
             switch (filter.price) {
                 case '-100000' :
                     priceItem[0] = true;

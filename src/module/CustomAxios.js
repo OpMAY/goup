@@ -31,11 +31,16 @@ const authFunction = async (token, setToken) => {
     })
 }
 
-export const axiosGetFunction = async (url, params, token, setToken) => {
+export const axiosGetFunction = async (url, params, token, setToken, additional_header = null) => {
     const config = {};
     config.headers = {
         contentType: 'application/x-www-form-urlencoded',
         authorization: 'bearer ' + token
+    }
+    if(additional_header) {
+        Object.keys(additional_header).forEach(key => {
+            config.headers[key] = additional_header[key];
+        });
     }
     config.params = params;
     return new Promise((resolve, reject) => {

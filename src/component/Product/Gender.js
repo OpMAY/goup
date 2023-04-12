@@ -12,9 +12,6 @@ const Man = () => {
             <GenderList></GenderList>
           </Grid>
         </Grid>
-        <ProductItem  title={'Most Popular'} subTitle={'인기 상품'}/>
-        <ProductItem  title={'Most Popular'} subTitle={'인기 상품'}/>
-        <ProductItem  title={'Most Popular'} subTitle={'인기 상품'}/>
         <Hr margin="56px 0 40px;"></Hr>
         <Grid container spacing={2}>
           <Grid xs={2.4}>

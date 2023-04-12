@@ -8,8 +8,8 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/effect-fade";
 import {axiosGetFunction} from "../../module/CustomAxios";
-import {useRecoilState} from "recoil";
-import {tokenAtom} from "../../atoms/atom";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {bannerAtom, tokenAtom} from "../../atoms/atom";
 
 const FirstImage = styled.div`
   height: 480px;
@@ -35,15 +35,7 @@ const BannerImageDiv = styled.div`
 `
 
 const BannerSwiper = () => {
-    const [token, setToken] = useRecoilState(tokenAtom);
-    const [banners, setBanners] = useState([]);
-    useEffect(() => {
-        axiosGetFunction('/api/kream/banner', {}, token, setToken).then((res) => {
-            console.log(res);
-            setBanners(res.data.data.bannerlist);
-        })
-    }, [])
-
+    const banners = useRecoilValue(bannerAtom);
     return (
         <>
             <Swiper

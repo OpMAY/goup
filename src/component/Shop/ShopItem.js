@@ -104,14 +104,12 @@ const LinkStyle = styled(Link)`
 
 const ShopItem = ({ product, idx }) => {
   // modal
-  const handleClose = () => setOpen(false);
-  const [open, setOpen] = useRecoilState(modalOpenAtom);
+  const setOpen = useSetRecoilState(modalOpenAtom);
   // item book mark
   const toggle = product._wish;
-  const [products, setProducts] = useRecoilState(productAtom);
   const setModalProduct = useSetRecoilState(modalProductAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
-  const [sizes, setSizes] = useRecoilState(sizeAtom);
+  const setSizes = useSetRecoilState(sizeAtom);
   const [param, setPram] = useRecoilState(paramAtom)
 
   // const confirmClcik = () => {
