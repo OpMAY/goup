@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Hr } from "../../common/js/style";
 import SelectProductItem from "./SelectProductItem";
 import CheckArea from "./CheckArea";
 import OrderButton from "./OrderButton";
+import CheckingModal from "../modal/CheckingModal";
 
 const CheckContainer = styled.div`
   .notice {
@@ -29,6 +29,7 @@ const SellCheckContainer = () => {
         <span className="strong">판매</span>
         하시기 전에 꼭 확인하세요.
       </p>
+      <CheckingModal />
       <SelectProductItem />
       {/* <Hr margin="20px 0 0;" /> */}
       <hr />
@@ -55,14 +56,14 @@ const CHECK_TEXT = [
   },
   {
     title: "박스/패키지의 상태를 확인합니다.",
-    content:
-      "박스/패키지 상태에 따른 검수 기준을 확인했습니다.",
+    content: "박스/패키지 상태에 따른 검수 기준을 확인했습니다.",
   },
   {
     title: "이중 포장하여 선불 발송합니다.",
     content:
       "반드시 이중 포장하여 택배 상자에 담아 선불 발송합니다. 합배송은 권장하지 않으며 이로 인한 박스/패키지 훼손은 판매자의 책임입니다.",
-  },  {
+  },
+  {
     title: "KREAM의 최신 이용정책을 모두 확인하였으며, 판매를 계속합니다.",
     content:
       "건전하고 안전한 거래를 위해 반드시 숙지해야 할 미입고, 페널티, 부정거래 등의 이용정책을 확인했습니다.",

@@ -1,24 +1,17 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
 import { Grid, Typography, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import { TfiClose } from "react-icons/tfi";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  sizeAtom,
-  modalOpenAtom,
-  sizeStateAtom,
-  tokenAtom,
-  modalProductAtom,
-  userAtom,
-} from "../../../atoms/atom";
+import { useRecoilState } from "recoil";
+import TwoButton from "../AddAddressModal/TwoButton";
+import { BiCheck } from "react-icons/bi";
+import { modalOpenAtom } from "../../../atoms/atom";
 
-const DeliveryRequireModal = ({ product }) => {
+const DeliveryRequireModal = () => {
   const [open, setOpen] = useRecoilState(modalOpenAtom);
-
 
   const handleOpen = () => {
     setOpen(true);
@@ -101,16 +94,21 @@ const DeliveryRequireModal = ({ product }) => {
                 height: "412px",
               }}>
               {REQUIRE.map((item, id) => (
-                <Typography
-                  key={id}
-                  sx={{ fontSize: "15px", padding: "17px 0" }}>
-                  {item}
-                </Typography>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Typography
+                    key={id}
+                    sx={{ fontSize: "15px", padding: "17px 0" }}>
+                    {item}
+                  </Typography>
+                  <BiCheck size="24"></BiCheck>
+                </Stack>
               ))}
-              <Stack direction="row" justifyContent="center" gap="8px" sx={{padding:"65px 0 32px"}}>
-                <Button sx={{backgroundColor:"#fff", color:"rgba(34,34,34,.8)", border:"1px solid #d3d3d3", padding:"10px", borderRadius:"12px", width:"120px"}} onClick={handleClose}>취소</Button>
-                <Button sx={{backgroundColor:"#222", color:"#fff", border:"1px solid #d3d3d3", padding:"10px", borderRadius:"12px", width:"120px", fontWeight:"700"}}>적용하기</Button>
-              </Stack>
+              <TwoButton
+                handleClose={handleClose}
+                solid="적용하기"
+                padding="65px 0 32px"
+                disabled={false}
+              />
             </Box>
           </Box>
         </Modal>

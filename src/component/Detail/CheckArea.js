@@ -28,6 +28,7 @@ const CheckAreaBox = styled.div`
 `;
 
 const CheckArea = ({ title, content, no }) => {
+
   return (
     <CheckAreaBox>
       <div>

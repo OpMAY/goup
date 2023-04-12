@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "@emotion/styled";
 import { Grid, Typography, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,13 +7,15 @@ import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import { TfiClose } from "react-icons/tfi";
 import { BiCheck } from "react-icons/bi";
-import {  useRecoilValue } from "recoil";
-import {
-  userAddressAtom,
-} from "../../../atoms/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userAddressAtom } from "../../../atoms/atom";
 import { Hr } from "../../../common/js/style";
+import TwoButton from "../AddAddressModal/TwoButton";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
 
-const AddressChangeModal = ({ product }) => {
+const RecipeInfoModal = ({ product }) => {
   const [open, setOpen] = useState(false);
   const userAddress = useRecoilValue(userAddressAtom);
   const handleOpen = () => {
@@ -54,7 +57,7 @@ const AddressChangeModal = ({ product }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 520,
+    width: 448,
     boxShadow: 24,
   };
 
@@ -84,39 +87,41 @@ const AddressChangeModal = ({ product }) => {
               </IconButton>
             </Box>
             <Box sx={header} className="header">
-              <Typography sx={text}>주소록</Typography>
+              <Typography sx={text}>현금영수증 정보</Typography>
             </Box>
             <Box
               sx={{
-                margin: "0px 20px 80px",
-                height: "480px",
+                margin: "0 20px",
+                height: "410px",
               }}>
-              {userAddress.map(address => (
-                <>
-                  <Stack
-                    key={address.no}
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="space-between">
-                    <Box sx={{ fontSize: "14px" }}>
-                      <Box component="span" sx={{ fontWeight: "700" }}>
-                        {address.name}
-                      </Box>
-                      <Box component="span" sx={{ marginLeft: "8px" }}>
-                        기본 배송지
-                      </Box>
-                      <Typography sx={{ fontSize: "14px" }}>
-                        {address.phone_number}
-                      </Typography>
-                      <Typography sx={{ fontSize: "14px" }}>
-                        ({address.zip_code}){address.address}
-                      </Typography>
-                    </Box>
-                    <BiCheck size="24"></BiCheck>
-                  </Stack>
-                    <Hr margin="20px 0 0;"/>
-                </>
-              ))}
+              <Typography sx={{ fontSize: "13px" }}>
+                현금영수증은 판매 거래 시 발생하는 수수료에 대해 '정산완료' 후
+                7일 이내에 건별로 발급됩니다. ‘미신청' 선택 시 자진발급으로
+                처리됩니다.
+              </Typography>
+              <Box sx={{ marginY: "10px" }}>
+                <FormControl fullWidth>
+                  <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                    형태
+                  </InputLabel>
+                  <NativeSelect
+                    defaultValue={10}
+                    inputProps={{
+                      name: "형태",
+                      id: "uncontrolled-native",
+                    }}>
+                    <option value={10}>미신청</option>
+                    <option value={20}>개인소득공제(휴대폰)</option>
+                    <option value={30}>개인소득공제(현금영수증카드)</option>
+                  </NativeSelect>
+                </FormControl>
+              </Box>
+              <TwoButton
+                handleClose={handleClose}
+                solid="저장하기"
+                padding="230px 0 0"
+                disabled={false}
+              />
             </Box>
           </Box>
         </Modal>
@@ -125,4 +130,4 @@ const AddressChangeModal = ({ product }) => {
   );
 };
 
-export default AddressChangeModal;
+export default RecipeInfoModal;

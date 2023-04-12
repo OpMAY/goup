@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from "react";
-import styled from "@emotion/styled";
 import { Grid, Typography, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import { TfiClose } from "react-icons/tfi";
-import { BiCheck } from "react-icons/bi";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  sizeAtom,
-  modalOpenAtom,
-  sizeStateAtom,
-  tokenAtom,
-  modalProductAtom,
-  userAtom,
-  userAddressAtom,
-} from "../../../atoms/atom";
-import { Hr } from "../../../common/js/style";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import TwoButton from "./TwoButton";
 
 const AddAddressModal = () => {
   const [open, setOpen] = useState(false);
-  const userAddress = useRecoilValue(userAddressAtom);
 
   const handleOpen = () => {
     setOpen(true);
@@ -30,8 +20,7 @@ const AddAddressModal = () => {
     setOpen(false);
   };
 
-  const button = {
-  };
+  const button = {};
 
   const subtext = {
     fontSize: "13px",
@@ -91,11 +80,98 @@ const AddAddressModal = () => {
             </Box>
             <Box
               sx={{
-                margin: "0px 20px 80px",
-                height: "480px",
-                backgroundColor: "pink",
+                margin: "0px 32px",
               }}>
-              <h1>gggggggggggggg</h1>
+              <TextField
+                id="filled-required"
+                sx={{ margin: "16px 0" }}
+                label="이름"
+                variant="standard"
+                fullWidth
+                placeholder="수령인의 이름"
+                InputLabelProps={{
+                  shrink: true,
+                  sx: { color: "#222", fontWeight: "700" },
+                }}
+                autoFocus
+              />
+              <TextField
+                id="filled-required"
+                sx={{ margin: "16px 0" }}
+                label="휴대폰 번호"
+                variant="standard"
+                fullWidth
+                placeholder="-없이 입력"
+                InputLabelProps={{
+                  shrink: true,
+                  sx: { color: "#222", fontWeight: "700" },
+                }}
+              />
+              {/* <Stack direction="row" alignItems="center"> */}
+              <TextField
+                id="filled-required"
+                sx={{ margin: "16px 0" }}
+                label="우편번호"
+                variant="standard"
+                fullWidth
+                placeholder="우편 번호를 검색하세요"
+                InputLabelProps={{
+                  shrink: true,
+                  sx: { color: "#222", fontWeight: "700" },
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <Button
+                      sx={{
+                        borderRadius: "10px",
+                        border: "1px solid #d3d3d3",
+                        height: "34px",
+                        color: "rgba(34,34,34,.8)",
+                        fontSize: "12px",
+                        position: "absolute",
+                        right: "0",
+                        bottom: "6px",
+                      }}>
+                      우편번호
+                    </Button>
+                  ),
+                }}
+              />
+              <TextField
+                id="filled-required"
+                sx={{ margin: "16px 0" }}
+                label="주소"
+                variant="standard"
+                fullWidth
+                placeholder="우편 번호 검색 후, 자동입력 됩니다"
+                InputLabelProps={{
+                  shrink: true,
+                  sx: { color: "#222", fontWeight: "700" },
+                }}
+              />
+              <TextField
+                id="filled-required"
+                sx={{ margin: "16px 0" }}
+                label="상세 주소"
+                variant="standard"
+                fullWidth
+                placeholder="건물, 아파트, 동/호수 입력"
+                InputLabelProps={{
+                  shrink: true,
+                  sx: { color: "#222", fontWeight: "700" },
+                }}
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                label="기본 배송지로 설정"
+                sx={{
+                  "& .MuiSvgIcon-root": { fontSize: 28, color: "#222" },
+                  color: "#222",
+                  "& .MuiTypography-root": { fontSize: 13 },
+                }}
+              />
+              
+            <TwoButton handleClose={handleClose} solid="저장하기" padding="32px" disabled={true}/>
             </Box>
           </Box>
         </Modal>

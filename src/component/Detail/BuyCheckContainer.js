@@ -4,6 +4,7 @@ import { Hr } from "../../common/js/style";
 import SelectProductItem from "./SelectProductItem";
 import CheckArea from "./CheckArea";
 import OrderButton from "./OrderButton";
+import CheckingModal from "../modal/CheckingModal";
 
 const CheckContainer = styled.div`
   .notice {
@@ -29,16 +30,13 @@ const BuyCheckContainer = () => {
         <span className="strong">구매</span>
         하시기 전에 꼭 확인하세요.
       </p>
+      <CheckingModal/>
       <SelectProductItem />
-      {/* <Hr margin="20px 0 0;" /> */}
       <hr />
       {CHECK_TEXT.map((item, id) => (
         <CheckArea key={id} title={item.title} content={item.content} />
       ))}
-      {/* <CheckArea status={false} />
-      <CheckArea />
-      <CheckArea />
-      <CheckArea /> */}
+
       <OrderButton type="buy_step2" />
     </CheckContainer>
   );

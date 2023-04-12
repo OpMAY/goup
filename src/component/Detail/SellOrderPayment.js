@@ -26,6 +26,8 @@ import DeliveryIconBox from "./DeliveryIconBox";
 import CheckArea from "./CheckArea";
 import { axiosGetFunction } from "../../module/CustomAxios";
 import DeliveryRequireModal from "../modal/DeliveryRequireModal";
+import AddAddressModal from "../modal/AddAddressModal";
+import RecipeInfoModal from "../modal/RecipeInfoModal";
 
 const panelStyle = {
   padding: "0",
@@ -250,7 +252,6 @@ const SellOrderPayment = () => {
   const [finalPage, setFinalPage] = useState(false);
   const user = useRecoilValue(userAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
-  // const [listValue, setListValue] = useState("1");
   const size = useRecoilValue(sizeAtom);
   const sizeState = useRecoilValue(sizeStateAtom);
   const productDetail = useRecoilValue(productDetailAtom);
@@ -311,15 +312,6 @@ const SellOrderPayment = () => {
     }
     return result;
   };
-  // const handleChangeListValue = (event, newValue) => {
-  //   console.log(2, event, newValue);
-  //   setListValue(newValue);
-  // };
-
-  // const handleSize = e => {
-  //   console.log(e.target.value);
-  //   // setSize(e.target.value);
-  // ;
 
   return (
     <OrderContainer>
@@ -350,7 +342,6 @@ const SellOrderPayment = () => {
             </Box>
           </Stack>
           <TabContext value={value}>
-            {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}> */}
             <TabList
               sx={tabListStyle}
               variant="fullWidth"
@@ -402,10 +393,7 @@ const SellOrderPayment = () => {
                         sx={{ mt: "7px" }}
                         direction="row"
                         justifyContent="space-between">
-                        {/* <ButtonGroup
-                      fullWidth
-                      size="large"
-                      aria-label="outlined primary button group"> */}
+              
                         <Button
                           onClick={() => {
                             setWaitDate(1);
@@ -441,7 +429,6 @@ const SellOrderPayment = () => {
                           sx={dateButton}>
                           60일
                         </Button>
-                        {/* </ButtonGroup> */}
                       </Stack>
                     </Stack>
                   </Box>
@@ -530,7 +517,7 @@ const SellOrderPayment = () => {
             <div className="section delivery_box">
               <div className="section_title">
                 <h3>반송 주소</h3>
-                <p>+ 새 주소 추가</p>
+                <AddAddressModal/>
               </div>
               <div className="delivery_info">
                 <table>
@@ -555,38 +542,7 @@ const SellOrderPayment = () => {
               </div>
               <DeliveryIconBox order="true" title="택배발송" side="선불" sub="착불 발송 시 정산금액에서 차감"/>
             </div>
-            {/* <div className="check_box"></div> */}
           </Box>
-          {/* <Box sx={{ padding: "32px 32px" }}>
-            <div className="section point_box">
-              <div className="section_title">
-                <h3>포인트</h3>
-              </div>
-              <Button
-                sx={{
-                  color: "rgba(34, 34, 34, 0.3)",
-                  border: "1px solid #ebebeb",
-                  margin: "0",
-                  width: "636px",
-                  padding: "20px 12px",
-                  textAlign: "left",
-                  display: "block",
-                  marginTop: "12px",
-                  borderRadius: "10px",
-                }}>
-                결제 시점에 최대 사용
-              </Button>
-              <br />
-              <Box
-                component="span"
-                sx={{ fontSize: "14px", color: "rgba(34,34,34,.5)" }}>
-                보유 포인트
-              </Box>
-              <Box component="span" sx={{ marginLeft: "8px" }}>
-                {userPoint.point}P
-              </Box>
-            </div>
-          </Box> */}
           <Box sx={{ padding: "32px 32px" }}>
             <div className="section final_info_box">
               <div className="section_title">
@@ -633,16 +589,7 @@ const SellOrderPayment = () => {
                     판매 거래 시 수수료에 대해 건별로 현금영수증을 발급합니다.
                   </Typography>
                 </Box>
-                <Button
-                  sx={{
-                    border: "1px solid #d3d3d3",
-                    borderRadius: "10px",
-                    color: "gray",
-                    height: "36px",
-                    padding: "0",
-                  }}>
-                  변경
-                </Button>
+                <RecipeInfoModal/>
               </Stack>
             </div>
           </Box>
@@ -651,31 +598,6 @@ const SellOrderPayment = () => {
               <div className="section_title">
                 <h3>패널티 결제 방법</h3>
               </div>
-              {/* {"구매입찰" && <PaymentContainerBid>
-                <div>
-                  <span className="front">카드 간편결제</span>
-                  <span className="back">일시불</span>
-                </div>
-                <Button
-                  sx={{
-                    color: "rgba(34, 34, 34, 0.3)",
-                    border: "1px solid #ebebeb",
-                    margin: "0",
-                    width: "636px",
-                    padding: "20px 12px",
-                    textAlign: "left",
-                    display: "block",
-                    marginTop: "12px",
-                    borderRadius: "10px",
-                  }}>
-                  카드를 등록해주세요
-                </Button>
-                <p>
-                  구매 입찰은 일시불만 지원하며, 카드사 홈페이지나 앱에서 분할
-                  납부로 변경 가능합니다. 단, 카드사별 정책에 따라 분할 납부
-                  변경 시 수수료가 발생할 수 있습니다.
-                </p>
-              </PaymentContainerBid>} */}
               {"즉시구매" && (
                 <PaymentContainerBuy>
                   <div>
@@ -717,10 +639,6 @@ const SellOrderPayment = () => {
                   content={item.content}
                 />
               ))}
-              {/* <CheckArea status={false} />
-      <CheckArea />
-      <CheckArea />
-      <CheckArea /> */}
               <CheckArea title="구매 조건을 모두 확인하였으며, 거래 진행에 동의합니다" />
               <Stack direction="row" justifyContent="space-between">
                 <Typography sx={subTitle}>정산금액</Typography>
