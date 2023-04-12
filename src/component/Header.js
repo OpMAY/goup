@@ -108,10 +108,10 @@ const Header = () => {
         <Top>
           <ul>
             <li>
-              <Link to="/">고객센터</Link>
+              <Link to="/notice">고객센터</Link>
             </li>
             <li>
-              <Link to="/my/wish">관심상품1</Link>
+              <Link to="/my/wish">관심상품</Link>
             </li>
             <li>
               {getUser === null ? (
