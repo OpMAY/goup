@@ -13,6 +13,12 @@ const Unordered = styled.ul`
     a {
       color: rgba(34, 34, 34, 0.5);
       text-decoration: none;
+      &:focus {
+        &:active {
+          font-weight: 700;
+          color: #222;
+        }
+      }
     }
   }
 `;
@@ -22,13 +28,15 @@ const UnorderedList = ({ list, listName }) => {
 
   return (
     <>
-      <Typography
-        variant="h6"
-        marginBottom="12px"
-        marginTop={listName === "내 정보" && "40px"}
-        fontWeight="700">
-        {listName}
-      </Typography>
+      {listName ? (
+        <Typography
+          variant="h6"
+          marginBottom="12px"
+          marginTop={listName === "내 정보" && "40px"}
+          fontWeight="700">
+          {listName}
+        </Typography>
+      ) : null}
       <Unordered>
         {list.map((item, _) => (
           <li key={item.name}>

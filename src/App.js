@@ -16,6 +16,7 @@ import Detail from "./page/Detail";
 // Style page
 import Style from "./page/Style";
 import My from "./page/My";
+import Notice from "./page/Notice";
 import Kakao from "./module/Kakao";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { tokenAtom, userAtom } from "./atoms/atom";
@@ -32,10 +33,19 @@ function App() {
         {/*<Route path="" element={}/>*/}
         <Route path="/" element={<Product />} />
         <Route path="/product/:id" element={<Detail />} />
-        <Route path="/buy/select/:id" element={<Select path="purchase_select" />} />
-        <Route path="/buy/check/:id" element={<Select path="purchase_check" />} />
+        <Route
+          path="/buy/select/:id"
+          element={<Select path="purchase_select" />}
+        />
+        <Route
+          path="/buy/check/:id"
+          element={<Select path="purchase_check" />}
+        />
         <Route path="/buy/:id" element={<Select path="purchase_order" />} />
-        <Route path="/sell/select/:id" element={<Select path="sell_select" />} />
+        <Route
+          path="/sell/select/:id"
+          element={<Select path="sell_select" />}
+        />
         <Route path="/sell/check/:id" element={<Select path="sell_check" />} />
         <Route path="/sell/:id" element={<Select path="sell_order" />} />
         <Route path="/style" element={<Style />} />
@@ -51,6 +61,8 @@ function App() {
         <Route path="/my/profile" element={<My path="profile" />} />
         <Route path="/my/receipt" element={<My path="receipt" />} />
         <Route path="/my/wish" element={<My path="wish" />} />
+        <Route path="/notice" element={<Notice />} />
+        <Route path="/faq" element={<Notice path="faq" />} />
         <Route path="/oauth" element={<Kakao />} />
       </Routes>
       <Footer></Footer>
