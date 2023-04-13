@@ -16,6 +16,7 @@ import {
   sizeStateAtom,
   tokenAtom,
   userAtom,
+  orderToggleAtom,
   wishPriceAtom,
   userPointAtom,
   userAddressAtom,
@@ -286,6 +287,7 @@ const CheckContainer = styled.div`
 
 const OrderPayment = () => {
   const [value, setValue] = useState("1");
+  const [orderPageState, setOrderPageState] = useRecoilState(orderToggleAtom);
   const [waitDate, setWaitDate] = useState(30);
   const [finalPage, setFinalPage] = useState(false);
   const user = useRecoilValue(userAtom);
@@ -330,7 +332,7 @@ const OrderPayment = () => {
 
   const handleChange = (event, newValue) => {
     console.log(1, event, newValue);
-    setValue(newValue);
+    setOrderPageState(newValue);
   };
   const handleChangeButton = e => {
     console.log(e);
@@ -400,7 +402,7 @@ const OrderPayment = () => {
               </Typography>
             </Box>
           </Stack>
-          <TabContext value={value}>
+          <TabContext value={orderPageState}>
             {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}> */}
             <TabList
               sx={tabListStyle}

@@ -13,11 +13,11 @@ const MyListTitle = ({ title, name, more }) => {
   return (
     <Stack direction="row" sx={{ margin: "42px 0 16px", color: "#222" }}>
       <Typography sx={{ fontSize: "18px", fontWeight: "700" }}>
-        {name}
+        {name? name : null}
       </Typography>
-      {more && (
+      {more ? (
         <Stack direction="row" alignItems="center" marginLeft="auto">
-          <MoreLink to={`/my/${title}`}>
+          <MoreLink to={title ? `/my/${title}` : '/'}>
             <Stack direction="row" alignItems="center">
               <Typography sx={{ fontSize: "13px" }}>더 보기</Typography>
               <Box width="20px" height="20px">
@@ -26,7 +26,7 @@ const MyListTitle = ({ title, name, more }) => {
             </Stack>
           </MoreLink>
         </Stack>
-      )}
+      ) : null}
     </Stack>
   );
 };

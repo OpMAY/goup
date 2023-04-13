@@ -163,3 +163,8 @@ export const NoticeAtom = atom({
     default : []
 })
 
+export const orderToggleAtom = atom({
+    key : "state",
+    default : "1"
+})
+

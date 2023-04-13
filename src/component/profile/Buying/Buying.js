@@ -6,9 +6,7 @@ import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Link } from "react-router-dom";
-import BuySellFilterModal from "../../modal/BuySellFilterModal";
-import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
+import ListContent from "./ListContent";
 
 const PeriodNotice = styled.ul`
   margin: 0;
@@ -16,54 +14,6 @@ const PeriodNotice = styled.ul`
   color: rgba(34, 34, 34, 0.5);
   padding: 12px 0;
   padding-left: 16px;
-`;
-
-const PurchaseBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  .purchase_head {
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #ebebeb;
-    .state_button {
-      font-size: 12px;
-      border-radius: 12px;
-      background-color: #fff;
-      justify-content: left;
-      padding: 5px 10px;
-      justify-content: space-between;
-      color: #222;
-      p {
-        line-height: 24px;
-        margin: 0;
-      }
-    }
-  }
-  .status {
-    font-size: 13px;
-  }
-
-  .purchase_content {
-    padding: 80px 0;
-    text-align: center;
-    p {
-      font-size: 13px;
-      color: rgba(34, 34, 34, 0.5);
-      margin: 0;
-      margin-bottom: 20px;
-    }
-    a {
-      text-decoration: none;
-      border: 1px solid #d3d3d3;
-      font-size: 12px;
-      border-radius: 10px;
-      background-color: #fff;
-      padding: 10px 14px;
-      color: #222;
-    }
-  }
 `;
 
 function getToday() {
@@ -151,58 +101,19 @@ function TabPanel(props) {
             <li>기간별 조회 결과는 입찰일 기준으로 노출됩니다.</li>
           </PeriodNotice>
           {value === 0 && (
-            <PurchaseBox className="changed_box">
-              <div className="purchase_head">
-                <BuySellFilterModal className="modal_button" arr={OPTION_1} />
-                <div className="status">
-                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
-                    구매 희망가
-                  </Button>
-                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
-                    만료일
-                  </Button>
-                </div>
-              </div>
-              <div className="purchase_content">
-                <p>구매 입찰 내역이 없습니다.</p>
-                <Link to="/shop">SHOP 바로가기</Link>
-              </div>
-            </PurchaseBox>
+            <ListContent
+              arr={OPTION_1}
+              firstTitle="구매 희망가"
+              secondTitle="만료일"
+            />
           )}
-          {value === 1 && (
-            <PurchaseBox className="changed_box">
-              <div className="purchase_head">
-                <BuySellFilterModal className="modal_button" arr={OPTION_2} />
-                <div className="status">
-                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
-                    상태
-                  </Button>
-                </div>
-              </div>
-              <div className="purchase_content">
-                <p>구매 입찰 내역이 없습니다.</p>
-                <Link to="/shop">SHOP 바로가기</Link>
-              </div>
-            </PurchaseBox>
-          )}
+          {value === 1 && <ListContent arr={OPTION_2} firstTitle="상태" />}
           {value === 2 && (
-            <PurchaseBox className="changed_box">
-              <div className="purchase_head">
-                <BuySellFilterModal className="modal_button" arr={OPTION_3} />
-                <div className="status">
-                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
-                    구매일
-                  </Button>
-                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
-                    상태
-                  </Button>
-                </div>
-              </div>
-              <div className="purchase_content">
-                <p>구매 입찰 내역이 없습니다.</p>
-                <Link to="/shop">SHOP 바로가기</Link>
-              </div>
-            </PurchaseBox>
+            <ListContent
+              arr={OPTION_3}
+              firstTitle="구매일"
+              secondTitle="상태"
+            />
           )}
 
           <Typography>{children}</Typography>

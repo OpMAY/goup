@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Layout from "../component/Layout";
 
 const Container = styled.div`
   display: flex;
@@ -29,19 +30,21 @@ const Container = styled.div`
 
 const NotFound = () => {
   return (
-    <Container>
-      <div className="image_container">
-        <img src="/images/not_found.png" alt="not_found_page" />
-      </div>
-      <div className="text_field">
-        <h2>찾을 수 없는 페이지입니다.</h2>
-        <p>
-          주소가 올바르지 않거나 알 수 없는 오류로 인해
-          <br />
-          페이지를 찾을 수 없습니다.
-        </p>
-      </div>
-    </Container>
+    <Layout>
+      <Container>
+        <div className="image_container">
+          <img src="/images/not_found.png" alt="not_found_page" />
+        </div>
+        <div className="text_field">
+          <h2>찾을 수 없는 페이지입니다.</h2>
+          <p>
+            주소가 올바르지 않거나 알 수 없는 오류로 인해
+            <br />
+            페이지를 찾을 수 없습니다.
+          </p>
+        </div>
+      </Container>
+    </Layout>
   );
 };
 
