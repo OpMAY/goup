@@ -6,7 +6,6 @@ const SubButton = ({ name, link }) => {
   return (
     <Button
       component={Link}
-      link
       to={link}
       variant="outlined"
       sx={{
