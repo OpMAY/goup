@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -178,10 +178,11 @@ const ModalBox = styled.div`
 const sizeInfo = [
   '220', '225', '230', '235', '240', '245', '250', '255', '260', '265', '270', '275', '280', '285', '290', '295', '300'
 ]
-const Info = () => {
-  const [open, setOpen] = React.useState(false);
+const Info = ({profile, setProfile}) => {
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [change, setChange] = useState(false)
   return (
     <Block>
       <ProfileInfo >
@@ -189,44 +190,52 @@ const Info = () => {
         <div>
           <div className='unit'>
             <h4 className='sub-title'>이메일 주소</h4>
-            <p className='e-mail'>roal3437@naver.com</p>
-          </div>
-          <div className='unit'>
-            <h4 className='sub-title'>비밀번호</h4>
-            <p className='password'>1231421</p>
+            {
+              profile ? <p className='e-mail'>{profile.email}</p> : null
+            }
           </div>
         </div>
       </ProfileInfo>
       <ProfileInfo paddingTop="58px">
         <h3>개인정보</h3>
         <div>
-          <div className='unit'>
+          {
+            !change ? <div className='unit'>
             <h4 className='sub-title'>이름</h4>
-            <p className='name'>roal3437@naver.com</p>
-            <button type='button' className='change'>변경</button>
-          </div>
-          <div className='unit_change'>
+            {
+              profile ? <p className='name'>{profile.name}</p>  : null
+            }
+            
+            <button type='button' className='change' onClick={() => setChange(true)}>변경</button>
+          </div> : null
+          }
+          {
+            change ? <div className='unit_change'>
             <h4 className='sub-title'>이름</h4>
             <h4 className='change_title'>새로운 이름</h4>
             <input className='unit_input' type="text" placeholder='고객님의 이름'></input>
             <div className='btn_box'>
-              <button className='btn btn_back'>취소하기</button>
+              <button className='btn btn_back' onClick={() => setChange(false)}>취소하기</button>
               <button className='btn btn_save'>저장하기</button>
             </div>
-          </div>
+          </div> : null
+          }
           <div className='unit'>
             <h4 className='sub-title'>휴대폰 번호</h4>
-            <p className='phone'>1231421</p>
-            <button type='button' className='change'>변경</button>
+            {
+              profile ? <p className='phone'>{profile.phone_number}.</p> : null
+            }
           </div>
           <div className='unit'>
             <h4 className='sub-title'>신발 사이즈</h4>
-            <p className='size'>220</p>
+            {
+              profile ? <p className='size'>{profile.size}</p> : null
+            }
             <button type='button' className='change' onClick={handleOpen}>변경</button>
           </div>
         </div>
       </ProfileInfo>
-      <button type='button' className='withdrawal'>회원탈퇴</button>
+      {/* <button type='button' className='withdrawal'>회원탈퇴</button> */}
       <Modal
         open={open}
         onClose={handleClose}

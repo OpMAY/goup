@@ -58,11 +58,6 @@ const MY_LIST = [
     main: "address",
   },
   {
-    name: "결제 정보",
-    link: "/my/payment",
-    main: "payment",
-  },
-  {
     name: "판매 정산 계좌",
     link: "/my/account",
     main: "account",

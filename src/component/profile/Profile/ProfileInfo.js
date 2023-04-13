@@ -1,5 +1,7 @@
 import React from 'react'
+import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
+import { profileAtom } from '../../../atoms/atom'
 
 const ProfileBlcock = styled.div`
   display: flex;
@@ -36,17 +38,27 @@ const UserImage = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: #d3d3d3;
+  background-image: url(${props => props.bgImage});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `
 
-const ProfileInfo = () => {
+const ProfileInfo = ({profile, setProfile}) => {
+    console.log(profile)
   return (
     <ProfileBlcock>
       <div className='user'>
-        <UserImage />
+        {
+          profile ? <UserImage bgImage={profile.profile_img.url}/> : null
+        }
+        
       </div>
       <div>
-        <h3 className='name'>ID</h3>
+        {
+          profile ? <h3 className='name'>{profile.id}</h3>  : 'no'
+        }
+        
         <div className='btn-grop'>
           <button type='button'>이미지 삭제</button>
           <button type='button'>삭제</button>

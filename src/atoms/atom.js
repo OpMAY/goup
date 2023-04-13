@@ -168,3 +168,7 @@ export const orderToggleAtom = atom({
     default : "1"
 })
 
+export const profileAtom = atom({
+    key : 'profile',
+    default: null
+})
