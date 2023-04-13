@@ -18,7 +18,8 @@ import Style from "./page/Style";
 import My from "./page/My";
 import Notice from "./page/Notice";
 import Kakao from "./module/Kakao";
-import { useRecoilState, useRecoilValue } from "recoil";
+import NotFound from "./page/NotFound";
+import { useRecoilState} from "recoil";
 import { tokenAtom, userAtom } from "./atoms/atom";
 import Select from "./component/Detail/Select";
 
@@ -28,7 +29,7 @@ function App() {
   console.log("token ? ", token);
   return (
     <div className="App">
-      <Header></Header>
+      <Header />
       <Routes>
         {/*<Route path="" element={}/>*/}
         <Route path="/" element={<Product />} />
@@ -64,9 +65,10 @@ function App() {
         <Route path="/notice" element={<Notice />} />
         <Route path="/notice/:id" element={<Notice path="detail" />} />
         <Route path="/faq" element={<Notice path="faq" />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/oauth" element={<Kakao />} />
       </Routes>
-      <Footer></Footer>
+      <Footer />
 
       {/* Route */}
     </div>
