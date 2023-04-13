@@ -2,12 +2,13 @@ import React from "react";
 import { Tab, Stack, Tabs, Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import styled from "styled-components";
-import { RiArrowDropDownFill } from "react-icons/ri";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Link } from "react-router-dom";
+import BuySellFilterModal from "../../modal/BuySellFilterModal";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 
 const PeriodNotice = styled.ul`
   margin: 0;
@@ -26,9 +27,7 @@ const PurchaseBox = styled.div`
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #ebebeb;
-    button {
-      border: 1px solid #d3d3d3;
-      width: 120px;
+    .state_button {
       font-size: 12px;
       border-radius: 12px;
       background-color: #fff;
@@ -44,12 +43,6 @@ const PurchaseBox = styled.div`
   }
   .status {
     font-size: 13px;
-    .wish_price {
-      padding-left: 40px;
-    }
-    .expire {
-      padding-left: 40px;
-    }
   }
 
   .purchase_content {
@@ -144,13 +137,9 @@ function TabPanel(props) {
             </Stack>
             <Stack direction="row">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                {/* <DemoContainer components={["DatePicker"]}>
-                <DemoItem> */}
                 <DatePicker sx={picker} defaultValue={dayjs(getToday())} />
                 ~
                 <DatePicker sx={picker} defaultValue={dayjs(getToday())} />
-                {/* </DemoItem>
-              </DemoContainer> */}
               </LocalizationProvider>
               <Button sx={checkButton} variant="contained">
                 조회
@@ -161,22 +150,60 @@ function TabPanel(props) {
             <li>한 번에 조회 가능한 기간은 최대 6개월입니다.</li>
             <li>기간별 조회 결과는 입찰일 기준으로 노출됩니다.</li>
           </PeriodNotice>
-          <PurchaseBox>
-            <div className="purchase_head">
-              <Button>
-                <p>전체</p>
-                <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
-              </Button>
-              <div className="status">
-                <span className="wish_price">구매 희망가</span>
-                <span className="expire">만료일</span>
+          {value === 0 && (
+            <PurchaseBox className="changed_box">
+              <div className="purchase_head">
+                <BuySellFilterModal className="modal_button" arr={OPTION_1} />
+                <div className="status">
+                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
+                    구매 희망가
+                  </Button>
+                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
+                    만료일
+                  </Button>
+                </div>
               </div>
-            </div>
-            <div className="purchase_content">
-              <p>구매 입찰 내역이 없습니다.</p>
-              <Link to="/shop">SHOP 바로가기</Link>
-            </div>
-          </PurchaseBox>
+              <div className="purchase_content">
+                <p>구매 입찰 내역이 없습니다.</p>
+                <Link to="/shop">SHOP 바로가기</Link>
+              </div>
+            </PurchaseBox>
+          )}
+          {value === 1 && (
+            <PurchaseBox className="changed_box">
+              <div className="purchase_head">
+                <BuySellFilterModal className="modal_button" arr={OPTION_2} />
+                <div className="status">
+                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
+                    상태
+                  </Button>
+                </div>
+              </div>
+              <div className="purchase_content">
+                <p>구매 입찰 내역이 없습니다.</p>
+                <Link to="/shop">SHOP 바로가기</Link>
+              </div>
+            </PurchaseBox>
+          )}
+          {value === 2 && (
+            <PurchaseBox className="changed_box">
+              <div className="purchase_head">
+                <BuySellFilterModal className="modal_button" arr={OPTION_3} />
+                <div className="status">
+                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
+                    구매일
+                  </Button>
+                  <Button className="state_button" endIcon={<UnfoldMoreIcon />}>
+                    상태
+                  </Button>
+                </div>
+              </div>
+              <div className="purchase_content">
+                <p>구매 입찰 내역이 없습니다.</p>
+                <Link to="/shop">SHOP 바로가기</Link>
+              </div>
+            </PurchaseBox>
+          )}
 
           <Typography>{children}</Typography>
         </Box>
@@ -263,18 +290,16 @@ const Buying = () => {
             />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0}>
-          {/* item one */}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {/* Item Two */}
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          {/* Item Three */}
-        </TabPanel>
+        <TabPanel value={value} index={0} />
+        <TabPanel value={value} index={1} />
+        <TabPanel value={value} index={2} />
       </Box>
     </>
   );
 };
 
 export default Buying;
+
+const OPTION_1 = ["전체", "입찰중", "기한만료"];
+const OPTION_2 = ["전체", "대기 중", "발송완료", "배송중"];
+const OPTION_3 = ["전체", "배송완료"];

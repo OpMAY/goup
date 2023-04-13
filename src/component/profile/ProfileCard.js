@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Box, Stack, Typography, Button } from "@mui/material";
 import SubButton from "./SubButton";
 import MembershipDetail from "./MembershipDetail";
-import {useRecoilState} from 'recoil'
+import { useRecoilState } from "recoil";
 import { userAtom } from "../../atoms/atom";
 
 const ProfileCard = () => {
@@ -39,7 +39,7 @@ const ProfileCard = () => {
               direction="row"
               spacing="7px"
               sx={{ fontSize: "12px", marginTop: "12px" }}>
-              <SubButton name="프로필 수정" />
+              <SubButton name="프로필 수정" link="/my/profile" />
             </Stack>
           </Stack>
         </Box>
