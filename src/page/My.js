@@ -18,13 +18,12 @@ import WishContent from "../component/profile/WishContent";
 import Layout from "../component/Layout";
 
 const My = ({ path }) => {
-  console.log(path);
 
   return (
     <Layout>
       <Inner padding="40px 40px;">
         <Stack direction="row">
-          <ProfileList />
+          <ProfileList path={path} />
           <Box sx={{ width: "100%" }}>
             {path === "buying" && <Buying />}
             {path === "selling" && <Selling />}

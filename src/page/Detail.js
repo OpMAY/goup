@@ -27,6 +27,6 @@ const Detail = () => {
     );
   }, []);
 
-  return <Layout>{productDetail ? <DetailInfo /> : <NotFound />}</Layout>;
+  return <Layout>{productDetail ? <DetailInfo /> : <></>}</Layout>;
 };
 export default Detail;

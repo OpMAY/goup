@@ -41,17 +41,15 @@ const Notice = ({ path }) => {
     });
   }, []);
 
-  console.log("---------->", notice);
-
   return (
     <Layout>
       <Inner padding="40px 40px;">
         <Stack direction="row">
-          <NoticeList />
+          <NoticeList path={path}/>
           <Box sx={{ width: "100%" }}>
             {path === "faq" && <Faq />}
             {path === "detail" && <NoticeDetail />}
-            {path === undefined && (
+            {path === "main" && (
               <>
                 <Box
                   sx={{

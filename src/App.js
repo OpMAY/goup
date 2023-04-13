@@ -1,10 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 // import Kakao from "./module/Kakao";
 // import axios from "axios";
-// header
-import Header from "./component/Header";
-// footer
-import Footer from "./component/Footer";
+
 // product
 import Product from "./page/Product";
 // Shop
@@ -31,9 +28,7 @@ function App() {
   console.log("token ? ", token);
   return (
     <div className="App">
-      {/* <Header /> */}
       <Routes>
-        {/*<Route path="" element={}/>*/}
         <Route path="/" element={<Product />} />
         <Route path="/product/:id" element={<Detail />} />
         <Route
@@ -63,13 +58,12 @@ function App() {
         <Route path="/my/profile" element={<My path="profile" />} />
         <Route path="/my/receipt" element={<My path="receipt" />} />
         <Route path="/my/wish" element={<My path="wish" />} />
-        <Route path="/notice" element={<Notice />} />
+        <Route path="/notice" element={<Notice path="main" />} />
         <Route path="/notice/:id" element={<Notice path="detail" />} />
         <Route path="/faq" element={<Notice path="faq" />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/oauth" element={<Kakao />} />
       </Routes>
-      {/* <Footer /> */}
 
       {/* Route */}
     </div>

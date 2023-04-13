@@ -3,7 +3,7 @@ import styled from "styled-components";
 import BuySellFilterModal from "../../modal/BuySellFilterModal";
 import { Button } from "@mui/material";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import { Link } from "react-router-dom";
+import EmptyContent from "./EmptyContent";
 
 const PurchaseBox = styled.div`
   display: flex;
@@ -31,26 +31,6 @@ const PurchaseBox = styled.div`
   .status {
     font-size: 13px;
   }
-
-  .purchase_content {
-    padding: 80px 0;
-    text-align: center;
-    p {
-      font-size: 13px;
-      color: rgba(34, 34, 34, 0.5);
-      margin: 0;
-      margin-bottom: 20px;
-    }
-    a {
-      text-decoration: none;
-      border: 1px solid #d3d3d3;
-      font-size: 12px;
-      border-radius: 10px;
-      background-color: #fff;
-      padding: 10px 14px;
-      color: #222;
-    }
-  }
 `;
 
 const ListContent = ({ arr, firstTitle, secondTitle }) => {
@@ -69,10 +49,7 @@ const ListContent = ({ arr, firstTitle, secondTitle }) => {
           ) : null}
         </div>
       </div>
-      <div className="purchase_content">
-        <p>구매 입찰 내역이 없습니다.</p>
-        <Link to="/shop">SHOP 바로가기</Link>
-      </div>
+      <EmptyContent text="구매 입찰 내역이 없습니다." shopButton={true}/>
     </PurchaseBox>
   );
 };
