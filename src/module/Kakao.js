@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {tokenAtom, userAtom} from "../atoms/atom";
 import {axiosGetFunction, axiosPostFunction} from "./CustomAxios";
 
@@ -7,11 +7,9 @@ const Kakao = () => {
   let url = new URL(window.location.href);
   let params = url.searchParams;
   let code = params.get("code");
-  console.log(code);
 
-    const [getUser, setUser] = useRecoilState(userAtom);
+    const setUser = useSetRecoilState(userAtom);
     const [token, setToken] = useRecoilState(tokenAtom);
-    console.log(token);
 
     useEffect(() => {
         axiosGetFunction('/api/oauth/callback?code=' + code, {}, token, setToken).then((res) => {
@@ -44,7 +42,7 @@ const Kakao = () => {
         })
     }, []);
 
-  return <div>oauth call page</div>;
+  return '';
 };
 
 export default Kakao;

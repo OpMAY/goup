@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import {userAtom, paramAtom, sizeStateAtom, checkAtom} from "../../atoms/atom";
+import {userAtom, paramAtom, sizeStateAtom, checkAtom, priceStateAtom} from "../../atoms/atom";
 import { useRecoilValue } from "recoil";
 
 const Button = styled.button`
@@ -16,6 +16,11 @@ const Button = styled.button`
     p {
       margin: 0;
       text-align: center;
+    }
+    .price {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 18px;
     }
     .status {
       font-size: 15px;
@@ -37,22 +42,27 @@ const OrderButton = ({ type, onClick }) => {
   const param = useRecoilValue(paramAtom);
   const size = useRecoilValue(sizeStateAtom);
   const check = useRecoilValue(checkAtom);
+  const priceState = useRecoilValue(priceStateAtom);
 
   const btnDisable = () => {
-    if(!(check[0] && check[1] && check[2] && check[3] && check[4])) {
-      return 'disabled'
-    } else {
-      return null;
-    }
+    // if(!check.every(v => v === true)) {
+    //   return 'disabled'
+    // } else {
+    //   return null;
+    // }
+    return check.length > 0 && !check.every(v => v === true);
   }
 
   return (
       <Button
-          disabled={btnDisable}
+          disabled={check.length > 0 ? !check.every(v => v === true) : false}
           onClick={onClick}>
       {type === "buy_step1" && (
-        <Link to={`/buy/check/${param}?size=${size}&type=buy`}>
-          <p className="status pending">구매입찰</p>
+        <Link to={`/buy/check/${param}?size=${size.size}&type=buy`}>
+          <p className="status pending">{priceState !== null ? priceState : '구매 입찰'}</p>
+          {
+            priceState !== null ? <p className="price pending">즉시 구매</p> : null
+          }
           <p className="delivery_notice">일반배송(5~7일소요)</p>
         </Link>
       )}
@@ -62,18 +72,21 @@ const OrderButton = ({ type, onClick }) => {
         </Link>
       )}
       {type === "buy_step3" && (
-        <Link to={`/buy/${param}/?size=${size}`}>
+        <Link to={`/buy/${param}/?size=${size.size}`}>
           <p className="status keepBid">구매 입찰 계속</p>
         </Link>
       )}
       {type === "buy_step4" && (
-        <Link to={`/buy/${param}/?size=${size}`}>
+        <Link to={`/buy/${param}/?size=${size.size}`}>
           <p className="status keepBuy">즉시 구매 계속</p>
         </Link>
       )}
       {type === "sell_step1" && (
-        <Link to={`/sell/check/${param}?size=${size}&type=sell`}>
-          <p className="status sell">판매 입찰</p>
+        <Link to={`/sell/check/${param}?size=${size.size}&type=sell`}>
+          <p className="status sell">{priceState !== null ? priceState : '판매 입찰'}</p>
+          {
+            priceState !== null ? <p className="price sell">즉시 판매</p> : null
+          }
         </Link>
       )}
       {type === "sell_step2" && (
@@ -82,12 +95,12 @@ const OrderButton = ({ type, onClick }) => {
         </Link>
       )}
       {type === "sell_step3" && (
-        <Link to={`/sell/${param}/?size=${size}`}>
+        <Link to={`/sell/${param}/?size=${size.size}`}>
           <p className="status keepBid">판매 입찰 계속</p>
         </Link>
       )}
       {type === "sell_step4" && (
-        <Link to={`/sell/${param}/?size=${size}`}>
+        <Link to={`/sell/${param}/?size=${size.size}`}>
           <p className="status keepSell">즉시 판매 계속</p>
         </Link>
       )}

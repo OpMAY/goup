@@ -58,7 +58,7 @@ const CheckingModal = () => {
         <>
             <div>
                 <Checkbox
-                    checked={check[0]}
+                    checked={check ? check[0] : false}
                     sx={{
                         "& .MuiSvgIcon-root": {fontSize: 28},
                         color: "#ebebeb",

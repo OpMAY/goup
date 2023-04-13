@@ -5,6 +5,8 @@ import SelectProductItem from "./SelectProductItem";
 import CheckArea from "./CheckArea";
 import OrderButton from "./OrderButton";
 import CheckingModal from "../modal/CheckingModal";
+import {useRecoilValue} from "recoil";
+import {checkAtom} from "../../atoms/atom";
 
 const CheckContainer = styled.div`
   .notice {
@@ -30,11 +32,10 @@ const BuyCheckContainer = () => {
         <span className="strong">구매</span>
         하시기 전에 꼭 확인하세요.
       </p>
-      <CheckingModal/>
       <SelectProductItem />
       <hr />
       {CHECK_TEXT.map((item, id) => (
-        <CheckArea key={id} title={item.title} content={item.content} />
+        <CheckArea key={id} title={item.title} content={item.content} no={id} />
       ))}
 
       <OrderButton type="buy_step2" />

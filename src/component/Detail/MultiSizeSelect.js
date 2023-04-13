@@ -21,11 +21,11 @@ export default function MultipleSelect() {
     <SelectList>
       <select onChange={handleSize} name="size" id="size-select">
           <option value="all">
-            {sizeState}
+            {sizeState ? sizeState.size : '모든 사이즈'}
           </option>
-        {size &&
+        {size && size[0].size !== 'ONE SIZE' &&
           size.map(sizes => (
-            <option key={sizes.no} value={sizes.size} defaultValue={sizeState === sizes.size ? true : false}>
+            <option key={sizes.no} value={sizes.size} defaultValue={sizeState && sizeState.size === sizes.size ? true : false}>
               {sizes.size}
             </option>
           ))}

@@ -99,12 +99,12 @@ const DetailSizeModal = ({ product }) => {
             sx={button}
             className="button"
             onClick={() => modalOpen(product.product.no)}>
-            <Typography sx={subtext}>{sizeState}</Typography>
+            <Typography sx={subtext}>{sizeState !== null ? sizeState.size : '모든 사이즈'}</Typography>
             <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
           </Button>
         ) : (
           <LinkStyle to="/login">
-            <Typography sx={subtext}>{sizeState}</Typography>
+            <Typography sx={subtext}>{sizeState !== null ? sizeState.size : '모든 사이즈'}</Typography>
             <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
           </LinkStyle>
         )}

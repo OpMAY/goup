@@ -124,7 +124,7 @@ const ColumTop = () => {
       <div className="product_figure_wrap">
         <SizeInfo>
           <div className="title">사이즈</div>
-          {sizeState === "ONE SIZE" ? (
+          {sizeState && sizeState.size === "ONE SIZE" ? (
             <Typography sx={oneSize}>ONE SIZE</Typography>
           ) : (
             <DetailSizeModal product={productDetail} />

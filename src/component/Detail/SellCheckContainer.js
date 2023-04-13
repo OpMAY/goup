@@ -24,19 +24,6 @@ const CheckContainer = styled.div`
 `;
 
 const SellCheckContainer = () => {
-  const [check, setCheck] = useRecoilState(checkAtom);
-  const initCheck = () => {
-    const c = [];
-    for(let i = 0; i < CHECK_TEXT.length; i++) {
-      c.push(false);
-    }
-    setCheck(c);
-  }
-
-
-  useEffect(() => {
-    initCheck();
-  }, [])
 
   return (
     <CheckContainer>
