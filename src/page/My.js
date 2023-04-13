@@ -15,37 +15,38 @@ import SellingContent from "../component/profile/SellingContent";
 import ProfileCard from "../component/profile/ProfileCard";
 import BuyingContent from "../component/profile/BuyingContent";
 import WishContent from "../component/profile/WishContent";
-import {useRecoilState} from "recoil";
-import { userAtom } from "../atoms/atom";
+import Layout from "../component/Layout";
 
 const My = ({ path }) => {
   console.log(path);
-  
+
   return (
-    <Inner padding="40px 40px;">
-      <Stack direction="row">
-        <ProfileList />
-        <Box sx={{ width: "100%" }}>
-          {path === "buying" && <Buying />}
-          {path === "selling" && <Selling />}
-          {path === "wish" && <Wish />}
-          {path === "profile" && <Profile />}
-          {path === "address" && <Address />}
-          {path === "payment" && <Payment />}
-          {path === "account" && <Account />}
-          {path === "receipt" && <Receipt />}
-          {path === "point" && <Point />}
-          {path === undefined && (
-            <>
-              <ProfileCard />
-              <BuyingContent />
-              <SellingContent />
-              <WishContent />
-            </>
-          )}
-        </Box>
-      </Stack>
-    </Inner>
+    <Layout>
+      <Inner padding="40px 40px;">
+        <Stack direction="row">
+          <ProfileList />
+          <Box sx={{ width: "100%" }}>
+            {path === "buying" && <Buying />}
+            {path === "selling" && <Selling />}
+            {path === "wish" && <Wish />}
+            {path === "profile" && <Profile />}
+            {path === "address" && <Address />}
+            {path === "payment" && <Payment />}
+            {path === "account" && <Account />}
+            {path === "receipt" && <Receipt />}
+            {path === "point" && <Point />}
+            {path === undefined && (
+              <>
+                <ProfileCard />
+                <BuyingContent />
+                <SellingContent />
+                <WishContent />
+              </>
+            )}
+          </Box>
+        </Stack>
+      </Inner>
+    </Layout>
   );
 };
 

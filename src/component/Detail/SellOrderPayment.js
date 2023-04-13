@@ -19,6 +19,7 @@ import {
   userAtom,
   wishPriceAtom,
   userPointAtom,
+  orderToggleAtom,
   userAddressAtom,
 } from "../../atoms/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -249,6 +250,7 @@ const CheckContainer = styled.div`
 const SellOrderPayment = () => {
   const [value, setValue] = useState("1");
   const [waitDate, setWaitDate] = useState(30);
+  const [orderPageState, setOrderPageState] = useRecoilState(orderToggleAtom);
   const [finalPage, setFinalPage] = useState(false);
   const user = useRecoilValue(userAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
@@ -280,7 +282,7 @@ const SellOrderPayment = () => {
 
   const handleChange = (event, newValue) => {
     console.log(1, event, newValue);
-    setValue(newValue);
+    setOrderPageState(newValue);
   };
   const handleChangeButton = e => {
     console.log(e);
@@ -341,7 +343,7 @@ const SellOrderPayment = () => {
               </Typography>
             </Box>
           </Stack>
-          <TabContext value={value}>
+          <TabContext value={orderPageState}>
             <TabList
               sx={tabListStyle}
               variant="fullWidth"

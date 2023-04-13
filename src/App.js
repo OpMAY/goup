@@ -6,20 +6,22 @@ import Header from "./component/Header";
 // footer
 import Footer from "./component/Footer";
 // product
-import Product from "./component/Product/Product";
+import Product from "./page/Product";
 // Shop
 import Shop from "./page/Shop";
 // Login
 import Login from "./page/Login";
 // Detail
 import Detail from "./page/Detail";
-// Style page
-import Style from "./page/Style";
+// My
 import My from "./page/My";
+// Notice
 import Notice from "./page/Notice";
-import Kakao from "./module/Kakao";
+// NotFound
 import NotFound from "./page/NotFound";
-import { useRecoilState} from "recoil";
+
+import Kakao from "./module/Kakao";
+import { useRecoilState } from "recoil";
 import { tokenAtom, userAtom } from "./atoms/atom";
 import Select from "./component/Detail/Select";
 
@@ -29,7 +31,7 @@ function App() {
   console.log("token ? ", token);
   return (
     <div className="App">
-      <Header />
+      {/* <Header /> */}
       <Routes>
         {/*<Route path="" element={}/>*/}
         <Route path="/" element={<Product />} />
@@ -49,7 +51,6 @@ function App() {
         />
         <Route path="/sell/check/:id" element={<Select path="sell_check" />} />
         <Route path="/sell/:id" element={<Select path="sell_order" />} />
-        <Route path="/style" element={<Style />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/my" element={getUser === null ? <Login /> : <My />} />
@@ -68,7 +69,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/oauth" element={<Kakao />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
 
       {/* Route */}
     </div>

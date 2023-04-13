@@ -53,32 +53,31 @@ const BuySelectContainer = () => {
     });
   }, []);
 
-  
-  console.log("1111",productPurchase, productSell) 
-
   return (
-    <SelectContainer>
-      <SelectProductItem state="purchase" />
-      <Hr margin="20px 0 0;" />
-      <Grid container className="size_container">
-        <Grid container className="content" sx={{}}>
-          {productPurchase.map(size => (
-            <Grid key={size.no} item xs={3.75} sx={{ margin: "4px" }}>
-              <SizeButton
-                onClick={handleButton}
-                size={size.size}
-                price={size.price}
-                reg_datetime={size.reg_datetime}
-                value={size.size}
-                state="구매 입찰"
-              />
-            </Grid>
-          ))}
+    <>
+      <SelectContainer>
+        <SelectProductItem state="purchase" />
+        <Hr margin="20px 0 0;" />
+        <Grid container className="size_container">
+          <Grid container className="content" sx={{}}>
+            {productPurchase.map(size => (
+              <Grid key={size.no} item xs={3.75} sx={{ margin: "4px" }}>
+                <SizeButton
+                  onClick={handleButton}
+                  size={size.size}
+                  price={size.price}
+                  reg_datetime={size.reg_datetime}
+                  value={size.size}
+                  state="구매 입찰"
+                />
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
-      </Grid>
-      <Hr margin="0;" />
-      {sizeState !== "모든 사이즈" && <OrderButton type="buy_step1" />}
-    </SelectContainer>
+        <Hr margin="0;" />
+        {sizeState !== "모든 사이즈" && <OrderButton type="buy_step1" />}
+      </SelectContainer>
+    </>
   );
 };
 

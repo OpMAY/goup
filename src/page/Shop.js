@@ -12,6 +12,7 @@ import {
 } from "../atoms/atom";
 import {axiosGetFunction} from "../module/CustomAxios";
 import SizeModal from "../component/Shop/SizeModal";
+import Layout from '../component/Layout';
 
 
 const Shop = () => {
@@ -112,10 +113,10 @@ const Shop = () => {
         }
     }, [filterChanged])
     return (
-        <>
+        <Layout>
             <ItemAll/>
             <SizeModal/>
-        </>
+        </Layout>
     )
 }
 

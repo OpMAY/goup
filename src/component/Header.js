@@ -12,6 +12,7 @@ import "../common/css/custom.css";
 import SearchModal from "./modal/SearchModal";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../atoms/atom";
+import { Button } from "@mui/material";
 
 const HeaderBlock = styled.header`
   position: sticky;
@@ -19,6 +20,7 @@ const HeaderBlock = styled.header`
   background-color: #fff;
   z-index: 9999;
 `;
+
 const Top = styled.div`
   display: flex;
   justify-content: end;
@@ -57,7 +59,6 @@ const Navbar = styled.nav`
   align-items: center;
   padding: 20px 0;
   box-sizing: border-box;
-
   ul {
     display: flex;
     list-style: none;
@@ -82,6 +83,8 @@ const Navbar = styled.nav`
       }
     }
   }
+  .title {
+  }
 `;
 
 const NavBlock = styled.div`
@@ -94,7 +97,16 @@ const NavBlock = styled.div`
   }
 `;
 
-const Header = () => {
+const NavCheck = {
+  border: "1px solid #d3d3d3",
+  fontSize: "12px",
+  fontWeight: 600,
+  color: "rgba(34,34,34,.8)",
+  padding: "8px 20px",
+  borderRadius: "10px",
+};
+
+const Header = ({ title }) => {
   const [getUser, setUser] = useRecoilState(userAtom);
 
   const logoutClick = () => {
@@ -102,56 +114,91 @@ const Header = () => {
     window.location.reload();
     window.location.href("http://localhost:3000");
   };
+
   return (
-    <HeaderBlock>
-      <Inner padding="0 40px;">
-        <Top>
-          <ul>
-            <li>
-              <Link to="/notice">고객센터</Link>
-            </li>
-            <li>
-              <Link to="/my/wish">관심상품</Link>
-            </li>
-            <li>
-              {getUser === null ? (
-                <Link to="/login">로그인</Link>
-              ) : (
-                <Link to="/" onClick={() => logoutClick()}>
-                  로그아웃
-                </Link>
-              )}
-            </li>
-          </ul>
-        </Top>
-        <Navbar>
-          <div>
-            <a href="/">
-              <img width="120px" src={logo} alt="logo"></img>
-            </a>
-          </div>
-          <NavBlock>
-            <nav>
+    <>
+      {title ? (
+        <HeaderBlock>
+          <Inner padding="0 40px;">
+            <Top>
               <ul>
                 <li>
-                  <a href="/">HOME</a>
+                  <Link to="/notice">고객센터</Link>
                 </li>
                 <li>
-                  <Link to="/style">STYLE</Link>
+                  <Link to="/my/wish">관심상품</Link>
                 </li>
                 <li>
-                  <Link to="/shop">SHOP</Link>
-                </li>
-                <li>
-                  <Link to="/my">MY</Link>
+                  {getUser === null ? (
+                    <Link to="/login">로그인</Link>
+                  ) : (
+                    <Link to="/" onClick={() => logoutClick()}>
+                      로그아웃
+                    </Link>
+                  )}
                 </li>
               </ul>
-            </nav>
-            <SearchModal />
-          </NavBlock>
-        </Navbar>
-      </Inner>
-    </HeaderBlock>
+            </Top>
+            <Navbar>
+              <div>
+                <a href="/">
+                  <img width="120px" src={logo} alt="logo"></img>
+                </a>
+              </div>
+              <h1 className="title">{title}</h1>
+              <Button sx={NavCheck}>검수 기준</Button>
+            </Navbar>
+          </Inner>
+        </HeaderBlock>
+      ) : (
+        <HeaderBlock>
+          <Inner padding="0 40px;">
+            <Top>
+              <ul>
+                <li>
+                  <Link to="/notice">고객센터</Link>
+                </li>
+                <li>
+                  <Link to="/my/wish">관심상품</Link>
+                </li>
+                <li>
+                  {getUser === null ? (
+                    <Link to="/login">로그인</Link>
+                  ) : (
+                    <Link to="/" onClick={() => logoutClick()}>
+                      로그아웃
+                    </Link>
+                  )}
+                </li>
+              </ul>
+            </Top>
+            <Navbar>
+              <div>
+                <a href="/">
+                  <img width="120px" src={logo} alt="logo"></img>
+                </a>
+              </div>
+              <NavBlock>
+                <nav>
+                  <ul>
+                    <li>
+                      <a href="/">HOME</a>
+                    </li>
+                    <li>
+                      <Link to="/shop">SHOP</Link>
+                    </li>
+                    <li>
+                      <Link to="/my">MY</Link>
+                    </li>
+                  </ul>
+                </nav>
+                <SearchModal />
+              </NavBlock>
+            </Navbar>
+          </Inner>
+        </HeaderBlock>
+      )}
+    </>
   );
 };
 

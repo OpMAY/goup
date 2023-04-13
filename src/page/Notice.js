@@ -9,6 +9,7 @@ import { NoticeAtom, tokenAtom } from "../atoms/atom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NoticeDetail from "../component/Notice/noticeDetail";
+import Layout from "../component/Layout";
 
 const ListStyle = styled.ul`
   padding: 0;
@@ -43,34 +44,39 @@ const Notice = ({ path }) => {
   console.log("---------->", notice);
 
   return (
-    <Inner padding="40px 40px;">
-      <Stack direction="row">
-        <NoticeList />
-        <Box sx={{ width: "100%" }}>
-          {path === "faq" && <Faq />}
-          {path === "detail" && <NoticeDetail />}
-          {path === undefined && (
-            <>
-              <Box
-                sx={{ borderBottom: "3px solid #222", paddingBottom: "16px" }}>
-                <Typography sx={{ fontSize: "24px", fontWeight: "700" }}>
-                  공지사항
-                </Typography>
-              </Box>
-              <ListStyle>
-                {notice.map(item => (
-                  <li key={item.no}>
-                    <Link to={`/notice/${item.no}`}>
-                      {item.title ? item.title : "무제"}
-                    </Link>
-                  </li>
-                ))}
-              </ListStyle>
-            </>
-          )}
-        </Box>
-      </Stack>
-    </Inner>
+    <Layout>
+      <Inner padding="40px 40px;">
+        <Stack direction="row">
+          <NoticeList />
+          <Box sx={{ width: "100%" }}>
+            {path === "faq" && <Faq />}
+            {path === "detail" && <NoticeDetail />}
+            {path === undefined && (
+              <>
+                <Box
+                  sx={{
+                    borderBottom: "3px solid #222",
+                    paddingBottom: "16px",
+                  }}>
+                  <Typography sx={{ fontSize: "24px", fontWeight: "700" }}>
+                    공지사항
+                  </Typography>
+                </Box>
+                <ListStyle>
+                  {notice.map(item => (
+                    <li key={item.no}>
+                      <Link to={`/notice/${item.no}`}>
+                        {item.title ? item.title : "무제"}
+                      </Link>
+                    </li>
+                  ))}
+                </ListStyle>
+              </>
+            )}
+          </Box>
+        </Stack>
+      </Inner>
+    </Layout>
   );
 };
 
