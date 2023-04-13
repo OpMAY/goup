@@ -9,6 +9,7 @@ const Title = styled.div`
   border-bottom: 3px solid #333;
   h2{
     font-size: 24px;
+    font-weight: bold;
   }
 `
 
@@ -16,7 +17,7 @@ const Profile = () => {
   return (
     <>
       <Title>
-        <h2>프로필 정보</h2>
+        <h3>프로필 정보</h3>
       </Title>
       <ProfileInfo />
       <Hr margin="0px"/>
