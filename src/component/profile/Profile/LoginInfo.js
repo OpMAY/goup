@@ -151,7 +151,12 @@ const ModalBox = styled.div`
         color: #222;
         border: 1px solid #ccc;
         border-radius: 10px;
+        &.is-active{
+          border: 1px solid #000;
+          font-weight: 600;
+        }
       }
+      
     }
 
   }
@@ -248,7 +253,7 @@ const Info = ({profile, setProfile}) => {
             {
               sizeInfo.map((item) => (
                 <div className='size_info'>
-                  <button type='button'>{item}</button>
+                  <button type='button' className='is-active'>{item}</button>
                 </div>
               ))
             }
