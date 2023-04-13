@@ -248,7 +248,7 @@ const dateButton = {
         // color: "gray",
         // backgroundColor: "#ebebeb",
     },
-    "&.is-active" : {
+    "&.is-active": {
         border: "2px solid black",
         fontWeight: '700'
     }
@@ -326,57 +326,56 @@ const OrderPayment = () => {
     const sizeState = useRecoilValue(sizeStateAtom);
     const productDetail = useRecoilValue(productDetailAtom);
     const [userAddress, setUserAddress] = useRecoilState(userAddressAtom);
+    const [deliveryAddress, setDeliveryAddress] = useState(null);
     const [userPoint, setUserPoint] = useRecoilState(userPointAtom);
     const [wishPrice, setWishPrice] = useRecoilState(wishPriceAtom);
     const param = useRecoilValue(paramAtom);
     const setCheck = useSetRecoilState(checkAtom);
     const navigate = useNavigate();
-    // console.log("1-1-1-1-1-1-1", wishPrice, userPoint);
-    console.log("🧧🎑🎑🎐🎐🎐🎏🎏", userAddress);
-    // console.log(
-    //   "오더페이먼트!!!!!!!!!!",
-    //   productDetail,
-    //   "사이즈--->",
-    //   sizeState,
-    //   size,
-    //   "waitDate",
-    //   waitDate
-    // );
+    const [sizePrice, setSizePrice] = useState(null);
 
     useEffect(() => {
         setWishPrice('');
-        if (productDetail === null) {
+        if (productDetail === null && sizeState === null) {
             if (param !== null) {
                 navigate(`/product/${param}`, {replace: true});
             } else {
                 navigate(`/shop`, {replace: true});
             }
-        }
+        } else {
 
-        if (priceState !== null) {
-            setValue("2");
-        }
+            if (priceState !== null) {
+                setValue("2");
+            }
 
-        axiosGetFunction(
-            `/api/kream/my/address/` + 1,
-            {user_no: user},
-            token,
-            setToken
-        ).then(res => {
-            setUserAddress(res.data.data.address);
-        });
-        axiosGetFunction(
-            `/api/kream/my/point/` + 1,
-            {user_no: user},
-            token,
-            setToken
-        ).then(res => {
-            setUserPoint(res.data.data.point);
-        });
+            axiosGetFunction(`/api/kream/product/size/detail/${sizeState.no}`, {}, token, setToken).then(res => {
+                console.log(res);
+                setSizePrice(res.data.data.purchase.price);
+            })
+
+            axiosGetFunction(
+                `/api/kream/my/address/${user}`,
+                {},
+                token,
+                setToken
+            ).then(res => {
+                setUserAddress(res.data.data.address);
+                userAddress.length > 0 ? setDeliveryAddress(userAddress[0]) : setDeliveryAddress(null);
+                console.log(userAddress);
+            });
+            axiosGetFunction(
+                `/api/kream/my/point/${user}`,
+                {},
+                token,
+                setToken
+            ).then(res => {
+                setUserPoint(res.data.data.point);
+            });
+        }
     }, []);
 
-    const handleChange = (event, newValue) => {
-        console.log(1, event, newValue);
+
+    const handleTabChange = (event, newValue) => {
         setValue(newValue);
     };
     const handleChangeButton = e => {
@@ -395,7 +394,6 @@ const OrderPayment = () => {
         var month = ("0" + (1 + date.getMonth())).slice(-2);
         var day = ("0" + (waitDate + date.getDate())).slice(-2);
         if (day > 30) {
-            console.log(month, day, waitDate, day - waitDate, Number(month));
             return year + "/" + (Number(month) + 1) + "/" + (day - waitDate);
         } else {
             return year + "/" + month + "/" + day;
@@ -415,6 +413,14 @@ const OrderPayment = () => {
         }
         return result;
     };
+
+    const sendPurchase = (e) => {
+        if(deliveryAddress) {
+            console.log('a')
+        } else {
+            alert('주소를 등록해주세요.');
+        }
+    }
     // const handleChangeListValue = (event, newValue) => {
     //   console.log(2, event, newValue);
     //   setListValue(newValue);
@@ -445,8 +451,8 @@ const OrderPayment = () => {
                                 <Stack flexDirection="row">
                                     <Box sx={BoxStyle}>
                                         <Typography sx={subText}>즉시 구매가</Typography>
-                                        <Typography>{productDetail.direct_purchase_price
-                                            ? productDetail.direct_purchase_price.toLocaleString() + '원'
+                                        <Typography>{sizePrice
+                                            ? sizePrice.toLocaleString() + '원'
                                             : "-"}</Typography>
                                     </Box>
                                     <Box sx={BoxStyle}>
@@ -457,17 +463,16 @@ const OrderPayment = () => {
                                     </Box>
                                 </Stack>
                                 <TabContext value={value}>
-                                    {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}> */}
                                     <TabList
                                         sx={tabListStyle}
                                         variant="fullWidth"
                                         TabIndicatorProps={{hidden: true}}
-                                        onChange={handleChange}
+                                        onChange={handleTabChange}
                                         aria-label="lab API tabs example">
                                         <Tab sx={tabStyle} label="구매 입찰" value="1"/>
-                                        <Tab sx={tabStyle} label="즉시 구매" value="2" disabled={productDetail.direct_purchase_price === null}/>
+                                        <Tab sx={tabStyle} label="즉시 구매" value="2"
+                                             disabled={sizePrice === null}/>
                                     </TabList>
-                                    {/* </Box> */}
                                     <Box>
                                         <TabPanel sx={panelStyle} value="1">
                                             <Box>
@@ -475,23 +480,35 @@ const OrderPayment = () => {
                                                     <PriceInputBox>
                                                         <Typography sx={subTitle}>구매 희망가</Typography>
                                                         <span>
-                        <input
-                            onChange={event => {
-                                if (Number(event.target.value.replaceAll(',', '')) > 9999999) {
-                                    alert('판매가는 1000만원을 넘길 수 없습니다.');
-                                    event.preventDefault();
-                                } else {
-                                    setWishPrice(addComma(event));
-                                }
-                            }}
-                            placeholder="희망가 입력"
-                            required
-                            autoComplete="off"
-                            value={wishPrice}
-                            pattern="^\d{0,8}(\.\d{1,4})?$"
-                        />
-                        원
-                      </span>
+                                                            <input
+                                                                onChange={event => {
+                                                                    if (!isNaN(event.target.value.replaceAll(',', '') * 1)) {
+                                                                        const n = Number(event.target.value.replaceAll(',', ''));
+                                                                        if (n > 9999999) {
+                                                                            alert('판매가는 1000만원을 넘길 수 없습니다.');
+                                                                            event.preventDefault();
+                                                                        } else {
+                                                                            setWishPrice(addComma(event));
+                                                                        }
+                                                                    } else {
+                                                                        event.preventDefault();
+                                                                    }
+                                                                }}
+                                                                onBlur={(e) => {
+                                                                    const n = Number(e.target.value.replaceAll(',', ''));
+                                                                    if (sizePrice && n >= sizePrice) {
+                                                                        setWishPrice('')
+                                                                        setValue('2');
+                                                                    }
+                                                                }}
+                                                                placeholder="희망가 입력"
+                                                                required
+                                                                autoComplete="off"
+                                                                value={wishPrice}
+                                                                pattern="^\d{0,8}(\.\d{1,4})?$"
+                                                            />
+                                                            원
+                                                        </span>
                                                     </PriceInputBox>
                                                     <Typography
                                                         sx={{
@@ -514,10 +531,6 @@ const OrderPayment = () => {
                                                             sx={{mt: "7px"}}
                                                             direction="row"
                                                             justifyContent="space-between">
-                                                            {/* <ButtonGroup
-                      fullWidth
-                      size="large"
-                      aria-label="outlined primary button group"> */}
                                                             <Button
                                                                 onClick={() => {
                                                                     setWaitDate(1);
@@ -558,7 +571,6 @@ const OrderPayment = () => {
                                                                 sx={dateButton}>
                                                                 60일
                                                             </Button>
-                                                            {/* </ButtonGroup> */}
                                                         </Stack>
                                                     </Stack>
                                                 </Box>
@@ -574,6 +586,7 @@ const OrderPayment = () => {
                                                         setFinalPage(!finalPage);
                                                     }}
                                                     type="buy_step3"
+                                                    input={!(wishPrice !== '' && wishPrice * 1 !== 0)}
                                                 />
                                             </Box>
                                         </TabPanel>
@@ -603,6 +616,12 @@ const OrderPayment = () => {
                                                 </Stack>
                                                 <OrderButton
                                                     onClick={() => {
+                                                        const c = [];
+                                                        for (let i = 0; i < CHECK_TEXT.length + 1; i++) {
+                                                            c.push(false);
+                                                        }
+                                                        setCheck(c);
+                                                        setWishPrice(sizePrice.toLocaleString())
                                                         setFinalPage(!finalPage);
                                                     }}
                                                     type="buy_step4"
@@ -618,26 +637,35 @@ const OrderPayment = () => {
                                     <div className="section delivery_box">
                                         <div className="section_title">
                                             <h3>배송 주소</h3>
-                                            <AddAddressModal/>
+                                            <AddAddressModal setDeliveryAddress={setDeliveryAddress}/>
                                         </div>
-                                        <div className="delivery_info">
-                                            <table>
-                                                <tr>
-                                                    <th>받는 분</th>
-                                                    <td>{userAddress[0].name}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>연락처</th>
-                                                    <td>{userAddress[0].phone_number}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>배송 주소</th>
-                                                    <td>{userAddress[0].address_detail}</td>
-                                                </tr>
-                                            </table>
-                                            <AddressChangeModal/>
-                                        </div>
-                                        <DeliveryRequireModal/>
+                                        {
+                                            deliveryAddress ? <>
+                                                    <div className="delivery_info">
+                                                        <table>
+                                                            <tr>
+                                                                <th>받는 분</th>
+                                                                <td>{deliveryAddress.name}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>연락처</th>
+                                                                <td>{deliveryAddress.phone_number}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>배송 주소</th>
+                                                                <td>{`${deliveryAddress.address} ${deliveryAddress.address_detail}`}</td>
+                                                            </tr>
+                                                        </table>
+                                                        <AddressChangeModal/>
+                                                    </div>
+                                                    <DeliveryRequireModal/>
+                                                </>
+                                                : <h4 style={{
+                                                    textAlign: 'center',
+                                                    color: 'rgba(34, 34, 34, 0.7)',
+                                                    fontSize: '14px'
+                                                }}>주소가 등록되어 있지 않습니다. 주소를 등록해 주세요.</h4>
+                                        }
                                         <div className="section_title">
                                             <h3>배송 방법</h3>
                                         </div>
@@ -676,7 +704,7 @@ const OrderPayment = () => {
                                             보유 포인트
                                         </Box>
                                         <Box component="span" sx={{marginLeft: "8px"}}>
-                                            {userPoint.point}P
+                                            {userPoint !== null ? userPoint.point : 0}P
                                         </Box>
                                     </div>
                                 </Box>
@@ -687,12 +715,12 @@ const OrderPayment = () => {
                                         </div>
                                         <PriceInputBox>
                                             <Typography sx={subTitle}>총 결제금액</Typography>
-                                            <span>{Number(wishPrice) + 9000 + 3000}원</span>
+                                            <span>{(Number(wishPrice.replaceAll(',', '')) + 9000 + 3000).toLocaleString()}원</span>
                                         </PriceInputBox>
                                         <FinalInfoTable>
                                             <tr>
                                                 <th>구매 희망가</th>
-                                                <td>{wishPrice}</td>
+                                                <td>{wishPrice.toLocaleString()}원</td>
                                             </tr>
                                             <tr>
                                                 <th>포인트</th>
@@ -704,16 +732,18 @@ const OrderPayment = () => {
                                             </tr>
                                             <tr>
                                                 <th>수수료</th>
-                                                <td>9,000</td>
+                                                <td>9,000원</td>
                                             </tr>
                                             <tr>
                                                 <th>배송비</th>
-                                                <td>3,000</td>
+                                                <td>3,000원</td>
                                             </tr>
-                                            <tr className="bid_final_date">
-                                                <th>입찰 마감 기한</th>
-                                                <td>서울 강남구 ㅇㅇㅇ ㅇㅇㅇ동</td>
-                                            </tr>
+                                            {
+                                                sizePrice !== wishPrice ? <tr className="bid_final_date">
+                                                    <th>입찰 마감 기한</th>
+                                                    <td>{getToday(waitDate)}</td>
+                                                </tr> : null
+                                            }
                                         </FinalInfoTable>
                                     </div>
                                 </Box>
@@ -722,86 +752,7 @@ const OrderPayment = () => {
                                         <div className="section_title">
                                             <h3>결제 방법</h3>
                                         </div>
-                                        {/* {"구매입찰" && <PaymentContainerBid>
-                <div>
-                  <span className="front">카드 간편결제</span>
-                  <span className="back">일시불</span>
-                </div>
-                <Button
-                  sx={{
-                    color: "rgba(34, 34, 34, 0.3)",
-                    border: "1px solid #ebebeb",
-                    margin: "0",
-                    width: "636px",
-                    padding: "20px 12px",
-                    textAlign: "left",
-                    display: "block",
-                    marginTop: "12px",
-                    borderRadius: "10px",
-                  }}>
-                  카드를 등록해주세요
-                </Button>
-                <p>
-                  구매 입찰은 일시불만 지원하며, 카드사 홈페이지나 앱에서 분할
-                  납부로 변경 가능합니다. 단, 카드사별 정책에 따라 분할 납부
-                  변경 시 수수료가 발생할 수 있습니다.
-                </p>
-              </PaymentContainerBid>} */}
-                                        {"즉시구매" && (
-                                            <PaymentContainerBuy>
-                                                <p>계좌 간편결제</p>
-                                                <Button
-                                                    sx={{
-                                                        color: "rgba(34, 34, 34, 0.3)",
-                                                        border: "1px solid #ebebeb",
-                                                        margin: "0",
-                                                        width: "636px",
-                                                        padding: "20px 12px",
-                                                        textAlign: "left",
-                                                        display: "block",
-                                                        marginTop: "12px",
-                                                        borderRadius: "10px",
-                                                    }}>
-                                                    계좌를 등록해주세요
-                                                </Button>
-                                                <div>
-                                                    <span className="front">카드 간편결제</span>
-                                                    <span className="back">일시불</span>
-                                                </div>
-                                                <Button
-                                                    sx={{
-                                                        color: "rgba(34, 34, 34, 0.3)",
-                                                        border: "1px solid #ebebeb",
-                                                        margin: "0",
-                                                        width: "636px",
-                                                        padding: "20px 12px",
-                                                        textAlign: "left",
-                                                        display: "block",
-                                                        marginTop: "12px",
-                                                        borderRadius: "10px",
-                                                    }}>
-                                                    카드를 등록해주세요
-                                                </Button>
-                                                <div>
-                                                    <span className="front">일반 결제</span>
-                                                    <span className="back">일시불</span>
-                                                </div>
-                                                <Button
-                                                    sx={{
-                                                        color: "#222",
-                                                        border: "1px solid #ebebeb",
-                                                        margin: "0",
-                                                        width: "636px",
-                                                        padding: "20px 12px",
-                                                        textAlign: "left",
-                                                        display: "block",
-                                                        marginTop: "12px",
-                                                        borderRadius: "10px",
-                                                    }}>
-                                                    신용카드
-                                                </Button>
-                                            </PaymentContainerBuy>
-                                        )}
+                                        <h5 style={{textAlign: 'center'}}>결제 미구현</h5>
                                     </div>
                                 </Box>
                                 <Box sx={{padding: "32px 32px"}}>
@@ -814,19 +765,15 @@ const OrderPayment = () => {
                                                 content={item.content}
                                             />
                                         ))}
-                                        {/* <CheckArea status={false} />
-      <CheckArea />
-      <CheckArea />
-      <CheckArea /> */}
-                                        <CheckArea title="구매 조건을 모두 확인하였으며, 거래 진행에 동의합니다"/>
+                                        <CheckArea title="구매 조건을 모두 확인하였으며, 거래 진행에 동의합니다" no={CHECK_TEXT.length}/>
                                         <Stack direction="row" justifyContent="space-between">
                                             <Typography sx={subTitle}>총 결제금액</Typography>
                                             <Typography
                                                 sx={{fontSize: "20px", color: "#f15746", fontWeight: 700}}>
-                                                {Number(wishPrice) + 9000 + 3000}원
+                                                {(Number(wishPrice.replaceAll(',', '')) + 9000 + 3000).toLocaleString()}원
                                             </Typography>
                                         </Stack>
-                                        <OrderButton type="buy_step2"/>
+                                        <OrderButton type="buy_step2" onClick={sendPurchase}/>
                                     </CheckContainer>
                                 </Box>
                             </>

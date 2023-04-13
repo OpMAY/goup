@@ -5,6 +5,7 @@ import {userAtom, paramAtom, sizeStateAtom, checkAtom, priceStateAtom} from "../
 import { useRecoilValue } from "recoil";
 
 const Button = styled.button`
+  cursor: pointer;
   width: 100%;
   border-radius: 10px;
   padding: 16px 18px;
@@ -38,24 +39,15 @@ const Button = styled.button`
   }
 `;
 
-const OrderButton = ({ type, onClick }) => {
+const OrderButton = ({ type, onClick, input = false }) => {
   const param = useRecoilValue(paramAtom);
   const size = useRecoilValue(sizeStateAtom);
   const check = useRecoilValue(checkAtom);
   const priceState = useRecoilValue(priceStateAtom);
 
-  const btnDisable = () => {
-    // if(!check.every(v => v === true)) {
-    //   return 'disabled'
-    // } else {
-    //   return null;
-    // }
-    return check.length > 0 && !check.every(v => v === true);
-  }
-
   return (
       <Button
-          disabled={check.length > 0 ? !check.every(v => v === true) : false}
+          disabled={(type === 'buy_step3' || type === 'sell_step3') ? input : (check.length > 0 ? !check.every(v => v === true) : false)}
           onClick={onClick}>
       {type === "buy_step1" && (
         <Link to={`/buy/check/${param}?size=${size.size}&type=buy`}>

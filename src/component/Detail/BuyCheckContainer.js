@@ -35,7 +35,7 @@ const BuyCheckContainer = () => {
       <SelectProductItem />
       <hr />
       {CHECK_TEXT.map((item, id) => (
-        <CheckArea key={id} title={item.title} content={item.content} no={id} />
+        <CheckArea key={id} title={item.title} content={item.content} no={id} isModal={id === 0} />
       ))}
 
       <OrderButton type="buy_step2" />

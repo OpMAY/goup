@@ -4,26 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="Changes">
+    <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atoms/atom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/atoms/atom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Detail/BuyCheckContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/BuyCheckContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/BuySelectContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/BuySelectContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/DetailInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/MultiSizeSelect.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/MultiSizeSelect.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/CheckArea.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/CheckArea.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/DeliveryIconBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/DeliveryIconBox.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Detail/OrderButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/OrderButton.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Detail/OrderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/OrderPayment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/ProductGraph.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/ProductGraph.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/SelectProductItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SelectProductItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellCheckContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellCheckContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellSelectContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellSelectContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/CheckingModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/CheckingModal/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/SizeButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/SizeButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/Kakao.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/Kakao.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/AddAddressModal/TwoButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/AddAddressModal/TwoButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/AddAddressModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/AddAddressModal/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,24 +45,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2022.2.1\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/atoms" />

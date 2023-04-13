@@ -30,7 +30,7 @@ const CheckAreaBox = styled.div`
   }
 `;
 
-const CheckArea = ({ title, content, no }) => {
+const CheckArea = ({ title, content, no, isModal = false }) => {
     const [check, setCheck] = useRecoilState(checkAtom);
 
     const handleCheck = (e) => {
@@ -46,7 +46,7 @@ const CheckArea = ({ title, content, no }) => {
         {content ? <p className="sub_text">{content}</p> : null}
       </div>
         {
-            no === 0 ? <CheckingModal /> : <Checkbox
+            isModal ? <CheckingModal /> : <Checkbox
                 value={no}
                 checked={check[no]}
                 sx={{
