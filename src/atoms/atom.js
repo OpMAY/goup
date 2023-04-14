@@ -1,7 +1,11 @@
 import {atom} from "recoil";
 import {recoilPersist} from "recoil-persist";
 
-// [Product] 모든 상품 브랜드들
+const {persistAtom} = recoilPersist({
+    key: "내맘대로 정하는 키 이름",
+    storage: sessionStorage,
+});
+
 export const productAtom = atom({
     key: "product",
     default: [],
@@ -22,7 +26,8 @@ export const sizeAtom = atom({
 // 파라미터
 export const paramAtom = atom({
     key: "param",
-    default: 1,
+    default: null,
+    effects_UNSTABLE: [persistAtom],
 });
 
 export const filterChangeAtom = atom({
@@ -32,8 +37,13 @@ export const filterChangeAtom = atom({
 
 export const sizeStateAtom = atom({
     key: "sizeState",
-    default: "모든 사이즈",
+    default: null,
 });
+
+export const priceStateAtom = atom({
+    key: 'priceState',
+    default: null
+})
 
 export const isToggleAtom = atom({
     key: "isToggle",
@@ -44,11 +54,6 @@ export const bookMarkToggleAtom = atom({
     key: 'bookMarkToggle',
     default: false
 })
-
-const {persistAtom} = recoilPersist({
-    key: "내맘대로 정하는 키 이름",
-    storage: sessionStorage,
-});
 
 export const userAtom = atom({
     key: "user",
@@ -160,6 +165,11 @@ export const productOrderAtom = atom({
 export const wishPriceAtom = atom({
     key : 'wishPrice',
     default : ""
+})
+
+export const checkAtom = atom({
+    key : 'check',
+    default: [],
 })
 
 // [Notice] 고객센터 모든 질문답변들

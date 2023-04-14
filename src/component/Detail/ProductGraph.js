@@ -171,12 +171,12 @@ const ProductGraph = () => {
         <span>
           <select onChange={handleSize} name="size" className="size_select">
             <option className="default_option" value="all" defaultValue>
-              {sizeState}
+              {sizeState ? sizeState.size : '모든 사이즈'}
             </option>
-            {size &&
+            {size && size[0].size !== 'ONE SIZE' &&
               size.map((item, id) => (
                 <option key={id} value={item.size}>
-                  {item.size}
+                  {item.size !== null ? item.size : '모든 사이즈'}
                 </option>
               ))}
           </select>

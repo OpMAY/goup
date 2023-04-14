@@ -75,7 +75,8 @@ const BtnBox = styled.div`
 // footer bottom 
 const FooterBottom = styled.div`
   position: relative;
-  margin-top: 30px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   box-sizing: border-box;             
   
   ul{
@@ -105,7 +106,7 @@ const FooterBottom = styled.div`
 `
 const SnsBox = styled.div`
   position: absolute;
-  top: 0;
+  top: 50px;
   right: 0;
   ul{
     display: flex;
@@ -162,7 +163,7 @@ const Guide = styled.div`
   }
 `
 const Notice = styled.div`
-  display: flex;c
+  display: flex;
   font-size: 12px;
   color: rgba(34,34,34,.5);
   align-items: end;

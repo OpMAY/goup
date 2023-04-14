@@ -1,7 +1,7 @@
 import React from "react";
 import { Stack, Button } from "@mui/material";
 
-const TwoButton = ({ handleClose, solid, padding, disabled }) => {
+const TwoButton = ({ handleClose, solid, padding, disabled, onConfirm }) => {
   return (
     <Stack
       direction="row"
@@ -27,6 +27,7 @@ const TwoButton = ({ handleClose, solid, padding, disabled }) => {
       <Button
         disabled={disabled}
         variant="contained"
+        onClick={onConfirm}
         sx={{
           backgroundColor: "#222",
           color: "#fff",

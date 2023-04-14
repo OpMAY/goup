@@ -5,7 +5,7 @@ import FilterSide from '../../component/Shop/FilterSide';
 import ShopList from '../../component/Shop/ShopList';
 import ClearIcon from '@mui/icons-material/Clear';
 import {useNavigate} from "react-router-dom";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {filterChangeAtom} from "../../atoms/atom";
 
 const ShopBlock = styled.div`
@@ -106,7 +106,7 @@ function setFilterInit() {
 
 const ItemAll = () => {
     const filters = setFilterInit();
-    const [filterChange, setFilterChange] = useRecoilState(filterChangeAtom);
+    const setFilterChange = useSetRecoilState(filterChangeAtom);
     const [searchText, setSearchText] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {

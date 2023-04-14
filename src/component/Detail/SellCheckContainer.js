@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import SelectProductItem from "./SelectProductItem";
 import CheckArea from "./CheckArea";
 import OrderButton from "./OrderButton";
-import CheckingModal from "../modal/CheckingModal";
+import {useRecoilState} from "recoil";
+import {checkAtom} from "../../atoms/atom";
 
 const CheckContainer = styled.div`
   .notice {
@@ -23,18 +24,18 @@ const CheckContainer = styled.div`
 `;
 
 const SellCheckContainer = () => {
+
   return (
     <CheckContainer>
       <p className="notice">
         <span className="strong">판매</span>
         하시기 전에 꼭 확인하세요.
       </p>
-      <CheckingModal />
       <SelectProductItem />
       {/* <Hr margin="20px 0 0;" /> */}
       <hr />
       {CHECK_TEXT.map((item, id) => (
-        <CheckArea key={id} title={item.title} content={item.content} />
+        <CheckArea key={id} title={item.title} content={item.content} no={id} />
       ))}
       <OrderButton type="sell_step2" />
     </CheckContainer>

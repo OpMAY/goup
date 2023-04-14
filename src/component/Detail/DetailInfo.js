@@ -231,12 +231,22 @@ const DetailInfo = () => {
   const [ScrollY, setScrollY] = useState(0);
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
+    console.log('scrollY : ', ScrollY)
   };
 
+  const calcOffset = () => {
+    const bind = document.querySelector('.column_bind');
+    const box = document.querySelector('.column_box');
+    return bind && box ? bind.offsetHeight - box.offsetHeight : 1290;
+  }
 
-  console.log(111, size, sizeState);
+
+  // console.log(111, size, sizeState);
   // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
   useEffect(() => {
+    if(sizeState) {
+      setSizeState(null);
+    }
     axiosGetFunction(
       `/api/kream/product/size/` + param,
       { user_no: 1 },
@@ -245,11 +255,11 @@ const DetailInfo = () => {
     ).then(res => {
       setSize(res.data.data.sizes);
       res.data.data.sizes[0].size === "ONE SIZE" &&
-        setSizeState(res.data.data.sizes[0].size);
+        setSizeState({size: res.data.data.sizes[0].size, no: res.data.data.sizes[0].no});
     });
   }, []);
 
-  console.log('->>>>>>>>>>>>',size)
+  // console.log('->>>>>>>>>>>>',size)
 
   useEffect(() => {
     const watch = () => {
@@ -270,9 +280,9 @@ const DetailInfo = () => {
             <div className="spread">{/* stay empty */}</div>
             <ColumnBox
               className="column_box"
-              position={ScrollY < 1430 ? "fixed;" : "absolute;"}
-              top={ScrollY < 1430 ? "140px;" : "auto;"}
-              bottom={ScrollY < 1430 ? "auto;" : "0px;"}>
+              position={ScrollY < calcOffset() ? "fixed;" : "absolute;"}
+              top={ScrollY < calcOffset() ? "140px;" : "auto;"}
+              bottom={ScrollY < calcOffset() ? "auto;" : "0px;"}>
               <Swiper
                 pagination={{ clickable: true }}
                 navigation={true}
@@ -340,7 +350,6 @@ const DetailInfo = () => {
           </div>
         </div>
       </div>
-      <div className="content content_bottom">밑에 내용</div>
     </Container>
   );
 };
