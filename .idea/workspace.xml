@@ -6,7 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/BuySelectContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/BuySelectContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/OrderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/OrderPayment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellCheckContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellCheckContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellSelectContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellSelectContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Login/LoginButtonBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Login/LoginButtonBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/AddAddressModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/AddAddressModal/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/AddressChangeModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/AddressChangeModal/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/CustomAxios.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/CustomAxios.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -206,7 +206,7 @@ const FinalInfoTable = styled.table`
     }
 
     td {
-      width: 540px;
+      width: 568px;
       text-align: right;
     }
   }
@@ -293,7 +293,11 @@ const SellOrderPayment = () => {
     const [wishPrice, setWishPrice] = useRecoilState(wishPriceAtom);
     const setCheck = useSetRecoilState(checkAtom);
     const navigate = useNavigate();
-    const [sizePrice, setSizePrice] = useState(null);
+    const [directPrice, setDirectPrice] = useState(null);
+    const [directReversePrice, setDirectReversePrice] = useState(null);
+    const [resendAddress, setResendAddress] = useState(null);
+    const [userAccount, setUserAccount] = useState(null);
+
 
     useEffect(() => {
         setWishPrice('');
@@ -303,32 +307,47 @@ const SellOrderPayment = () => {
             } else {
                 navigate(`/shop`, {replace: true});
             }
-        }
+        } else {
+            if (priceState !== null) {
+                setValue("2");
+            }
 
-        if (priceState !== null) {
-            setValue("2");
-        }
-        axiosGetFunction(`/api/kream/product/size/detail/${sizeState.no}`,{}, token, setToken).then(res => {
-            console.log(res);
-            setSizePrice(res.data.data.sell.price);
-        })
+            axiosGetFunction(`/api/kream/product/size/detail/${sizeState.no}`, {}, token, setToken).then(res => {
+                setDirectPrice(res.data.data.sell.price);
+                setDirectReversePrice(res.data.data.purchase.price);
+            })
 
-        axiosGetFunction(
-            `/api/kream/my/address/` + 1,
-            {user_no: user},
-            token,
-            setToken
-        ).then(res => {
-            setUserAddress(res.data.data.address);
-        });
-        axiosGetFunction(
-            `/api/kream/my/point/` + 1,
-            {user_no: user},
-            token,
-            setToken
-        ).then(res => {
-            setUserPoint(res.data.data.point);
-        });
+            axiosGetFunction(`/api/kream/my/account/${user}`, {}, token, setToken).then((res) => {
+                setUserAccount(res.data.data.accountInfo)
+            })
+
+            axiosGetFunction(
+                `/api/kream/my/address/${user}`,
+                {},
+                token,
+                setToken
+            ).then(res => {
+                const arr = res.data.data.address
+                if (arr.length > 0) {
+                    const idx = arr.findIndex(x => x._default_address);
+                    const default_add = arr[idx]
+                    arr.splice(idx, 1);
+                    arr.unshift(default_add)
+                    setResendAddress(default_add);
+                } else {
+                    setResendAddress(null);
+                }
+                setUserAddress(arr)
+            });
+            axiosGetFunction(
+                `/api/kream/my/point/${user}`,
+                {},
+                token,
+                setToken
+            ).then(res => {
+                setUserPoint(res.data.data.point);
+            });
+        }
     }, []);
 
     const checkInit = () => {
@@ -399,13 +418,15 @@ const SellOrderPayment = () => {
                             <Stack flexDirection="row">
                                 <Box sx={BoxStyle}>
                                     <Typography sx={subText}>즉시 구매가</Typography>
-                                    <Typography>{resultPurchase()}</Typography>
+                                    <Typography>{directReversePrice
+                                        ? directReversePrice.toLocaleString() + '원'
+                                        : "-"}</Typography>
                                 </Box>
                                 <Box sx={BoxStyle}>
                                     <Typography sx={subText}>즉시 판매가</Typography>
                                     <Typography>
-                                        {sizePrice
-                                            ? sizePrice.toLocaleString() + '원'
+                                        {directPrice
+                                            ? directPrice.toLocaleString() + '원'
                                             : "-"}
                                     </Typography>
                                 </Box>
@@ -419,7 +440,7 @@ const SellOrderPayment = () => {
                                     aria-label="lab API tabs example">
                                     <Tab sx={tabStyle} label="판매 입찰" value="1"/>
                                     <Tab sx={tabStyle} label="즉시 판매" value="2"
-                                         disabled={sizePrice === null}/>
+                                         disabled={directPrice === null}/>
                                 </TabList>
                                 {/* </Box> */}
                                 <Box>
@@ -427,25 +448,37 @@ const SellOrderPayment = () => {
                                         <Box>
                                             <Box>
                                                 <PriceInputBox>
-                                                    <Typography sx={subTitle}>구매 희망가</Typography>
+                                                    <Typography sx={subTitle}>판매 희망가</Typography>
                                                     <span>
-                        <input
-                            onChange={event => {
-                                if (Number(event.target.value.replaceAll(',', '')) > 9999999) {
-                                    alert('판매가는 1000만원을 넘길 수 없습니다.');
-                                    event.preventDefault();
-                                } else {
-                                    setWishPrice(addComma(event));
-                                }
-                            }}
-                            required
-                            autoComplete="off"
-                            value={wishPrice}
-                            placeholder="희망가 입력"
-                            pattern="^\d{0,8}(\.\d{1,4})?$"
-                        />
-                        원
-                      </span>
+                                                        <input
+                                                            onChange={event => {
+                                                                if (!isNaN(event.target.value.replaceAll(',', '') * 1)) {
+                                                                    const n = Number(event.target.value.replaceAll(',', ''));
+                                                                    if (n > 9999999) {
+                                                                        alert('구매가는 1000만원을 넘길 수 없습니다.');
+                                                                        event.preventDefault();
+                                                                    } else {
+                                                                        setWishPrice(addComma(event));
+                                                                    }
+                                                                } else {
+                                                                    event.preventDefault();
+                                                                }
+                                                            }}
+                                                            onBlur={(e) => {
+                                                                const n = Number(e.target.value.replaceAll(',', ''));
+                                                                if (directPrice && n <= directPrice) {
+                                                                    setWishPrice('')
+                                                                    setValue('2');
+                                                                }
+                                                            }}
+                                                            required
+                                                            autoComplete="off"
+                                                            value={wishPrice}
+                                                            placeholder="희망가 입력"
+                                                            pattern="^\d{0,8}(\.\d{1,4})?$"
+                                                        />
+                                                        원
+                                                  </span>
                                                 </PriceInputBox>
                                                 <Typography
                                                     sx={{
@@ -521,9 +554,15 @@ const SellOrderPayment = () => {
                                             </Stack>
                                             <OrderButton
                                                 onClick={() => {
+                                                    const c = [];
+                                                    for (let i = 0; i < CHECK_TEXT.length + 1; i++) {
+                                                        c.push(false);
+                                                    }
+                                                    setCheck(c);
                                                     setFinalPage(!finalPage);
                                                 }}
                                                 type="sell_step3"
+                                                input={!(wishPrice !== '' && wishPrice * 1 !== 0)}
                                             />
                                         </Box>
                                     </TabPanel>
@@ -557,6 +596,12 @@ const SellOrderPayment = () => {
                                             </Stack>
                                             <OrderButton
                                                 onClick={() => {
+                                                    const c = [];
+                                                    for (let i = 0; i < CHECK_TEXT.length + 1; i++) {
+                                                        c.push(false);
+                                                    }
+                                                    setCheck(c);
+                                                    setWishPrice(directPrice.toLocaleString())
                                                     setFinalPage(!finalPage);
                                                 }}
                                                 type="sell_step4"
@@ -597,26 +642,36 @@ const SellOrderPayment = () => {
                                 <div className="section delivery_box">
                                     <div className="section_title">
                                         <h3>반송 주소</h3>
-                                        <AddAddressModal/>
+                                        <AddAddressModal setParamAddress={setResendAddress}/>
                                     </div>
-                                    <div className="delivery_info">
-                                        <table>
-                                            <tr>
-                                                <th>받는 분</th>
-                                                <td>{userAddress[0].name}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>연락처</th>
-                                                <td>{userAddress[0].phone_number}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>배송 주소</th>
-                                                <td>{userAddress[0].address_detail}</td>
-                                            </tr>
-                                        </table>
-                                        <AddressChangeModal/>
-                                    </div>
-                                    <DeliveryRequireModal/>
+                                    {
+                                        resendAddress ? <>
+                                                <div className="delivery_info">
+                                                    <table>
+                                                        <tr>
+                                                            <th>받는 분</th>
+                                                            <td>{resendAddress.name}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>연락처</th>
+                                                            <td>{resendAddress.phone_number}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>배송 주소</th>
+                                                            <td>{`${resendAddress.address} ${resendAddress.address_detail}`}</td>
+                                                        </tr>
+                                                    </table>
+                                                    <AddressChangeModal paramAddress={resendAddress}
+                                                                        setParamAddress={setResendAddress}/>
+                                                </div>
+                                                <DeliveryRequireModal/>
+                                            </>
+                                            : <h4 style={{
+                                                textAlign: 'center',
+                                                color: 'rgba(34, 34, 34, 0.7)',
+                                                fontSize: '14px'
+                                            }}>주소가 등록되어 있지 않습니다. 주소를 등록해 주세요.</h4>
+                                    }
                                     <div className="section_title">
                                         <h3>발송 방법</h3>
                                     </div>
@@ -630,12 +685,12 @@ const SellOrderPayment = () => {
                                     </div>
                                     <PriceInputBox>
                                         <Typography sx={subTitle}>정산금액</Typography>
-                                        <span>{Number(wishPrice) + 9000 + 3000}원</span>
+                                        <span>{(Number(wishPrice.replaceAll(',', '')) - 9000).toLocaleString()}원</span>
                                     </PriceInputBox>
                                     <FinalInfoTable>
                                         <tr>
                                             <th>즉시 판매가</th>
-                                            <td>{wishPrice ? wishPrice : "120,000원"}</td>
+                                            <td>{wishPrice.toLocaleString()}원</td>
                                         </tr>
                                         <tr>
                                             <th>검수비</th>
@@ -678,35 +733,7 @@ const SellOrderPayment = () => {
                                     <div className="section_title">
                                         <h3>패널티 결제 방법</h3>
                                     </div>
-                                    {"즉시구매" && (
-                                        <PaymentContainerBuy>
-                                            <div>
-                                                <span className="front">카드 간편결제</span>
-                                                <span className="back">일시불</span>
-                                            </div>
-                                            <Button
-                                                sx={{
-                                                    color: "rgba(34, 34, 34, 0.8)",
-                                                    border: "1px solid #ebebeb",
-                                                    margin: "0",
-                                                    width: "636px",
-                                                    padding: "20px 12px",
-                                                    textAlign: "left",
-                                                    display: "block",
-                                                    marginTop: "12px",
-                                                    borderRadius: "10px",
-                                                    backgroundColor: "#fafafa",
-                                                }}>
-                                                카드를 등록해주세요
-                                            </Button>
-                                            <p>
-                                                - 페널티는 일시불만 지원하며, 카드사 홈페이지나 앱에서
-                                                분할납부로 변경 가능합니다. 단, 카드사별 정책에 따라 분할
-                                                납부 변경 시 수수료가 발생할 수 있습니다.
-                                                <br/>- 수수료(페널티, 착불배송비 등)가 정산되지 않을 경우, 별도 고시 없이 해당 금액을 결제 시도 할 수 있습니다.
-                                            </p>
-                                        </PaymentContainerBuy>
-                                    )}
+                                    <h5 style={{textAlign: 'center'}}>결제 미구현</h5>
                                 </div>
                             </Box>
                             <Box sx={{padding: "32px 32px"}}>
@@ -724,7 +751,7 @@ const SellOrderPayment = () => {
                                         <Typography sx={subTitle}>정산금액</Typography>
                                         <Typography
                                             sx={{fontSize: "20px", color: "#31b46e", fontWeight: 700}}>
-                                            {Number(wishPrice) + 9000 + 3000}원
+                                            {(Number(wishPrice.replaceAll(',', '')) - 9000).toLocaleString()}원
                                         </Typography>
                                     </Stack>
                                     <OrderButton type="buy_step2"/>

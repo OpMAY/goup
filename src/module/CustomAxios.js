@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const DEFAULT_SERVER_URL = 'http://3.35.219.16';
+const DEFAULT_SERVER_URL = 'http://43.200.202.87';
+// const DEFAULT_SERVER_URL = 'http://localhost:8080';
 const DEFAULT_ACCESS_KEY = 'N4gdubumGsrvzFFzewu4hQ==';
 
 export const setDefaultAxios = () => {
