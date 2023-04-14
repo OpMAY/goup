@@ -81,9 +81,14 @@ const RecentPrice = styled.div`
 
   p {
     font-size: 13px;
-    color: rgb(241, 87, 70);
     margin: 0px;
     text-align: right;
+    &.plus {
+      color: rgb(241, 87, 70);
+    }
+    &.minus {
+      color: rgb(65, 185, 121);
+    }
   }
 `;
 
@@ -146,14 +151,14 @@ const ColumTop = () => {
                             <div className="detail">
                                 {productDetail.recent_order_price.toLocaleString()}원
                             </div>
-                            <p>
-                                {productDetail.recent_2nd_order_price -
-                                    productDetail.recent_order_price}
-                                (
+                            <p className={productDetail.recent_order_price - productDetail.recent_2nd_order_price > 0 ? 'plus' : productDetail.recent_order_price - productDetail.recent_2nd_order_price < 0 ? 'minus' : ''}>
                                 {((productDetail.recent_order_price -
+                                    productDetail.recent_2nd_order_price)).toLocaleString()}원
+                                (
+                                {Math.round((((productDetail.recent_order_price -
                                             productDetail.recent_2nd_order_price) /
                                         productDetail.recent_2nd_order_price) *
-                                    100}
+                                    100) * 10) / 10}
                                 %)
                             </p>
                         </div>
