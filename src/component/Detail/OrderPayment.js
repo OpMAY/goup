@@ -623,6 +623,11 @@ const OrderPayment = () => {
                                                 </Stack>
                                                 <OrderButton
                                                     onClick={() => {
+                                                        const c = [];
+                                                        for (let i = 0; i < CHECK_TEXT.length + 1; i++) {
+                                                            c.push(false);
+                                                        }
+                                                        setCheck(c);
                                                         setFinalPage(!finalPage);
                                                     }}
                                                     type="buy_step3"
