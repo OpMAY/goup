@@ -21,6 +21,7 @@ const LoginButton = styled.button`
   padding: 0;
   font-size: 16px;
   font-weight: 700;
+  cursor: pointer;
 
   .button_icon {
     width: 22px;
