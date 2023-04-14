@@ -6,15 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/BuyCheckContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/BuyCheckContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/CheckArea.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/CheckArea.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/DeliveryIconBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/DeliveryIconBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/OrderButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/OrderButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Detail/OrderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/OrderPayment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/AddAddressModal/TwoButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/AddAddressModal/TwoButton.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/modal/AddAddressModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/AddAddressModal/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/AddressChangeModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/AddressChangeModal/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/PostCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/PostCode.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

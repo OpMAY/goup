@@ -23,7 +23,7 @@ import {
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import DeliveryIconBox from "./DeliveryIconBox";
 import CheckArea from "./CheckArea";
-import {axiosGetFunction} from "../../module/CustomAxios";
+import {axiosGetFunction, axiosPostFunction} from "../../module/CustomAxios";
 import DeliveryRequireModal from "../modal/DeliveryRequireModal";
 import AddressChangeModal from "../modal/AddressChangeModal";
 import AddAddressModal from "../modal/AddAddressModal";
@@ -343,7 +343,6 @@ const OrderPayment = () => {
                 navigate(`/shop`, {replace: true});
             }
         } else {
-
             if (priceState !== null) {
                 setValue("2");
             }
@@ -359,9 +358,17 @@ const OrderPayment = () => {
                 token,
                 setToken
             ).then(res => {
-                setUserAddress(res.data.data.address);
-                userAddress.length > 0 ? setDeliveryAddress(userAddress[0]) : setDeliveryAddress(null);
-                console.log(userAddress);
+                const arr = res.data.data.address
+                if (arr.length > 0) {
+                    const idx = arr.findIndex(x => x._default_address);
+                    const default_add = arr[idx]
+                    arr.splice(idx, 1);
+                    arr.unshift(default_add)
+                    setDeliveryAddress(default_add);
+                } else {
+                    setDeliveryAddress(null);
+                }
+                setUserAddress(arr)
             });
             axiosGetFunction(
                 `/api/kream/my/point/${user}`,
@@ -400,6 +407,12 @@ const OrderPayment = () => {
         }
     }
 
+    function getLocalDate(days) {
+        const date = new Date();
+        date.setDate(date.getDate() + days);
+        return date.toISOString().split('T')[0];
+    }
+
     const resultPurchase = () => {
         let filtered = [];
         let result = "-";
@@ -415,22 +428,49 @@ const OrderPayment = () => {
     };
 
     const sendPurchase = (e) => {
-        if(deliveryAddress) {
-            console.log('a')
+        if (deliveryAddress) {
+            const method_s = sizePrice === wishPrice.replaceAll(',', '') * 1 ? '즉시 구매를' : '구매 입찰을'
+            if (window.confirm(method_s + ' 진행하시겠습니까?')) {
+                const s = {
+                    user_no: user,
+                    size_no: sizeState.no,
+                    purchase_agree: {},
+                    p_order_agree: {},
+                    purchase_type: sizePrice === wishPrice.replaceAll(',', '') * 1 ? 'DIRECT' : 'AUCTION',
+                    expiration_days: sizePrice === wishPrice.replaceAll(',', '') * 1 ? 0 : waitDate,
+                    // expiration_date: sizePrice === wishPrice ? getLocalDate(0) : getLocalDate(waitDate), => 서버에서 처리로 변경 java.time.LocalDate parsing
+                    price: wishPrice.replaceAll(',', '') * 1,
+                    delivery_info: deliveryAddress,
+                    delivery_method: 'NORMAL',
+                    point: 0,
+                    commission: 9000,
+                    delivery_price: 3000,
+                    payment_method: '',
+                    // receipt: {
+                    //     receipt_bootpay: {
+                    //         method: '',
+                    //         bootPayV1: {},
+                    //         bootPayV2: {},
+                    //     }
+                    // },
+                    receipt: null,
+                };
+                s.total_price = s.price + s.point + s.commission + s.delivery_price;
+
+                console.log(s)
+                axiosPostFunction('/api/kream/product/order/purchase', s, false, token, setToken).then((res) => {
+                    if (res.data.data.status) {
+                        res.data.data.result_type === 'ORDER_CREATED' ? alert('즉시 구매가 완료되었습니다.') : alert('구매 입찰 신청이 완료되었습니다');
+                        navigate('/my', {replace: true});
+                    } else {
+                        alert(res.data.data.error_msg);
+                    }
+                })
+            }
         } else {
             alert('주소를 등록해주세요.');
         }
     }
-    // const handleChangeListValue = (event, newValue) => {
-    //   console.log(2, event, newValue);
-    //   setListValue(newValue);
-    // };
-
-    // const handleSize = e => {
-    //   console.log(e.target.value);
-    //   // setSize(e.target.value);
-    // ;
-
     return (
         <>
             {
@@ -656,7 +696,8 @@ const OrderPayment = () => {
                                                                 <td>{`${deliveryAddress.address} ${deliveryAddress.address_detail}`}</td>
                                                             </tr>
                                                         </table>
-                                                        <AddressChangeModal/>
+                                                        <AddressChangeModal deliveryAddress={deliveryAddress}
+                                                                            setDeliveryAddress={setDeliveryAddress}/>
                                                     </div>
                                                     <DeliveryRequireModal/>
                                                 </>

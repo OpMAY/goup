@@ -65,6 +65,7 @@ const DetailSizeModal = ({ product }) => {
     fontSize: "16px",
     fontWeight: 700,
     textAlign: "center",
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Roboto', 'AppleSDGothicNeo-Regular', 'NanumBarunGothic', 'NanumGothic', '나눔고딕', 'Segoe UI', 'Helveica', 'Arial', 'Malgun Gothic', 'Dotum', sans-serif"
   };
 
   const header = {

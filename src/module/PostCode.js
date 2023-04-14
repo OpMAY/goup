@@ -21,7 +21,7 @@ const PostCode = ({setAddress}) => {
             fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
         }
         setAddress(prevState => {
-            return {...prevState, address : fullAddress, zoneCode: data.zonecode}
+            return {...prevState, address : fullAddress, zip_code: data.zonecode}
         })
         console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     };

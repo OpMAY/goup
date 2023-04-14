@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import BuySellButton from "./BuySellButton";
-import { Link } from "react-router-dom";
-import { useRecoilValue, useRecoilState } from "recoil";
+import {useRecoilValue, useRecoilState} from "recoil";
 import DetailSizeModal from "../modal/DetailSizeModal";
 import DetailBookMarkModal from "../modal/DetailBookMarkModal";
-import { sizeStateAtom, productDetailAtom } from "../../atoms/atom";
-import { Typography } from "@mui/material";
+import {sizeStateAtom, productDetailAtom} from "../../atoms/atom";
+import {Typography} from "@mui/material";
 
 const DetailMainTitle = styled.div`
   font-size: 18px;
+
   div {
     margin-bottom: 10px;
+
     a {
       text-decoration: none;
       border-bottom: 2px solid black;
@@ -19,6 +20,7 @@ const DetailMainTitle = styled.div`
       color: black;
     }
   }
+
   .productName {
     margin-bottom: 4px;
   }
@@ -41,9 +43,11 @@ const SizeInfo = styled.div`
     font-size: 13px;
     color: rgba(34, 34, 34, 0.8);
   }
+
   .detail {
     font-weight: 700;
   }
+
   .button {
     background-color: #fff;
     border: none;
@@ -51,6 +55,7 @@ const SizeInfo = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
+
     p {
       margin: 0;
     }
@@ -62,15 +67,18 @@ const RecentPrice = styled.div`
   direction: row;
   justify-content: space-between;
   margin-top: 11px;
+
   .title {
     font-size: 13px;
     color: rgba(34, 34, 34, 0.8);
   }
+
   .detail {
     font-weight: 700;
     font-size: 20px;
     text-align: right;
   }
+
   p {
     font-size: 13px;
     color: rgb(241, 87, 70);
@@ -103,70 +111,66 @@ const RecentPrice = styled.div`
 // `;
 
 const ColumTop = () => {
-  const productDetail = useRecoilValue(productDetailAtom);
-  const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
+    const productDetail = useRecoilValue(productDetailAtom);
+    const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
 
-  const oneSize = {
-    fontSize: "16px",
-    fontWeight: 700,
-    textAlign: "center",
-  };
+    const oneSize = {
+        fontSize: "16px",
+        fontWeight: 700,
+        textAlign: "center",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Roboto', 'AppleSDGothicNeo-Regular', 'NanumBarunGothic', 'NanumGothic', '나눔고딕', 'Segoe UI', 'Helveica', 'Arial', 'Malgun Gothic', 'Dotum', sans-serif"
+    };
 
-  return (
-    <div>
-      <DetailMainTitle>
+    return (
         <div>
-          <a href="3">{productDetail.brand.name}</a>
+            <DetailMainTitle>
+                <div>
+                    <a href="3">{productDetail.brand.name}</a>
+                </div>
+                <div className="productName">{productDetail.product.en_name}</div>
+                <div className="ProductKoName">{productDetail.product.kor_name}</div>
+            </DetailMainTitle>
+            <div className="product_figure_wrap">
+                <SizeInfo>
+                    <div className="title">사이즈</div>
+                    {sizeState && sizeState.size === "ONE SIZE" ? (
+                        <Typography sx={oneSize}>ONE SIZE</Typography>
+                    ) : (
+                        <DetailSizeModal product={productDetail}/>
+                    )}
+                </SizeInfo>
+                <RecentPrice>
+                    <div className="title">최근 거래가</div>
+                    {productDetail.recent_order_price ? (
+                        <div>
+                            <div className="detail">
+                                {productDetail.recent_order_price.toLocaleString()}원
+                            </div>
+                            <p>
+                                {productDetail.recent_2nd_order_price -
+                                    productDetail.recent_order_price}
+                                (
+                                {((productDetail.recent_order_price -
+                                            productDetail.recent_2nd_order_price) /
+                                        productDetail.recent_2nd_order_price) *
+                                    100}
+                                %)
+                            </p>
+                        </div>
+                    ) : (
+                        <div>
+                            <div className="detail">-</div>
+                            <p>-</p>
+                        </div>
+                    )}
+                </RecentPrice>
+            </div>
+            <div className="buttonWrap">
+                <BuySellButton/>
+                <DetailBookMarkModal/>
+            </div>
         </div>
-        <div className="productName">{productDetail.product.en_name}</div>
-        <div className="ProductKoName">{productDetail.product.kor_name}</div>
-      </DetailMainTitle>
-      <div className="product_figure_wrap">
-        <SizeInfo>
-          <div className="title">사이즈</div>
-          {sizeState && sizeState.size === "ONE SIZE" ? (
-            <Typography sx={oneSize}>ONE SIZE</Typography>
-          ) : (
-            <DetailSizeModal product={productDetail} />
-          )}
-        </SizeInfo>
-        <RecentPrice>
-          <div className="title">최근 거래가</div>
-          {productDetail.recent_order_price ? (
-            <div>
-              <div className="detail">
-                {productDetail.recent_order_price.toLocaleString()}원
-              </div>
-              <p>
-                {productDetail.recent_2nd_order_price -
-                  productDetail.recent_order_price}
-                (
-                {((productDetail.recent_order_price -
-                  productDetail.recent_2nd_order_price) /
-                  productDetail.recent_2nd_order_price) *
-                  100}
-                %)
-              </p>
-            </div>
-          ) : (
-            <div>
-              <div className="detail">-</div>
-              <p>-</p>
-            </div>
-          )}
-        </RecentPrice>
-      </div>
-      <div className="buttonWrap">
-        <BuySellButton />
-        <DetailBookMarkModal />
-        {/* <WishButton to={getUser ? "#" : "/login"} className="btn_wish">
-          <BsBookmark size="20px"></BsBookmark>
-          <span className="btn_text">관심상품</span>
-          <span className="wish_count">1,231</span>
-        </WishButton> */}
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ColumTop;

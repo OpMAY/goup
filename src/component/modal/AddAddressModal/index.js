@@ -10,14 +10,20 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import TwoButton from "./TwoButton";
 import PostCode from "../../../module/PostCode";
+import {axiosGetFunction, axiosPostFunction} from "../../../module/CustomAxios";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {tokenAtom, userAddressAtom, userAtom} from "../../../atoms/atom";
 
 
 const AddAddressModal = ({setDeliveryAddress}) => {
     const [open, setOpen] = useState(false);
+    const [token, setToken] = useRecoilState(tokenAtom);
+    const user = useRecoilValue(userAtom);
+    const setUserAddress = useSetRecoilState(userAddressAtom);
     const [address, setAddress] = useState({
         name: '',
         phone_number: '',
-        zoneCode: '',
+        zip_code: '',
         address: '',
         address_detail: '',
         isDefault: false,
@@ -27,7 +33,7 @@ const AddAddressModal = ({setDeliveryAddress}) => {
         const reset = {
             name: '',
             phone_number: '',
-            zoneCode: '',
+            zip_code: '',
             address: '',
             address_detail: '',
             isDefault: false,
@@ -44,9 +50,24 @@ const AddAddressModal = ({setDeliveryAddress}) => {
     };
 
     const addAddress = () => {
-        console.log(address);
-        setDeliveryAddress(address);
-        handleClose();
+        address.user_no = user;
+        address.is_default_address = address.isDefault
+        axiosPostFunction('/api/kream/my/address', address, false, token, setToken).then((res) => {
+            if(res.data.status) {
+                setDeliveryAddress(address);
+                axiosGetFunction(
+                    `/api/kream/my/address/${user}`,
+                    {},
+                    token,
+                    setToken
+                ).then(res => {
+                    setUserAddress(res.data.data.address);
+                    handleClose();
+                });
+            } else {
+                alert('주소를 등록하지 못했습니다.');
+            }
+        })
     }
 
     const button = {};
@@ -159,7 +180,7 @@ const AddAddressModal = ({setDeliveryAddress}) => {
                                 inputProps={{
                                     readOnly: true
                                 }}
-                                value={address.zoneCode}
+                                value={address.zip_code}
                                 InputProps={{
                                     endAdornment: (
                                         <PostCode setAddress={setAddress}/>
@@ -212,7 +233,7 @@ const AddAddressModal = ({setDeliveryAddress}) => {
                                     "& .MuiTypography-root": {fontSize: 13},
                                 }}
                             />
-                            <TwoButton handleClose={handleClose} onConfirm={addAddress} solid="저장하기" padding="32px" disabled={!(address.name && address.phone_number && address.zoneCode && address.address)}/>
+                            <TwoButton handleClose={handleClose} onConfirm={addAddress} solid="저장하기" padding="32px" disabled={!(address.name && address.phone_number && address.zip_code && address.address)}/>
                         </Box>
                     </Box>
                 </Modal>
