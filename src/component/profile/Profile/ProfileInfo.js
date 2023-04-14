@@ -12,7 +12,7 @@ const ProfileBlock = styled.div`
     color: #000;
     font-size: 24px;
   }
-  .btn-grop {
+  .btn-group {
     display: flex;
     margin-top: 8px;
 
