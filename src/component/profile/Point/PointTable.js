@@ -1,51 +1,51 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const Table = styled.table`
   width: 100%;
   border-top: 2px solid #000;
   border-collapse: collapse;
-  thead{
-    
-    tr{
+  thead {
+    tr {
       border-bottom: 1px solid #ccc;
-      th{
+      th {
         padding: 15px 15px;
         font-size: 13px;
         font-weight: 400;
         text-align: left;
         background-color: #eee;
-        &:last-child{
+        &:last-child {
           border-left: 1px solid #ccc;
         }
       }
     }
   }
-  tbody{
-    tr{
-      td{
+  tbody {
+    tr {
+      td {
         padding: 15px 15px;
         text-align: left;
         font-size: 13px;
         border-bottom: 1px solid #ccc;
-        
-        &:last-child{
+
+        &:last-child {
           border-left: 1px solid #ccc;
         }
-        &.not{
+        &.not {
           border-left: 0;
           text-align: center;
           padding: 150px 0;
-          color: rgba(34,34,34,.5);
+          color: rgba(34, 34, 34, 0.5);
         }
       }
     }
   }
-`
+`;
 
-const PointTabel = () => {
+const PointTable = ({ userPoint }) => {
+  console.log(userPoint);
+  console.log(userPoint.type);
   return (
-
     <Table>
       <colgroup>
         <col width="80%" />
@@ -58,18 +58,24 @@ const PointTabel = () => {
         </tr>
       </thead>
       <tbody>
-        {/* <tr>
-          <td>1번</td>
-          <td>2번</td>
-        </tr> */}
         <tr>
-          <td colSpan="2" className='not'>
-            <p>적립 또는 사용한 내역이 없습니다.</p>
+          <td>{userPoint.type}</td>
+          <td>
+            {userPoint.point > 0
+              ? "+" + userPoint.point
+              : "-" + userPoint.point}
           </td>
         </tr>
+        {userPoint.point ? null : (
+          <tr>
+            <td colSpan="2" className="not">
+              <p>적립 또는 사용한 내역이 없습니다.</p>
+            </td>
+          </tr>
+        )}
       </tbody>
     </Table>
-  )
-}
+  );
+};
 
-export default PointTabel
+export default PointTable;
