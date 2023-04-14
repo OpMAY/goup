@@ -8,6 +8,8 @@ import {
   tokenAtom,
 } from "../atoms/atom";
 import { axiosGetFunction } from "../module/CustomAxios";
+import NotFound from "./NotFound";
+import Layout from "../component/Layout";
 
 const Detail = () => {
   const [token, setToken] = useRecoilState(tokenAtom);
@@ -30,6 +32,6 @@ const Detail = () => {
     }
   }, []);
 
-  return <>{productDetail ? <DetailInfo /> : <h1>상품이 없습니다.</h1>}</>;
+  return <Layout>{productDetail ? <DetailInfo /> : <></>}</Layout>;
 };
 export default Detail;

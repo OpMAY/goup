@@ -10,7 +10,7 @@ const Block = styled.div`
   .title{
     font-size: 24px;
     color: #000;
-    font-weight: 600;
+    font-weight: bold;
   }
   .sub_title{
     font-size: 12px;

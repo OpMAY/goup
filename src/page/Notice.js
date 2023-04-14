@@ -1,55 +1,80 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Inner } from "../common/js/style";
-import { Box, Stack, ListItem, Typography, Pagination } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import NoticeList from "../component/profile/NoticeList";
 import Faq from "../component/Notice/faq";
+import { axiosGetFunction } from "../module/CustomAxios";
+import { useRecoilState } from "recoil";
+import { NoticeAtom, tokenAtom } from "../atoms/atom";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import NoticeDetail from "../component/Notice/noticeDetail";
+import Layout from "../component/Layout";
+
+const ListStyle = styled.ul`
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  li {
+    font-size: 15px;
+    padding: 17px 0 19px;
+    border-bottom: 1px solid #ebebeb;
+    a {
+      color: rgba(34, 34, 34, 0.8);
+      text-decoration: none;
+    }
+  }
+`;
 
 const Notice = ({ path }) => {
-  console.log(path);
-  const [page, setPage] = React.useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+  const [token, setToken] = useRecoilState(tokenAtom);
+  const [notice, setNotice] = useRecoilState(NoticeAtom);
+
+  useEffect(() => {
+    axiosGetFunction(
+      `/api/kream/notice/1`,
+      { user_no: 1 },
+      token,
+      setToken
+    ).then(res => {
+      setNotice(res.data.data.notices);
+    });
+  }, []);
 
   return (
-    <Inner padding="40px 40px;">
-      <Stack direction="row">
-        <NoticeList />
-        <Box sx={{ width: "100%" }}>
-          {path === "faq" && <Faq />}
-          {path === undefined && (
-            <>
-              <Box
-                sx={{ borderBottom: "3px solid #222", paddingBottom: "16px" }}>
-                <Typography sx={{ fontSize: "24px", fontWeight: "700" }}>
-                  공지사항
-                </Typography>
-              </Box>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, id) => (
-                <ListItem
+    <Layout>
+      <Inner padding="40px 40px;">
+        <Stack direction="row">
+          <NoticeList path={path}/>
+          <Box sx={{ width: "100%" }}>
+            {path === "faq" && <Faq />}
+            {path === "detail" && <NoticeDetail />}
+            {path === "main" && (
+              <>
+                <Box
                   sx={{
-                    fontSize: "15px",
-                    padding: "17px 0 19px",
-                    borderBottom: "1px solid #ebebeb",
+                    borderBottom: "3px solid #222",
+                    paddingBottom: "16px",
                   }}>
-                  [이벤트 발표] WELCOME DRAW - 티파니 세트
-                </ListItem>
-              ))}
-              {page}
-              <Stack spacing={2} sx={{ padding: "28px 0" }}>
-                <Pagination
-                  onChange={handleChange}
-                  count={5}
-                  size="large"
-                  page={page}
-                  defaultPage={1}
-                />
-              </Stack>
-            </>
-          )}
-        </Box>
-      </Stack>
-    </Inner>
+                  <Typography sx={{ fontSize: "24px", fontWeight: "700" }}>
+                    공지사항
+                  </Typography>
+                </Box>
+                <ListStyle>
+                  {notice.map(item => (
+                    <li key={item.no}>
+                      <Link to={`/notice/${item.no}`}>
+                        {item.title ? item.title : "무제"}
+                      </Link>
+                    </li>
+                  ))}
+                </ListStyle>
+              </>
+            )}
+          </Box>
+        </Stack>
+      </Inner>
+    </Layout>
   );
 };
 

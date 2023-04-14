@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import {userAtom, paramAtom, sizeStateAtom, checkAtom, priceStateAtom} from "../../atoms/atom";
 import { useRecoilValue } from "recoil";
@@ -56,22 +56,22 @@ const OrderButton = ({ type, onClick, input = false }) => {
             priceState !== null ? <p className="price pending">즉시 구매</p> : null
           }
           <p className="delivery_notice">일반배송(5~7일소요)</p>
-        </Link>
+        </LinkStyle>
       )}
       {type === "buy_step2" && (
-        <Link to={`/buy/${param}`}>
+        <LinkStyle to={`/buy/${param}`}>
           <p className="status pending">구매 계속</p>
-        </Link>
+        </LinkStyle>
       )}
       {type === "buy_step3" && (
         <Link to={`/buy/${param}/?size=${size.size}`}>
           <p className="status keepBid">구매 입찰 계속</p>
-        </Link>
+        </LinkStyle>
       )}
       {type === "buy_step4" && (
         <Link to={`/buy/${param}/?size=${size.size}`}>
           <p className="status keepBuy">즉시 구매 계속</p>
-        </Link>
+        </LinkStyle>
       )}
       {type === "sell_step1" && (
         <Link to={`/sell/check/${param}?size=${size.size}&type=sell`}>
@@ -82,19 +82,19 @@ const OrderButton = ({ type, onClick, input = false }) => {
         </Link>
       )}
       {type === "sell_step2" && (
-        <Link to={`/sell/${param}`}>
+        <LinkStyle to={`/sell/${param}`}>
           <p className="status pending">판매 계속</p>
-        </Link>
+        </LinkStyle>
       )}
       {type === "sell_step3" && (
         <Link to={`/sell/${param}/?size=${size.size}`}>
           <p className="status keepBid">판매 입찰 계속</p>
-        </Link>
+        </LinkStyle>
       )}
       {type === "sell_step4" && (
         <Link to={`/sell/${param}/?size=${size.size}`}>
           <p className="status keepSell">즉시 판매 계속</p>
-        </Link>
+        </LinkStyle>
       )}
     </Button>
   );
