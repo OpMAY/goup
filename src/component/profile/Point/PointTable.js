@@ -44,7 +44,6 @@ const Table = styled.table`
 
 const PointTable = ({ userPoint }) => {
   console.log(userPoint);
-  console.log(userPoint.type);
   return (
     <Table>
       <colgroup>
@@ -58,21 +57,22 @@ const PointTable = ({ userPoint }) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>{userPoint.type}</td>
-          <td>
-            {userPoint.point > 0
-              ? "+" + userPoint.point
-              : "-" + userPoint.point}
-          </td>
-        </tr>
-        {userPoint.point ? null : (
-          <tr>
-            <td colSpan="2" className="not">
-              <p>적립 또는 사용한 내역이 없습니다.</p>
-            </td>
-          </tr>
-        )}
+      {
+          userPoint ?
+              <tr>
+                  <td>{userPoint.type}</td>
+                  <td>
+                      {userPoint.point > 0
+                          ? "+" + userPoint.point
+                          : "-" + userPoint.point}
+                  </td>
+              </tr> : <tr>
+                  <td colSpan="2" className="not">
+                      <p>적립 또는 사용한 내역이 없습니다.</p>
+                  </td>
+              </tr>
+      }
+
       </tbody>
     </Table>
   );

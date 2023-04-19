@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/RecipeInfoModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/RecipeInfoModal/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profile/Point/Point.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profile/Point/Point.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profile/Point/PointTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profile/Point/PointTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profile/Profile/ProfileInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profile/Profile/ProfileInfo.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

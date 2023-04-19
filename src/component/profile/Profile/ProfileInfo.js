@@ -47,7 +47,7 @@ const UserImage = styled.div`
 const ProfileInfo = ({profile, setProfile}) => {
     console.log(profile)
   return (
-    <ProfileBlcock>
+    <ProfileBlock>
       <div className='user'>
         {
           profile ? <UserImage bgImage={profile.profile_img.url}/> : null
@@ -59,7 +59,7 @@ const ProfileInfo = ({profile, setProfile}) => {
           profile ? <h3 className='name'>{profile.id}</h3>  : 'no'
         }
         
-        <div className='btn-grop'>
+        <div className='btn-group'>
           <button type='button'>이미지 삭제</button>
           <button type='button'>삭제</button>
         </div>

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import HelpSharpIcon from "@mui/icons-material/HelpSharp";
-import PointTable from './PointTabel';
+import PointTable from './PointTable';
 import Modal from '@mui/material/Modal';
 import { axiosGetFunction } from '../../../module/CustomAxios';
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -203,7 +203,7 @@ const Point = () => {
           <button type='button' className='save_btn' onClick={handleOpen}>+ 포인트 적립하기 </button>
         </div>
       </div>
-      <PointTabel></PointTabel>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -228,12 +228,6 @@ const Point = () => {
           </div>
         </ModalBlock>
       </Modal>
-        <div className="btn_box">
-          <button type="button" className="save_btn">
-            + 포인트 적립하기
-          </button>
-        </div>
-      </div>
       <PointTable userPoint={userPoint} />
     </Block>
   );
