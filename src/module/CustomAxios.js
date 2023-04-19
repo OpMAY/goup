@@ -13,6 +13,21 @@ export const setDefaultAxios = () => {
     console.log("setting axios defaults done");
 };
 
+/**
+ * Axios Function 공통
+ * 1. Header Set
+ *    - ContentType
+ *    - Authorization
+ *    - additional Header [OPTIONAL]
+ *  2. method에 따라 axios.get, axios.post ...
+ *    - response status 에 따라 처리 방식 다르게 해주고
+ *    - 그에 따른 Promise 객체의 resolve, reject 선언
+ *
+ * # res 보는 방법
+ *   기본적으로 status => HTTP 통신 STATUS => res.status => 고정
+ *   데이터의 status => 서버에서 유효성 검증해주는 status => res.data.status => 서버 짜는 사람에 따라 달라질 수 있음
+ * **/
+
 const authFunction = async (token, setToken) => {
     console.log("auth token setting...");
     return new Promise((resolve, reject) => {
@@ -45,31 +60,33 @@ export const axiosGetFunction = async (
     config.headers = {
         contentType: "application/x-www-form-urlencoded",
         authorization: "bearer " + token,
-    };
+    }; // 헤더 설정
     if (additional_header) {
         Object.keys(additional_header).forEach(key => {
             config.headers[key] = additional_header[key];
         });
-    }
-    config.params = params;
+    } // 추가 헤더 설정
+    config.params = params; // 파라미터 세팅
     return new Promise((resolve, reject) => {
-        axios.get(DEFAULT_SERVER_URL + url, config).then(async res => {
-            if (res.data.status === "UNAUTHORIZED") {
-                await authFunction(token, setToken).then(() => {
-                    config.headers["authorization"] = "bearer " + token;
-                    axios.get(DEFAULT_SERVER_URL + url, config).then(res1 => {
-                        console.log("response : ", res1);
-                        resolve(res1);
+        axios.get(DEFAULT_SERVER_URL + url, config)
+            .then(async res => {
+                if (res.data.status === "UNAUTHORIZED") {
+                    await authFunction(token, setToken).then(() => {
+                        config.headers["authorization"] = "bearer " + token;
+                        axios.get(DEFAULT_SERVER_URL + url, config)
+                            .then(res1 => {
+                                console.log("response : ", res1);
+                                resolve(res1);
+                            });
                     });
-                });
-            } else if (res.data.status === "OK") {
-                console.log("request success params : ", params);
-                console.log("response on GET", url, " : ", res);
-                resolve(res);
-            } else {
-                reject(res);
-            }
-        });
+                } else if (res.data.status === "OK") {
+                    console.log("request success params : ", params);
+                    console.log("response on GET", url, " : ", res);
+                    resolve(res);
+                } else {
+                    reject(res);
+                }
+            });
     });
 };
 
