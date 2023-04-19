@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/modal/RecipeInfoModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/RecipeInfoModal/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +44,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kevin/WebstormProjects/goup/src/component/modal/AccountRegisterModal&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -56,6 +58,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kevin\WebstormProjects\goup\src\component\modal\AccountRegisterModal" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/atoms" />
     </key>
@@ -79,6 +84,7 @@
       <workItem from="1680831207517" duration="4183000" />
       <workItem from="1681273603960" duration="8879000" />
       <workItem from="1681356531157" duration="18488000" />
+      <workItem from="1681876303445" duration="2898000" />
     </task>
     <servers />
   </component>

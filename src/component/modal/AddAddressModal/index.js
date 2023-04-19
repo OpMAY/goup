@@ -15,7 +15,7 @@ import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {tokenAtom, userAddressAtom, userAtom} from "../../../atoms/atom";
 
 
-const AddAddressModal = ({setDeliveryAddress}) => {
+const AddAddressModal = ({setParamAddress}) => {
     const [open, setOpen] = useState(false);
     const [token, setToken] = useRecoilState(tokenAtom);
     const user = useRecoilValue(userAtom);
@@ -54,7 +54,7 @@ const AddAddressModal = ({setDeliveryAddress}) => {
         address.is_default_address = address.isDefault
         axiosPostFunction('/api/kream/my/address', address, false, token, setToken).then((res) => {
             if(res.data.status) {
-                setDeliveryAddress(address);
+                setParamAddress(address);
                 axiosGetFunction(
                     `/api/kream/my/address/${user}`,
                     {},

@@ -112,7 +112,7 @@ const Header = ({ title }) => {
 
   const logoutClick = () => {
     setUser(null);
-    window.location.href = "http://localhost:3000";
+    window.location.href = window.location.origin;
   };
 
   return (

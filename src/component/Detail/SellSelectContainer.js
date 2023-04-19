@@ -22,17 +22,19 @@ const SelectContainer = styled.div`
   .size_container {
     list-style: none;
     padding: 20px 0;
+    align-items: flex-start;
+    min-height: 488px;
   }
 `;
 
 const SellSelectContainer = () => {
   const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
-  const [priceState, setPriceState] = useRecoilState(priceStateAtom);
+  const setPriceState = useSetRecoilState(priceStateAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
   const user = useRecoilValue(userAtom);
   const param = useRecoilValue(paramAtom);
   const [productSell, setProductSell] = useRecoilState(productSellAtom);
-  const [productPurchase, setProductPurchase] = useRecoilState(productPurchaseAtom);
+  const setProductPurchase = useSetRecoilState(productPurchaseAtom);
   const setCheck = useSetRecoilState(checkAtom);
 
   const handleButton = e => {
@@ -90,6 +92,7 @@ const SellSelectContainer = () => {
                 reg_datetime={size.reg_datetime}
                 value={size.size}
                 no={size.no}
+                isSell={true}
                 state="판매 입찰"
               />
             </Grid>

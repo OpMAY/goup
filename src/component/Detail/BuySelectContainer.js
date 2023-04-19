@@ -28,12 +28,11 @@ const SelectContainer = styled.div`
 `;
 
 const BuySelectContainer = () => {
-  const size = useRecoilValue(sizeAtom);
   const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
   const [productPurchase, setProductPurchase] =
     useRecoilState(productPurchaseAtom);
-  const [productSell, setProductSell] = useRecoilState(productSellAtom);
+  const setProductSell = useSetRecoilState(productSellAtom);
   const user = useRecoilValue(userAtom);
   const param = useRecoilValue(paramAtom);
   const setCheck = useSetRecoilState(checkAtom);

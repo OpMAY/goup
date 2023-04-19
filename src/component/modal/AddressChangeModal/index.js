@@ -14,7 +14,7 @@ import {
 import {Hr} from "../../../common/js/style";
 import {axiosGetFunction} from "../../../module/CustomAxios";
 
-const AddressChangeModal = ({deliveryAddress, setDeliveryAddress}) => {
+const AddressChangeModal = ({paramAddress, setParamAddress}) => {
     const [open, setOpen] = useState(false);
     const [userAddress, setUserAddress] = useRecoilState(userAddressAtom);
     const [token, setToken] = useRecoilState(tokenAtom);
@@ -29,16 +29,16 @@ const AddressChangeModal = ({deliveryAddress, setDeliveryAddress}) => {
         ).then(res => {
             const d = res.data.data.address;
             if (d.length <= 0) {
-                setDeliveryAddress(null);
+                setParamAddress(null);
             } else {
                 const check = [true];
                 for (let i = 1; i < d.length; i++) {
                     check.push(false);
                 }
                 setAddressCheck(check);
-                const index = d.findIndex(x => x.zip_code === deliveryAddress.zip_code);
+                const index = d.findIndex(x => x.zip_code === paramAddress.zip_code);
                 d.splice(index, 1);
-                d.unshift(deliveryAddress);
+                d.unshift(paramAddress);
                 setUserAddress(d);
                 setOpen(true);
             }
@@ -49,7 +49,7 @@ const AddressChangeModal = ({deliveryAddress, setDeliveryAddress}) => {
     };
 
     const changeCheck = (idx) => {
-        setDeliveryAddress(userAddress[idx]);
+        setParamAddress(userAddress[idx]);
         handleClose();
     }
 

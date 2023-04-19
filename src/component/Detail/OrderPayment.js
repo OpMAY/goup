@@ -220,7 +220,7 @@ const FinalInfoTable = styled.table`
     }
 
     td {
-      width: 540px;
+      width: 553px;
       text-align: right;
     }
   }
@@ -332,7 +332,8 @@ const OrderPayment = () => {
     const param = useRecoilValue(paramAtom);
     const setCheck = useSetRecoilState(checkAtom);
     const navigate = useNavigate();
-    const [sizePrice, setSizePrice] = useState(null);
+    const [directPrice, setDirectPrice] = useState(null);
+    const [directReversePrice, setDirectReversePrice] = useState(null);
 
     useEffect(() => {
         setWishPrice('');
@@ -349,7 +350,8 @@ const OrderPayment = () => {
 
             axiosGetFunction(`/api/kream/product/size/detail/${sizeState.no}`, {}, token, setToken).then(res => {
                 console.log(res);
-                setSizePrice(res.data.data.purchase.price);
+                setDirectPrice(res.data.data.purchase.price);
+                setDirectReversePrice(res.data.data.sell.price);
             })
 
             axiosGetFunction(
@@ -429,15 +431,15 @@ const OrderPayment = () => {
 
     const sendPurchase = (e) => {
         if (deliveryAddress) {
-            const method_s = sizePrice === wishPrice.replaceAll(',', '') * 1 ? '즉시 구매를' : '구매 입찰을'
+            const method_s = directPrice === wishPrice.replaceAll(',', '') * 1 ? '즉시 구매를' : '구매 입찰을'
             if (window.confirm(method_s + ' 진행하시겠습니까?')) {
                 const s = {
                     user_no: user,
                     size_no: sizeState.no,
                     purchase_agree: {},
                     p_order_agree: {},
-                    purchase_type: sizePrice === wishPrice.replaceAll(',', '') * 1 ? 'DIRECT' : 'AUCTION',
-                    expiration_days: sizePrice === wishPrice.replaceAll(',', '') * 1 ? 0 : waitDate,
+                    purchase_type: directPrice === wishPrice.replaceAll(',', '') * 1 ? 'DIRECT' : 'AUCTION',
+                    expiration_days: directPrice === wishPrice.replaceAll(',', '') * 1 ? 0 : waitDate,
                     // expiration_date: sizePrice === wishPrice ? getLocalDate(0) : getLocalDate(waitDate), => 서버에서 처리로 변경 java.time.LocalDate parsing
                     price: wishPrice.replaceAll(',', '') * 1,
                     delivery_info: deliveryAddress,
@@ -491,14 +493,16 @@ const OrderPayment = () => {
                                 <Stack flexDirection="row">
                                     <Box sx={BoxStyle}>
                                         <Typography sx={subText}>즉시 구매가</Typography>
-                                        <Typography>{sizePrice
-                                            ? sizePrice.toLocaleString() + '원'
+                                        <Typography>{directPrice
+                                            ? directPrice.toLocaleString() + '원'
                                             : "-"}</Typography>
                                     </Box>
                                     <Box sx={BoxStyle}>
                                         <Typography sx={subText}>즉시 판매가</Typography>
                                         <Typography>
-                                            {resultPurchase()}
+                                            {directReversePrice
+                                                ? directReversePrice.toLocaleString() + '원'
+                                                : "-"}
                                         </Typography>
                                     </Box>
                                 </Stack>
@@ -511,7 +515,7 @@ const OrderPayment = () => {
                                         aria-label="lab API tabs example">
                                         <Tab sx={tabStyle} label="구매 입찰" value="1"/>
                                         <Tab sx={tabStyle} label="즉시 구매" value="2"
-                                             disabled={sizePrice === null}/>
+                                             disabled={directPrice === null}/>
                                     </TabList>
                                     <Box>
                                         <TabPanel sx={panelStyle} value="1">
@@ -525,7 +529,7 @@ const OrderPayment = () => {
                                                                     if (!isNaN(event.target.value.replaceAll(',', '') * 1)) {
                                                                         const n = Number(event.target.value.replaceAll(',', ''));
                                                                         if (n > 9999999) {
-                                                                            alert('판매가는 1000만원을 넘길 수 없습니다.');
+                                                                            alert('구매가는 1000만원을 넘길 수 없습니다.');
                                                                             event.preventDefault();
                                                                         } else {
                                                                             setWishPrice(addComma(event));
@@ -536,7 +540,7 @@ const OrderPayment = () => {
                                                                 }}
                                                                 onBlur={(e) => {
                                                                     const n = Number(e.target.value.replaceAll(',', ''));
-                                                                    if (sizePrice && n >= sizePrice) {
+                                                                    if (directPrice && n >= directPrice) {
                                                                         setWishPrice('')
                                                                         setValue('2');
                                                                     }
@@ -666,7 +670,7 @@ const OrderPayment = () => {
                                                             c.push(false);
                                                         }
                                                         setCheck(c);
-                                                        setWishPrice(sizePrice.toLocaleString())
+                                                        setWishPrice(directPrice.toLocaleString())
                                                         setFinalPage(!finalPage);
                                                     }}
                                                     type="buy_step4"
@@ -682,7 +686,7 @@ const OrderPayment = () => {
                                     <div className="section delivery_box">
                                         <div className="section_title">
                                             <h3>배송 주소</h3>
-                                            <AddAddressModal setDeliveryAddress={setDeliveryAddress}/>
+                                            <AddAddressModal setParamAddress={setDeliveryAddress}/>
                                         </div>
                                         {
                                             deliveryAddress ? <>
@@ -701,8 +705,8 @@ const OrderPayment = () => {
                                                                 <td>{`${deliveryAddress.address} ${deliveryAddress.address_detail}`}</td>
                                                             </tr>
                                                         </table>
-                                                        <AddressChangeModal deliveryAddress={deliveryAddress}
-                                                                            setDeliveryAddress={setDeliveryAddress}/>
+                                                        <AddressChangeModal paramAddress={deliveryAddress}
+                                                                            setParamAddress={setDeliveryAddress}/>
                                                     </div>
                                                     <DeliveryRequireModal/>
                                                 </>
@@ -785,7 +789,7 @@ const OrderPayment = () => {
                                                 <td>3,000원</td>
                                             </tr>
                                             {
-                                                sizePrice !== wishPrice ? <tr className="bid_final_date">
+                                                directPrice !== wishPrice ? <tr className="bid_final_date">
                                                     <th>입찰 마감 기한</th>
                                                     <td>{getToday(waitDate)}</td>
                                                 </tr> : null

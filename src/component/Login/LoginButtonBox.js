@@ -63,7 +63,7 @@ const doLogin = (name, token, setToken) => {
                 const data = res.data;
                 if (data.status === 'OK') {
                     const clientId = data.data.key;
-                    const redirectURI = 'http://localhost:3000/oauth';
+                    const redirectURI = window.location.origin + '/oauth';
                     window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + clientId + '&redirect_uri=' + redirectURI + '&response_type=code'
                 }
             })
