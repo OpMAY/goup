@@ -77,7 +77,13 @@ const Address = () => {
   useEffect(() => {
     axiosGetFunction(`/api/kream/my/address/` + user, {}, token, setToken).then(
       res => {
-        setUserAddress(res.data.data.address);
+        console.log(res)
+        const address = res.data.data.address;
+        const index = address.findIndex(x => x._default_address);
+        const defaultAddr = address[index];
+        address.splice(index, 1);
+        address.unshift(defaultAddr);
+        setUserAddress(address);
       }
     );
   }, []);
@@ -95,7 +101,6 @@ const Address = () => {
               <div className="address_info">
                 <div>
                   <span className="name">{item.name}</span>
-                  <div className="chip">
                     {item._default_address ? (
                       <Box
                         component="span"
@@ -115,7 +120,6 @@ const Address = () => {
                         기본 배송지
                       </Box>
                     ) : null}
-                  </div>
                 </div>
                 <p className="phone">{item.phone_number}</p>
                 <p className="address_box">
