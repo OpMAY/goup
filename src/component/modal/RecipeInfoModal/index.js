@@ -16,14 +16,20 @@ import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import TextField from "@mui/material/TextField";
 
-const RecipeInfoModal = ({product}) => {
+const RecipeInfoModal = ({receiptInfo, setReceiptInfo}) => {
     const [open, setOpen] = useState(false);
-    const userAddress = useRecoilValue(userAddressAtom);
-    const [value, setValue] = useState(10);
+    const origin = {...receiptInfo}
+    const [init, setInit] = useState(true);
+    const [value, setValue] = useState(receiptInfo && receiptInfo.cash_receipt_type !== null ? receiptInfo.cash_receipt_type === 'PHONE' ? 20 : 30 : 10);
     const handleOpen = () => {
         setOpen(true);
+        setInit(true);
+        setValue(receiptInfo && receiptInfo.cash_receipt_type !== null ? receiptInfo.cash_receipt_type === 'PHONE' ? 20 : 30 : 10);
     };
-    const handleClose = () => {
+    const handleClose = (save) => {
+        if(!save) {
+            setReceiptInfo(origin);
+        }
         setOpen(false);
     };
 
@@ -71,14 +77,14 @@ const RecipeInfoModal = ({product}) => {
                 </Button>
                 <Modal
                     open={open}
-                    onClose={handleClose}
+                    onClose={() => {handleClose(false)}}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description">
                     <Box sx={style}>
                         <Box className="close_button">
                             <IconButton
                                 aria-label="close"
-                                onClick={handleClose}
+                                onClick={() => {handleClose(false)}}
                                 sx={{
                                     position: "absolute",
                                     right: 8,
@@ -111,7 +117,9 @@ const RecipeInfoModal = ({product}) => {
                                         defaultValue={value}
                                         onChange={(e) => {
                                             console.log(e.target.options[e.target.options.selectedIndex].value)
+                                            console.log(receiptInfo)
                                             setValue(e.target.options[e.target.options.selectedIndex].value * 1)
+                                            setInit(false);
                                         }}
                                         inputProps={{
                                             name: "형태",
@@ -122,49 +130,49 @@ const RecipeInfoModal = ({product}) => {
                                         <option value={30}>개인소득공제(현금영수증카드)</option>
                                     </NativeSelect>
                                     {
-                                        value !== 10 ? <>
+                                        value !== 10 ? value === 20 ?
                                             <TextField
                                                 id="filled-required"
                                                 sx={{margin: "16px 0"}}
-                                                label="계좌 번호"
+                                                label="휴대폰 번호"
                                                 variant="standard"
                                                 fullWidth
-                                                placeholder="계좌 번호를 입력하세요."
+                                                placeholder="휴대폰 번호를 입력하세요."
                                                 InputLabelProps={{
                                                     shrink: true,
                                                     sx: {color: "#222", fontWeight: "700"},
                                                 }}
-                                                // value={userAccount !== null ? userAccount.account_number : ''}
-                                                // onChange={(e) => setUserAccount(prevState => {
-                                                //     return {...prevState, account_number: e.target.value}
-                                                // })}
+                                                value={init && receiptInfo !== null ? receiptInfo.cr_phone_number : ''}
+                                                onChange={(e) => setReceiptInfo(prevState => {
+                                                    return {...prevState, cr_phone_number: e.target.value, cr_card_number : ''}
+                                                })}
                                                 autoFocus
                                             />
-                                            <TextField
+                                            : <TextField
                                                 id="filled-required"
                                                 sx={{margin: "16px 0"}}
-                                                label="예금주"
+                                                label="카드 번호"
                                                 variant="standard"
                                                 fullWidth
-                                                placeholder="예금주를 입력하세요."
+                                                placeholder="카드 번호를 입력하세요."
                                                 InputLabelProps={{
                                                     shrink: true,
                                                     sx: {color: "#222", fontWeight: "700"},
                                                 }}
-                                                // value={userAccount !== null ? userAccount.account_name : ''}
-                                                // onChange={(e) => setUserAccount(prevState => {
-                                                //     return {...prevState, account_name: e.target.value}
-                                                // })}
+                                                value={init && receiptInfo !== null ? receiptInfo.cr_card_number : ''}
+                                                onChange={(e) => setReceiptInfo(prevState => {
+                                                    return {...prevState, cr_card_number: e.target.value, cr_phone_number : ''}
+                                                })}
                                                 autoFocus
-                                            />
-                                        </> : null
+                                            /> : null
                                     }
                                 </FormControl>
                             </Box>
                             <TwoButton
-                                handleClose={handleClose}
+                                handleClose={() => {handleClose(false)}}
+                                onConfirm={() => {handleClose(true)}}
                                 solid="저장하기"
-                                padding="52px 0 0"
+                                padding={value === 10 ? '184px 0 0' : '104px 0 0'}
                                 disabled={false}
                             />
                         </Box>

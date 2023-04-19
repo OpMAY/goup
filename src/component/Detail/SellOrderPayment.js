@@ -27,7 +27,7 @@ import {
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import DeliveryIconBox from "./DeliveryIconBox";
 import CheckArea from "./CheckArea";
-import {axiosGetFunction} from "../../module/CustomAxios";
+import {axiosGetFunction, axiosPostFunction} from "../../module/CustomAxios";
 import DeliveryRequireModal from "../modal/DeliveryRequireModal";
 import AddAddressModal from "../modal/AddAddressModal";
 import RecipeInfoModal from "../modal/RecipeInfoModal";
@@ -278,6 +278,16 @@ const CheckContainer = styled.div`
   }
 `;
 
+function getReceiptType(keyword) {
+    if (keyword === 'PHONE') {
+        return '휴대폰'
+    } else if (keyword === 'CARD') {
+        return '카드'
+    } else {
+        return '미신청'
+    }
+}
+
 const SellOrderPayment = () => {
     const [value, setValue] = useState("1");
     const [waitDate, setWaitDate] = useState(30);
@@ -298,6 +308,9 @@ const SellOrderPayment = () => {
     const [directReversePrice, setDirectReversePrice] = useState(null);
     const [resendAddress, setResendAddress] = useState(null);
     const [userAccount, setUserAccount] = useState(null);
+    const [receiptInfo, setReceiptInfo] = useState(null);
+
+
 
 
     useEffect(() => {
@@ -348,6 +361,15 @@ const SellOrderPayment = () => {
             ).then(res => {
                 setUserPoint(res.data.data.point);
             });
+            axiosGetFunction(
+                `/api/kream/my/receipt/${user}`,
+                {},
+                token,
+                setToken
+            ).then(res => {
+                console.log(res)
+                setReceiptInfo(res.data.data.receiptInfo);
+            })
         }
     }, []);
 
@@ -399,6 +421,55 @@ const SellOrderPayment = () => {
         }
         return result;
     };
+
+    const sendSell = (e) => {
+        if(!resendAddress) {
+            alert('주소를 등록해주세요.');
+        } else if (!userAccount) {
+            alert('정산 계좌를 등록해주세요.');
+        } else {
+            const method_s = directPrice === wishPrice.replaceAll(',', '') * 1 ? '즉시 판매를' : '판매 입찰을'
+            if(window.confirm(method_s + ' 진행하시겠습니까?')) {
+                const s = {
+                    user_no: user,
+                    size_no: sizeState.no,
+                    sell_agree: {},
+                    s_order_agree: {},
+                    sell_type: directPrice === wishPrice.replaceAll(',', '') * 1 ? 'DIRECT' : 'AUCTION',
+                    expiration_days: directPrice === wishPrice.replaceAll(',', '') * 1 ? 0 : waitDate,
+                    // expiration_date: sizePrice === wishPrice ? getLocalDate(0) : getLocalDate(waitDate), => 서버에서 처리로 변경 java.time.LocalDate parsing
+                    price: wishPrice.replaceAll(',', '') * 1,
+                    recall_address_info: resendAddress,
+                    recall_method: 'NORMAL',
+                    inspection_price: 0,
+                    commission: 9000,
+                    delivery_price: 0,
+                    payment_method: '',
+                    cash_receipt: receiptInfo,
+                    bank_info: userAccount,
+                    // receipt: {
+                    //     receipt_bootpay: {
+                    //         method: '',
+                    //         bootPayV1: {},
+                    //         bootPayV2: {},
+                    //     }
+                    // },
+                    receipt: null,
+                };
+                s.total_price = s.price - s.commission + s.delivery_price;
+
+                console.log(s)
+                axiosPostFunction('/api/kream/product/order/sell', s, false, token, setToken).then((res) => {
+                    if (res.data.data.status) {
+                        res.data.data.result_type === 'ORDER_CREATED' ? alert('즉시 판매가 완료되었습니다.') : alert('판매 입찰 신청이 완료되었습니다');
+                        navigate('/my', {replace: true});
+                    } else {
+                        alert(res.data.data.error_msg);
+                    }
+                })
+            }
+        }
+    }
 
     return (
         <>
@@ -556,7 +627,7 @@ const SellOrderPayment = () => {
                                             <OrderButton
                                                 onClick={() => {
                                                     const c = [];
-                                                    for (let i = 0; i < CHECK_TEXT.length + 1; i++) {
+                                                    for (let i = 0; i < CHECK_TEXT.length; i++) {
                                                         c.push(false);
                                                     }
                                                     setCheck(c);
@@ -598,7 +669,7 @@ const SellOrderPayment = () => {
                                             <OrderButton
                                                 onClick={() => {
                                                     const c = [];
-                                                    for (let i = 0; i < CHECK_TEXT.length + 1; i++) {
+                                                    for (let i = 0; i < CHECK_TEXT.length; i++) {
                                                         c.push(false);
                                                     }
                                                     setCheck(c);
@@ -639,14 +710,18 @@ const SellOrderPayment = () => {
                                                             </tr>
                                                         </table>
                                                     </div>
-                                                    <AccountRegisterModal buttonTitle={'계좌 변경'} userAccount={userAccount} setUserAccount={setUserAccount}/>
+                                                    <AccountRegisterModal buttonTitle={'계좌 변경'}
+                                                                          userAccount={userAccount}
+                                                                          setUserAccount={setUserAccount}/>
                                                 </> :
                                                 <>
                                                     <Typography sx={{fontSize: "14px", padding: "0"}}>
                                                         등록된 판매 정산 계좌가 없습니다.
                                                         <br/>새 계좌번호를 추가해주세요!
                                                     </Typography>
-                                                    <AccountRegisterModal buttonTitle={'계좌 추가'} userAccount={userAccount} setUserAccount={setUserAccount}/>
+                                                    <AccountRegisterModal buttonTitle={'계좌 추가'}
+                                                                          userAccount={userAccount}
+                                                                          setUserAccount={setUserAccount}/>
                                                 </>
                                         }
                                     </Stack>
@@ -731,14 +806,27 @@ const SellOrderPayment = () => {
                                             <Stack direction="row">
                                                 <Typography sx={{fontSize: "13px"}}>형태</Typography>
                                                 <Typography sx={{fontSize: "14px", marginLeft: "40px"}}>
-                                                    미신청
+                                                    {
+                                                        receiptInfo && receiptInfo.cash_receipt_type !== null ? getReceiptType(receiptInfo.cash_receipt_type) : '미신청'
+                                                    }
                                                 </Typography>
                                             </Stack>
+                                            {
+                                                receiptInfo && receiptInfo.cash_receipt_type !== null ?
+                                                    <>
+                                                        <Stack direction="row">
+                                                            <Typography sx={{fontSize: "13px"}}>정보</Typography>
+                                                            <Typography sx={{fontSize: "14px", marginLeft: "40px"}}>
+                                                                {getReceiptType(receiptInfo.cash_receipt_type) === '휴대폰' ? receiptInfo.cr_phone_number : receiptInfo.cr_card_number}
+                                                            </Typography>
+                                                        </Stack>
+                                                    </> : null
+                                            }
                                             <Typography sx={{fontSize: "14px"}}>
                                                 판매 거래 시 수수료에 대해 건별로 현금영수증을 발급합니다.
                                             </Typography>
                                         </Box>
-                                        <RecipeInfoModal/>
+                                        <RecipeInfoModal receiptInfo={receiptInfo} setReceiptInfo={setReceiptInfo}/>
                                     </Stack>
                                 </div>
                             </Box>
@@ -767,7 +855,7 @@ const SellOrderPayment = () => {
                                             {(Number(wishPrice.replaceAll(',', '')) - 9000).toLocaleString()}원
                                         </Typography>
                                     </Stack>
-                                    <OrderButton type="buy_step2"/>
+                                    <OrderButton type="sell_step2" onClick={sendSell}/>
                                 </CheckContainer>
                             </Box>
                         </>
