@@ -236,7 +236,7 @@ const Info = ({profile, setProfile}) => {
           <div className='unit'>
             <h4 className='sub-title'>휴대폰 번호</h4>
             {
-              profile ? <p className='phone'>{profile.phone_number}.</p> : null
+              profile ? <p className='phone'>{profile.phone_number}</p> : null
             }
           </div>
           <div className='unit'>

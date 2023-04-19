@@ -83,9 +83,11 @@ const RecentPrice = styled.div`
     font-size: 13px;
     margin: 0px;
     text-align: right;
+
     &.plus {
       color: rgb(241, 87, 70);
     }
+
     &.minus {
       color: rgb(65, 185, 121);
     }
@@ -151,16 +153,20 @@ const ColumTop = () => {
                             <div className="detail">
                                 {productDetail.recent_order_price.toLocaleString()}원
                             </div>
-                            <p className={productDetail.recent_order_price - productDetail.recent_2nd_order_price > 0 ? 'plus' : productDetail.recent_order_price - productDetail.recent_2nd_order_price < 0 ? 'minus' : ''}>
-                                {((productDetail.recent_order_price -
-                                    productDetail.recent_2nd_order_price)).toLocaleString()}원
-                                (
-                                {Math.round((((productDetail.recent_order_price -
-                                            productDetail.recent_2nd_order_price) /
-                                        productDetail.recent_2nd_order_price) *
-                                    100) * 10) / 10}
-                                %)
-                            </p>
+                            {
+                                productDetail && productDetail.recent_2nd_order_price !== null && productDetail.recent_2nd_order_price !== 0 ?
+                                    <p className={productDetail.recent_order_price - productDetail.recent_2nd_order_price > 0 ? 'plus' : productDetail.recent_order_price - productDetail.recent_2nd_order_price < 0 ? 'minus' : ''}>
+                                        {((productDetail.recent_order_price -
+                                            productDetail.recent_2nd_order_price)).toLocaleString()}원
+                                        (
+                                        {Math.round((((productDetail.recent_order_price -
+                                                    productDetail.recent_2nd_order_price) /
+                                                productDetail.recent_2nd_order_price) *
+                                            100) * 10) / 10}
+                                        %)
+                                    </p> : null
+                            }
+
                         </div>
                     ) : (
                         <div>

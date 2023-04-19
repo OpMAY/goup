@@ -381,7 +381,7 @@ const ProductGraph = () => {
                             {item.size}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {item.price}
+                            {item.price.toLocaleString()}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
                             {item.reg_datetime.year}/{" "}
@@ -425,7 +425,7 @@ const ProductGraph = () => {
                             {item.size}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {item.price}
+                            {item.price.toLocaleString()}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
                             {item.count}
@@ -457,13 +457,13 @@ const ProductGraph = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {product.sell_history.slice(0, 5).map((item, idx) => (
+                      {product.purchase_history.slice(0, 5).map((item, idx) => (
                         <TableRow key={idx}>
                           <TableCell sx={tableCell} component="th" scope="row">
                             {item.size}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
-                            {item.price}
+                            {item.price.toLocaleString()}
                           </TableCell>
                           <TableCell sx={tableCell} align="right">
                             {item.count}
