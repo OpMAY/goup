@@ -6,16 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/ColumTop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/DetailInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/ProductGraph.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/ProductGraph.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Detail/SellOrderPayment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/AccountRegisterModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/AccountRegisterModal/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/DetailMoreBidModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/DetailMoreBidModal/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/SizeButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/DetailSizeModal/SizeButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/modal/RecipeInfoModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/modal/RecipeInfoModal/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/profile/Profile/LoginInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profile/Profile/LoginInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profile/Profile/ProfileInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profile/Profile/ProfileInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/CustomAxios.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/CustomAxios.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +86,7 @@
       <workItem from="1681273603960" duration="8879000" />
       <workItem from="1681356531157" duration="18488000" />
       <workItem from="1681876303445" duration="2898000" />
+      <workItem from="1681896758746" duration="117000" />
     </task>
     <servers />
   </component>

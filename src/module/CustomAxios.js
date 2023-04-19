@@ -97,3 +97,36 @@ export const axiosPostFunction = async (url, formData, hasFile, token, setToken)
         })
     })
 }
+
+export const axiosPutFunction = async (url, formData, hasFile, token, setToken) => {
+    const config = {};
+    config.headers = {
+        contentType: 'application/x-www-form-urlencoded',
+        authorization: 'bearer ' + token
+    }
+    if (hasFile === true) {
+        config.headers.contentType = 'multipart/form-data'
+    }
+    console.log(config);
+    return new Promise((resolve, reject) => {
+        axios.put(DEFAULT_SERVER_URL + url, formData, config).then(async (res) => {
+            if (res.data.status === 'UNAUTHORIZED') {
+                await authFunction(token, setToken).then(() => {
+                    console.log(config)
+                    config.headers['authorization'] = 'bearer ' + token;
+                    axios.put(DEFAULT_SERVER_URL + url, formData, config).then((res2) => {
+                        console.log('response on POST', url, ' : ',res);
+                        resolve(res2);
+                    })
+                })
+            } else if (res.data.status === 'OK') {
+                console.log('response on POST', url, ' : ',res);
+                resolve(res);
+            } else {
+                reject(res);
+            }
+        }).catch((reject) => {
+            console.log(reject);
+        })
+    })
+}
