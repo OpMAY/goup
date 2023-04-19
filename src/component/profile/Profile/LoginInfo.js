@@ -1,22 +1,28 @@
-
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import {useRecoilState, useRecoilValue} from "recoil";
+import {profileAtom, tokenAtom, userAtom} from "../../../atoms/atom";
+import {axiosPutFunction} from "../../../module/CustomAxios";
+
 const Block = styled.div`
   width: 50%;
   padding-top: 38px;
+
   h3 {
     font-size: 18px;
     font-weight: 800;
     color: #000;
   }
+
   .unit {
     position: relative;
     padding: 25px 0 18px;
     border-bottom: 1px solid #ebebeb;
+
     .change {
       display: inline-flex;
       height: 34px;
@@ -30,11 +36,13 @@ const Block = styled.div`
       border-radius: 10px;
       align-items: center;
     }
+
     .sub-title {
       font-size: 13px;
       color: rgba(34, 34, 34, 0.5);
       margin: 0;
     }
+
     .e-mail,
     .password,
     .name,
@@ -53,6 +61,7 @@ const Block = styled.div`
       color: #222;
     }
   }
+
   .withdrawal {
     display: inline-block;
     padding: 5px 0;
@@ -63,39 +72,47 @@ const Block = styled.div`
     background-color: transparent;
     border: 0;
   }
+
   .unit_change {
     position: relative;
     padding: 25px 0 18px;
+
     .sub-title {
       font-size: 13px;
       color: #222;
       margin: 0;
       padding-bottom: 20px;
     }
+
     .change_title {
       color: #000;
       margin: 0;
       font-size: 13px;
     }
+
     .name {
       font-size: 16px;
       padding-top: 6px;
       margin: 0;
       color: #222;
     }
+
     .unit_input {
       width: 100%;
       border: 0;
       padding: 7px 0;
       font-size: 15px;
       border-bottom: 1px solid #ebebeb;
+
       &:focus {
         outline: none;
       }
     }
+
     .btn_box {
       text-align: center;
       padding-top: 30px;
+
       .btn {
         min-width: 120px;
         height: 42px;
@@ -136,11 +153,13 @@ const ModalBox = styled.div`
   box-shadow: 24;
   z-index: 9;
   background-color: #fff;
+
   .title {
     padding: 20px 50px;
     font-size: 18px;
     text-align: center;
   }
+
   .size_body {
     overflow-x: hidden;
     overflow-y: auto;
@@ -148,10 +167,12 @@ const ModalBox = styled.div`
     padding: 6px 28px 0;
     display: flex;
     flex-wrap: wrap;
+
     .size_info {
       width: calc(33.33333% - 8px);
       height: 52px;
       margin: 4px;
+
       button {
         width: 100%;
         height: 100%;
@@ -159,17 +180,20 @@ const ModalBox = styled.div`
         color: #222;
         border: 1px solid #ccc;
         border-radius: 10px;
-        &.is-active{
+
+        &.is-active {
           border: 1px solid #000;
           font-weight: 600;
         }
       }
-      
+
     }
   }
+
   .btn_box {
     text-align: center;
     padding: 24px 32px 32px;
+
     .btn {
       min-width: 120px;
       height: 42px;
@@ -179,6 +203,7 @@ const ModalBox = styled.div`
       font-size: 14px;
       font-weight: 700;
       border-radius: 10px;
+
       &.btn_save {
         background-color: #222;
         color: #fff;
@@ -189,89 +214,146 @@ const ModalBox = styled.div`
 `;
 
 const sizeInfo = [
-  '220', '225', '230', '235', '240', '245', '250', '255', '260', '265', '270', '275', '280', '285', '290', '295', '300'
+    '220', '225', '230', '235', '240', '245', '250', '255', '260', '265', '270', '275', '280', '285', '290', '295', '300'
 ]
-const Info = ({profile, setProfile}) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [change, setChange] = useState(false)
-  return (
-    <Block>
-      <ProfileInfo>
-        <h3>로그인 정보</h3>
-        <div>
-          <div className='unit'>
-            <h4 className='sub-title'>이메일 주소</h4>
-            {
-              profile ? <p className='e-mail'>{profile.email}</p> : null
-            }
-          </div>
-        </div>
-      </ProfileInfo>
-      <ProfileInfo paddingTop="58px">
-        <h3>개인정보</h3>
-        <div>
-          {
-            !change ? <div className='unit'>
-            <h4 className='sub-title'>이름</h4>
-            {
-              profile ? <p className='name'>{profile.name}</p>  : null
-            }
-            
-            <button type='button' className='change' onClick={() => setChange(true)}>변경</button>
-          </div> : null
-          }
-          {
-            change ? <div className='unit_change'>
-            <h4 className='sub-title'>이름</h4>
-            <h4 className='change_title'>새로운 이름</h4>
-            <input className='unit_input' type="text" placeholder='고객님의 이름'></input>
-            <div className='btn_box'>
-              <button className='btn btn_back' onClick={() => setChange(false)}>취소하기</button>
-              <button className='btn btn_save'>저장하기</button>
-            </div>
-          </div> : null
-          }
-          <div className='unit'>
-            <h4 className='sub-title'>휴대폰 번호</h4>
-            {
-              profile ? <p className='phone'>{profile.phone_number}.</p> : null
-            }
-          </div>
-          <div className='unit'>
-            <h4 className='sub-title'>신발 사이즈</h4>
-            {
-              profile ? <p className='size'>{profile.size}</p> : null
-            }
-            <button type='button' className='change' onClick={handleOpen}>변경</button>
-          </div>
-        </div>
-      </ProfileInfo>
-      {/* <button type='button' className='withdrawal'>회원탈퇴</button> */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <ModalBox>
-          <h2 className='title'>사이즈 선택</h2>
-          <div className='size_body'>
-            {
-              sizeInfo.map((item) => (
-                <div className='size_info'>
-                  <button type='button' className='is-active'>{item}</button>
+const Info = () => {
+    const user = useRecoilValue(userAtom);
+    const [profile, setProfile] = useRecoilState(profileAtom);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setActiveSize(profile.size);
+        setOpen(true)
+    };
+    const handleClose = () => setOpen(false);
+    const [change, setChange] = useState(false)
+    const [name, setName] = useState('');
+    const [token, setToken] = useRecoilState(tokenAtom);
+    const [activeSize, setActiveSize] = useState(null);
+
+    const handleName = (e) => {
+        setName(e.target.value);
+    }
+
+    const handleSizeButton = (size) => {
+        setActiveSize(size);
+    }
+
+    const changeName = () => {
+        if (name.length > 0) {
+            axiosPutFunction(`/api/kream/my/profile/${user}`, {
+                no: user,
+                name: name,
+                email: '',
+                phone_number: ''
+            }, false, token, setToken).then(res => {
+                setProfile(prevState => {
+                    return {...prevState, name: res.data.data.USER.name};
+                })
+                setChange(false);
+            })
+        }
+    }
+
+    const changeSize = () => {
+        console.log(activeSize);
+        axiosPutFunction(`/api/kream/my/profile/${user}`, {
+            no: user,
+            name: '',
+            email: '',
+            phone_number: '',
+            size: activeSize
+        }, false, token, setToken).then(res => {
+            setProfile(prevState => {
+                return {...prevState, size: res.data.data.USER.size};
+            })
+            setOpen(false);
+        })
+    }
+
+    return (
+        <Block>
+            <ProfileInfo>
+                <h3>로그인 정보</h3>
+                <div>
+                    <div className='unit'>
+                        <h4 className='sub-title'>이메일 주소</h4>
+                        {
+                            profile ? <p className='e-mail'>{profile.email}</p> : null
+                        }
+                    </div>
                 </div>
-              ))
-            }
-          </div>
-          <div className="btn_box">
-            <button className="btn btn_save">저장하기</button>
-          </div>
-        </ModalBox>
-      </Modal>
-    </Block>
-  );
+            </ProfileInfo>
+            <ProfileInfo paddingTop="58px">
+                <h3>개인정보</h3>
+                <div>
+                    {
+                        !change ? <div className='unit'>
+                            <h4 className='sub-title'>이름</h4>
+                            {
+                                profile ? <p className='name'>{profile.name}</p> : null
+                            }
+
+                            <button type='button' style={{cursor: "pointer"}} className='change' onClick={() => {
+                                setName('');
+                                setChange(true)
+                            }}>변경
+                            </button>
+                        </div> : null
+                    }
+                    {
+                        change ? <div className='unit_change'>
+                            <h4 className='sub-title'>이름</h4>
+                            <h4 className='change_title'>새로운 이름</h4>
+                            <input className='unit_input' onChange={handleName} type="text" value={name}
+                                   placeholder='고객님의 이름'></input>
+                            <div className='btn_box'>
+                                <button className='btn btn_back' style={{cursor: "pointer"}}
+                                        onClick={() => setChange(false)}>취소하기
+                                </button>
+                                <button className='btn btn_save' style={{cursor: "pointer"}} onClick={changeName}>저장하기
+                                </button>
+                            </div>
+                        </div> : null
+                    }
+                    <div className='unit'>
+                        <h4 className='sub-title'>휴대폰 번호</h4>
+                        {
+                            profile ? <p className='phone'>{profile.phone_number}</p> : null
+                        }
+                    </div>
+                    <div className='unit'>
+                        <h4 className='sub-title'>신발 사이즈</h4>
+                        {
+                            profile ? <p className='size'>{profile.size}</p> : null
+                        }
+                        <button type='button' className='change' style={{cursor: "pointer"}} onClick={handleOpen}>변경</button>
+                    </div>
+                </div>
+            </ProfileInfo>
+            {/* <button type='button' className='withdrawal'>회원탈퇴</button> */}
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description">
+                <ModalBox>
+                    <h2 className='title'>사이즈 선택</h2>
+                    <div className='size_body'>
+                        {
+                            sizeInfo.map((item) => (
+                                <div className='size_info'>
+                                    <button type='button' style={{cursor: "pointer"}} className={activeSize === item * 1 ? 'is-active' : ''} onClick={() => handleSizeButton(item * 1)}>{item}</button>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div className="btn_box">
+                        <button className="btn btn_save" style={{cursor: "pointer"}} onClick={changeSize}>저장하기</button>
+                    </div>
+                </ModalBox>
+            </Modal>
+        </Block>
+    );
 };
 
 export default Info;

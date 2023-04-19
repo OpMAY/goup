@@ -41,7 +41,7 @@ const redButton = {
 
 const SizeButton = ({onClick, size, reg_datetime, price, value, state, isSell, no, red}) => {
     const sizeState = useRecoilValue(sizeStateAtom);
-
+    console.log(sizeState)
     return (
         <Button
             sx={red ? redButton : button}

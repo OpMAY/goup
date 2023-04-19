@@ -812,7 +812,7 @@ const SellOrderPayment = () => {
                                                 </Typography>
                                             </Stack>
                                             {
-                                                receiptInfo && receiptInfo.cash_receipt_type !== null ?
+                                                receiptInfo && receiptInfo.cash_receipt_type !== null && receiptInfo.cash_receipt_type !== 'NONE' ?
                                                     <>
                                                         <Stack direction="row">
                                                             <Typography sx={{fontSize: "13px"}}>정보</Typography>
