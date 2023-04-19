@@ -190,9 +190,13 @@ export const orderToggleAtom = atom({
     default : "1"
 })
 
+export const profileAtom = atom({
+    key : 'profile',
+    default: null
+})
+
 // [My] 유저 계좌 정보
 export const userAccountAtom = atom({
     key : "account",
     default : null
 })
-

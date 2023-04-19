@@ -53,7 +53,6 @@ function App() {
         <Route path="/my/selling" element={<My path="selling" />} />
         <Route path="/my/account" element={<My path="account" />} />
         <Route path="/my/address" element={<My path="address" />} />
-        <Route path="/my/payment" element={<My path="payment" />} />
         <Route path="/my/point" element={<My path="point" />} />
         <Route path="/my/profile" element={<My path="profile" />} />
         <Route path="/my/receipt" element={<My path="receipt" />} />

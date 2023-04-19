@@ -6,7 +6,6 @@ import Selling from "../component/profile/Selling/Selling";
 import Wish from "../component/profile/Wish/Wish";
 import Profile from "../component/profile/Profile/Profile";
 import Address from "../component/profile/Address/Address";
-import Payment from "../component/profile/Payment/Payment";
 import Account from "../component/profile/Account/Account";
 import Receipt from "../component/profile/Receipt/Receipt";
 import Point from "../component/profile/Point/Point";
@@ -30,7 +29,6 @@ const My = ({ path }) => {
             {path === "wish" && <Wish />}
             {path === "profile" && <Profile />}
             {path === "address" && <Address />}
-            {path === "payment" && <Payment />}
             {path === "account" && <Account />}
             {path === "receipt" && <Receipt />}
             {path === "point" && <Point />}
