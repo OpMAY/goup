@@ -201,7 +201,7 @@ const DetailMoreBidModal = () => {
                                   {item.size}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {item.price}
+                                  {item.price.toLocaleString()}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
                                   {item.reg_datetime.year}/
@@ -250,7 +250,7 @@ const DetailMoreBidModal = () => {
                                   {item.size}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {item.price}
+                                  {item.price.toLocaleString()}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
                                   {item.count}
@@ -285,7 +285,7 @@ const DetailMoreBidModal = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {product.sell_history.map((item, idx) => (
+                            {product.purchase_history.map((item, idx) => (
                               <TableRow key={idx}>
                                 <TableCell
                                   sx={tableCell}
@@ -294,7 +294,7 @@ const DetailMoreBidModal = () => {
                                   {item.size}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
-                                  {item.price}
+                                  {item.price.toLocaleString()}
                                 </TableCell>
                                 <TableCell sx={tableCell} align="right">
                                   {item.count}

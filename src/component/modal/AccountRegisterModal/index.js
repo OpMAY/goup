@@ -18,13 +18,15 @@ import TextField from "@mui/material/TextField";
 
 const AccountRegisterModal = ({buttonTitle, userAccount, setUserAccount}) => {
     const [open, setOpen] = useState(false);
+    const [account, setAccount] = useState(null);
     const origin = {...userAccount};
     const handleOpen = () => {
+        setAccount(userAccount);
         setOpen(true);
     };
     const handleClose = (save) => {
-        if (!save) {
-            setUserAccount(origin);
+        if (save) {
+            setUserAccount(account);
         }
         setOpen(false);
     };
@@ -128,13 +130,13 @@ const AccountRegisterModal = ({buttonTitle, userAccount, setUserAccount}) => {
                                     </InputLabel>
                                     <NativeSelect
                                         sx={{marginY: "16px"}}
-                                        defaultValue={userAccount !== null ? userAccount.bank_name : names[0]}
+                                        defaultValue={account !== null ? account.bank_name : names[0]}
                                         inputProps={{
                                             name: "은행명",
                                             id: "uncontrolled-native",
                                         }}
                                         onChange={(e) => {
-                                            setUserAccount(prevState => {
+                                            setAccount(prevState => {
                                                 return {...prevState, bank_name: names[e.target.options.selectedIndex]}
                                             })
                                         }}
@@ -156,8 +158,8 @@ const AccountRegisterModal = ({buttonTitle, userAccount, setUserAccount}) => {
                                             shrink: true,
                                             sx: {color: "#222", fontWeight: "700"},
                                         }}
-                                        value={userAccount !== null ? userAccount.account_number : ''}
-                                        onChange={(e) => setUserAccount(prevState => {
+                                        value={account !== null ? account.account_number : ''}
+                                        onChange={(e) => setAccount(prevState => {
                                             return {...prevState, account_number: e.target.value}
                                         })}
                                         autoFocus
@@ -173,8 +175,8 @@ const AccountRegisterModal = ({buttonTitle, userAccount, setUserAccount}) => {
                                             shrink: true,
                                             sx: {color: "#222", fontWeight: "700"},
                                         }}
-                                        value={userAccount !== null ? userAccount.account_name : ''}
-                                        onChange={(e) => setUserAccount(prevState => {
+                                        value={account !== null ? account.account_name : ''}
+                                        onChange={(e) => setAccount(prevState => {
                                             return {...prevState, account_name: e.target.value}
                                         })}
                                         autoFocus

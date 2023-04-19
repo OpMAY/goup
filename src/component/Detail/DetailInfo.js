@@ -254,8 +254,8 @@ const DetailInfo = () => {
       setToken
     ).then(res => {
       setSize(res.data.data.sizes);
-      res.data.data.sizes[0].size === "ONE SIZE" &&
-        setSizeState({size: res.data.data.sizes[0].size, no: res.data.data.sizes[0].no});
+      // res.data.data.sizes[0].size === "ONE SIZE" &&
+      //   setSizeState({size: res.data.data.sizes[0].size, no: res.data.data.sizes[0].no});
     });
   }, []);
 
