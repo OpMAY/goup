@@ -21,6 +21,7 @@ const LoginButton = styled.button`
   padding: 0;
   font-size: 16px;
   font-weight: 700;
+  cursor: pointer;
 
   .button_icon {
     width: 22px;
@@ -62,7 +63,7 @@ const doLogin = (name, token, setToken) => {
                 const data = res.data;
                 if (data.status === 'OK') {
                     const clientId = data.data.key;
-                    const redirectURI = 'http://localhost:3000/oauth';
+                    const redirectURI = window.location.origin + '/oauth';
                     window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + clientId + '&redirect_uri=' + redirectURI + '&response_type=code'
                 }
             })

@@ -65,6 +65,7 @@ const DetailSizeModal = ({ product }) => {
     fontSize: "16px",
     fontWeight: 700,
     textAlign: "center",
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Roboto', 'AppleSDGothicNeo-Regular', 'NanumBarunGothic', 'NanumGothic', '나눔고딕', 'Segoe UI', 'Helveica', 'Arial', 'Malgun Gothic', 'Dotum', sans-serif"
   };
 
   const header = {
@@ -99,12 +100,12 @@ const DetailSizeModal = ({ product }) => {
             sx={button}
             className="button"
             onClick={() => modalOpen(product.product.no)}>
-            <Typography sx={subtext}>{sizeState}</Typography>
+            <Typography sx={subtext}>{sizeState !== null ? sizeState.size : '모든 사이즈'}</Typography>
             <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
           </Button>
         ) : (
           <LinkStyle to="/login">
-            <Typography sx={subtext}>{sizeState}</Typography>
+            <Typography sx={subtext}>{sizeState !== null ? sizeState.size : '모든 사이즈'}</Typography>
             <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
           </LinkStyle>
         )}

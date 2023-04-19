@@ -1,24 +1,24 @@
+
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import PointTabel from './PointTabel';
+import HelpSharpIcon from "@mui/icons-material/HelpSharp";
+import PointTable from './PointTabel';
 import Modal from '@mui/material/Modal';
 import { axiosGetFunction } from '../../../module/CustomAxios';
-import { useRecoilState, useRecoilStatem } from "recoil";
-import { tokenAtom, userAtom } from '../../../atoms/atom'
-
-
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userPointAtom, tokenAtom, userAtom } from "../../../atoms/atom";
 
 
 const Block = styled.div`
-  .point_title{
+  .point_title {
     display: flex;
     align-items: center;
-    .title{
+    .title {
       color: #000;
       font-weight: bold;
       font-size: 24px;
     }
-    .circle{
+    .circle {
       display: inline-flex;
       margin: 0;
       padding: 0;
@@ -27,7 +27,7 @@ const Block = styled.div`
       cursor: pointer;
     }
   }
-  .point_box{
+  .point_box {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -37,47 +37,47 @@ const Block = styled.div`
     border: 1px solid #ebebeb;
     border-radius: 15px;
     background-color: #fafafa;
-    
-    .point_list{
+
+    .point_list {
       list-style: none;
       padding: 0;
       margin: 0;
       display: flex;
 
-      li{
+      li {
         position: relative;
-        &:first-child{
+        &:first-child {
           padding-right: 100px;
         }
-        &:last-child{
+        &:last-child {
           padding-left: 100px;
-          &::after{
+          &::after {
             content: "";
             display: block;
             width: 1px;
             background-color: #ebebeb;
             position: absolute;
-            top:0;
-            bottom:0;
+            top: 0;
+            bottom: 0;
             left: 0;
           }
         }
       }
 
-      .point_subtitle{
-        color: rgba(34,34,34,.5);
+      .point_subtitle {
+        color: rgba(34, 34, 34, 0.5);
         font-size: 13px;
         margin: 0;
       }
-      .point_num{
+      .point_num {
         font-size: 24px;
         color: #222;
       }
     }
   }
-  .btn_box{
+  .btn_box {
     text-align: center;
-    .save_btn{
+    .save_btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -151,7 +151,6 @@ const ModalBlock = styled.div`
       font-size: 14px;
       font-weight: 700;
       border-radius: 10px;
-
       &.btn_back{
         background-color: #fff;
         border: 1px solid #ccc;
@@ -172,26 +171,32 @@ const Point = () => {
   const [user, setUser] = useRecoilState(userAtom);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [userPoint, setUserPoint] = useRecoilState(userPointAtom);
   useEffect(() => {
     axiosGetFunction(`/api/kream/my/point/${user}`, {}, token, setToken).then((res) => {
       console.log(res);
+      setUserPoint(res.data.data.point);
     })
   }, [])
-  console.log(user.toString())
+  
+
   return (
     <Block>
-      <div className='point_title'>
-        <h3 className='title'>포인트</h3>
+      <div className="point_title">
+        <h3 className="title">포인트</h3>
+        <button type="button" className="circle">
+          <HelpSharpIcon />
+        </button>
       </div>
-      <div className='point_box'>
-        <ul className='point_list'>
+      <div className="point_box">
+        <ul className="point_list">
           <li>
-            <p className='point_subtitle'>사용 가능한 포인트</p>
-            <strong className='point_num'>0P</strong>
+            <p className="point_subtitle">사용 가능한 포인트</p>
+            <strong className="point_num">{userPoint ? userPoint.point : 0}P</strong>
           </li>
           <li>
-            <p className='point_subtitle'>이번달 소멸예정 포인트</p>
-            <strong className='point_num'>0P</strong>
+            <p className="point_subtitle">이번달 소멸예정 포인트</p>
+            <strong className="point_num">0P</strong>
           </li>
         </ul>
         <div className='btn_box'>
@@ -223,8 +228,15 @@ const Point = () => {
           </div>
         </ModalBlock>
       </Modal>
+        <div className="btn_box">
+          <button type="button" className="save_btn">
+            + 포인트 적립하기
+          </button>
+        </div>
+      </div>
+      <PointTable userPoint={userPoint} />
     </Block>
-  )
-}
+  );
+};
 
-export default Point
+export default Point;

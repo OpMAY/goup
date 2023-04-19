@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const DeliveryWay = styled.div`
+  cursor: pointer;
   &:focus {
     border: 1px solid black;
   }
