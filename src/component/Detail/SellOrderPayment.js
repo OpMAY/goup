@@ -32,6 +32,7 @@ import DeliveryRequireModal from "../modal/DeliveryRequireModal";
 import AddAddressModal from "../modal/AddAddressModal";
 import RecipeInfoModal from "../modal/RecipeInfoModal";
 import {useNavigate} from "react-router-dom";
+import AccountRegisterModal from "../modal/AccountRegisterModal";
 
 const panelStyle = {
     padding: "0",
@@ -619,22 +620,35 @@ const SellOrderPayment = () => {
                                         <h3>판매 정산 계좌</h3>
                                     </div>
                                     <Stack direction="row" justifyContent="space-between">
-                                        <Typography sx={{fontSize: "14px", padding: "0"}}>
-                                            등록된 판매 정산 계좌가 없습니다.
-                                            <br/>새 계좌번호를 추가해주세요!
-                                        </Typography>
-                                        <Button
-                                            sx={{
-                                                backgroundColor: "#000",
-                                                color: "#fff",
-                                                fontSize: "12px",
-                                                fontWeight: "700",
-                                                padding: "0 16px",
-                                                borderRadius: "10px",
-                                                height: "36px",
-                                            }}>
-                                            계좌 추가
-                                        </Button>
+                                        {
+                                            userAccount !== null ?
+                                                <>
+                                                    <div className="delivery_info">
+                                                        <table>
+                                                            <tr>
+                                                                <th>은행 명</th>
+                                                                <td>{userAccount.bank_name}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>계좌 번호</th>
+                                                                <td>{userAccount.account_number}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>예금주</th>
+                                                                <td>{userAccount.account_name}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <AccountRegisterModal buttonTitle={'계좌 변경'} userAccount={userAccount} setUserAccount={setUserAccount}/>
+                                                </> :
+                                                <>
+                                                    <Typography sx={{fontSize: "14px", padding: "0"}}>
+                                                        등록된 판매 정산 계좌가 없습니다.
+                                                        <br/>새 계좌번호를 추가해주세요!
+                                                    </Typography>
+                                                    <AccountRegisterModal buttonTitle={'계좌 추가'} userAccount={userAccount} setUserAccount={setUserAccount}/>
+                                                </>
+                                        }
                                     </Stack>
                                 </div>
                             </Box>
@@ -746,7 +760,6 @@ const SellOrderPayment = () => {
                                             content={item.content}
                                         />
                                     ))}
-                                    <CheckArea title="구매 조건을 모두 확인하였으며, 거래 진행에 동의합니다"/>
                                     <Stack direction="row" justifyContent="space-between">
                                         <Typography sx={subTitle}>정산금액</Typography>
                                         <Typography
