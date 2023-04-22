@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -100,12 +100,12 @@ const DetailSizeModal = ({ product }) => {
             sx={button}
             className="button"
             onClick={() => modalOpen(product.product.no)}>
-            <Typography sx={subtext}>{sizeState !== null ? sizeState.size : '모든 사이즈'}</Typography>
+            <Typography sx={subtext}>{sizeState !== null ? sizeState : '모든 사이즈'}</Typography>
             <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
           </Button>
         ) : (
           <LinkStyle to="/login">
-            <Typography sx={subtext}>{sizeState !== null ? sizeState.size : '모든 사이즈'}</Typography>
+            <Typography sx={subtext}>{sizeState !== null ? sizeState : '모든 사이즈'}</Typography>
             <RiArrowDropDownFill size={24}></RiArrowDropDownFill>
           </LinkStyle>
         )}
