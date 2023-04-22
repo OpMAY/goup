@@ -509,7 +509,7 @@ const SellOrderPayment = () => {
                                     variant="fullWidth"
                                     TabIndicatorProps={{hidden: true}}
                                     onChange={handleChange}
-                                    aria-label="lab API tabs example">
+                                    aria-label="lab APgoI tabs example">
                                     <Tab sx={tabStyle} label="판매 입찰" value="1"/>
                                     <Tab sx={tabStyle} label="즉시 판매" value="2"
                                          disabled={directPrice === null}/>
