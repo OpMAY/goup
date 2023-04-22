@@ -121,13 +121,6 @@ const ColumTop = () => {
     const productDetail = useRecoilValue(productDetailAtom);
     const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
 
-    const oneSize = {
-        fontSize: "16px",
-        fontWeight: 700,
-        textAlign: "center",
-        fontFamily: "-apple-system, BlinkMacSystemFont, 'Roboto', 'AppleSDGothicNeo-Regular', 'NanumBarunGothic', 'NanumGothic', '나눔고딕', 'Segoe UI', 'Helveica', 'Arial', 'Malgun Gothic', 'Dotum', sans-serif"
-    };
-
     return (
         <div>
             <DetailMainTitle>
@@ -141,7 +134,7 @@ const ColumTop = () => {
                 <SizeInfo>
                     <div className="title">사이즈</div>
                     {sizeState && sizeState.size === "ONE SIZE" ? (
-                        <Typography sx={oneSize}>ONE SIZE</Typography>
+                        <Typography >ONE SIZE</Typography>
                     ) : (
                         <DetailSizeModal product={productDetail}/>
                     )}

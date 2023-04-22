@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import InfoTitle from "./InfoTitle";
 import MyResponsiveLine from "./MyResponsiveLine";
+import dayjs from "dayjs";
 import {
   Box,
   Tab,
@@ -65,7 +66,6 @@ const tabListStyle = {
   borderRadius: "10px",
 };
 
-
 const tableCellHead = {
   color: "rgba(34,34,34,.5)",
   padding: "0 0 9px",
@@ -84,39 +84,13 @@ const ProductGraph = () => {
   const [listValue, setListValue] = useState("1");
   const product = useRecoilValue(productDetailAtom);
   const size = useRecoilValue(sizeAtom);
-  console.log(88, size);
 
-  function getToday() {
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = ("0" + (1 + date.getMonth())).slice(-2);
-    var day = ("0" + date.getDate()).slice(-2);
-    return year + "-" + month + "-" + day;
-  }
-
-  function getMonthAgo() {
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = ("0" + date.getMonth()).slice(-2);
-    var day = ("0" + date.getDate()).slice(-2);
-
-    return year + "-" + month + "-" + day;
-  }
-
-  function getThreeMonthAgo() {
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = ("0" + (date.getMonth() - 2)).slice(-2);
-    var day = ("0" + date.getDate()).slice(-2);
-
-    return year + "-" + month + "-" + day;
-  }
-
-  let monthDate = getDatesStartToLast(getMonthAgo(), getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
-  let quarterDate = getDatesStartToLast("2023-01-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
-  let halfDate = getDatesStartToLast("2022-10-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
-  let yearDate = getDatesStartToLast("2022-04-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
-  let allDate = getDatesStartToLast("2022-04-01", getToday()); // 한 달치 날짜 보여줌 // 임시!~~~~~~~~
+  let now = dayjs();
+  const getToday = now.format("YYYY-MM-DD");
+  const getMonthAgo = now.subtract(1, "M").format("YYYY-MM-DD");
+  const getQuarterAgo = now.subtract(3, "M").format("YYYY-MM-DD");
+  const getHalfAgo = now.subtract(6, "M").format("YYYY-MM-DD");
+  const getYearAgo = now.subtract(1, "y").format("YYYY-MM-DD");
 
   function getDatesStartToLast(startDate, lastDate) {
     var regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
@@ -130,6 +104,12 @@ const ProductGraph = () => {
     }
     return result;
   }
+  
+  let monthAgoDate = getDatesStartToLast(getMonthAgo, getToday);
+  let quarterAgoDate = getDatesStartToLast(getQuarterAgo, getToday);
+  let halfDate = getDatesStartToLast(getHalfAgo, getToday);
+  let yearDate = getDatesStartToLast(getYearAgo, getToday);
+
 
   const handleChange = (event, newValue) => {
     console.log(1, event, newValue);
@@ -190,7 +170,7 @@ const ProductGraph = () => {
                         id: "1개월",
                         recent_price: product.recent_order_price,
                         color: "hsl(2, 100%, 53%)",
-                        data: monthDate.map((dates, idx) => {
+                        data: monthAgoDate.map((dates, idx) => {
                           let array = product.price_history.history_quarter
                             .map(item => {
                               return dates === item.target_date
@@ -219,7 +199,7 @@ const ProductGraph = () => {
                         id: "3개월",
                         recent_price: product.recent_order_price,
                         color: "hsl(2, 100%, 53%)",
-                        data: quarterDate.map((dates, idx) => {
+                        data: quarterAgoDate.map((dates, idx) => {
                           let array = product.price_history.history_quarter
                             .map(item => {
                               return dates === item.target_date
@@ -306,7 +286,10 @@ const ProductGraph = () => {
                         id: "전체",
                         recent_price: product.recent_order_price,
                         color: "hsl(2, 100%, 53%)",
-                        data: yearDate.map((dates, idx) => {
+                        data: getDatesStartToLast(
+                          product.price_history.history_all[0].target_date,
+                          getToday
+                        ).map((dates, idx) => {
                           let array = product.price_history.history_quarter
                             .map(item => {
                               return dates === item.target_date
@@ -486,55 +469,57 @@ const ProductGraph = () => {
           </TabContext>
         </Box>
         <DetailMoreBidModal />
-        {user ? null : <Box
-          sx={{
-            backgroundColor: "hsla(0, 0%, 100%, 0.8)",
-            position: "absolute",
-            top: 0,
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
+        {user ? null : (
           <Box
             sx={{
-              backgroundColor: "#fff",
-              width: "318px",
-              height: "150px",
-              border: "1px solid #d3d3d3",
-              textAlign: "center",
+              backgroundColor: "hsla(0, 0%, 100%, 0.8)",
+              position: "absolute",
+              top: 0,
+              width: "100%",
+              height: "100%",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              flexDirection: "column",
             }}>
-            <Typography
+            <Box
               sx={{
-                fontSize: "14px",
+                backgroundColor: "#fff",
+                width: "318px",
+                height: "150px",
+                border: "1px solid #d3d3d3",
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
               }}>
-              모든 체결 거래는
-              <br /> 로그인 후 확인 가능합니다.
-            </Typography>
-            <Button
-              component={Link}
-              to="/login"
-              sx={{
-                display: "inline-block",
-                backgroundColor: "#222",
-                color: " #fff",
-                fontWeight: 700,
-                marginTop: "12px",
-                padding: " 8px 20px",
-                borderRadius: "12px",
-                "&:hover": {
+              <Typography
+                sx={{
+                  fontSize: "14px",
+                }}>
+                모든 체결 거래는
+                <br /> 로그인 후 확인 가능합니다.
+              </Typography>
+              <Button
+                component={Link}
+                to="/login"
+                sx={{
+                  display: "inline-block",
                   backgroundColor: "#222",
-              },
-              }}>
-              로그인
-            </Button>
+                  color: " #fff",
+                  fontWeight: 700,
+                  marginTop: "12px",
+                  padding: " 8px 20px",
+                  borderRadius: "12px",
+                  "&:hover": {
+                    backgroundColor: "#222",
+                  },
+                }}>
+                로그인
+              </Button>
+            </Box>
           </Box>
-        </Box>}
+        )}
       </ProductContainer>
     </>
   );

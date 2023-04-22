@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Hr } from "../../common/js/style";
-import SelectProductItem from "./SelectProductItem";
-import CheckArea from "./CheckArea";
-import OrderButton from "./OrderButton";
-import CheckingModal from "../modal/CheckingModal";
-import {useRecoilValue} from "recoil";
-import {checkAtom} from "../../atoms/atom";
+import { Hr } from "../../../common/js/style";
+import SelectProductItem from "../SelectProductItem";
+import CheckArea from "../CheckArea";
+import OrderButton from "../OrderButton";
+import CheckingModal from "../../modal/CheckingModal";
+import { useRecoilValue } from "recoil";
+import { checkAtom } from "../../../atoms/atom";
 
 const CheckContainer = styled.div`
   .notice {
@@ -35,7 +35,13 @@ const BuyCheckContainer = () => {
       <SelectProductItem />
       <hr />
       {CHECK_TEXT.map((item, id) => (
-        <CheckArea key={id} title={item.title} content={item.content} no={id} isModal={id === 0} />
+        <CheckArea
+          key={id}
+          title={item.title}
+          content={item.content}
+          no={id}
+          isModal={id === 0}
+        />
       ))}
 
       <OrderButton type="buy_step2" />
