@@ -5,7 +5,7 @@ import { Bootpay } from "@bootpay/client-js";
 const BootPay = () => {
   const [bootPayKey, setBootPayKey] = useState("");
   const BOOTPAY_PAYMENT_DONE_EVENT = "done";
-  const SERVER_URL = "http://3.35.219.16";
+  const SERVER_URL = "http://43.200.202.87";
   const SERVER_BOOTPAY_URI = "/api/bootpay";
   const API_KEY_GET_URI = SERVER_BOOTPAY_URI + "/key";
   const VERIFY_RECEIPT_URI = SERVER_BOOTPAY_URI + "/verify";
