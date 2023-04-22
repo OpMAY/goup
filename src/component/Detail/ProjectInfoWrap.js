@@ -54,7 +54,11 @@ const ProjectInfoWrap = () => {
           </div>
           <div className="detail_box">
             <dt>출시일</dt>
-            <dd>{productDetail.product.product_info.released_date}</dd>
+            <dd>
+              {productDetail.product.product_info.released_date
+                ? productDetail.product.product_info.released_date
+                : "-"}
+            </dd>
           </div>
           <div className="detail_box">
             <dt>컬러</dt>

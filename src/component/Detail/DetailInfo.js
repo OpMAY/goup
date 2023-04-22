@@ -130,28 +130,20 @@ const ColumnBox = styled.div`
     .swiper-wrapper {
       .swiper-slide {
         position: relative;
-        .item_inner {
-          .product_image {
-            height: 560px;
-            width: 560px;
-            background-color: rgb(246, 238, 237);
-            background-size: contain;
-            overflow: hidden;
-            position: relative;
-          }
-        }
       }
     }
     .swiper-button-prev {
       &:after {
         font-size: 24px;
-        color: rgba(34, 34, 34, 0.2);
+        color: rgba(34, 34, 34, 0.3);
       }
     }
     .swiper-button-next {
+      position: absolute;
+      left: 520px;
       &:after {
         font-size: 24px;
-        color: rgba(34, 34, 34, 0.2);
+        color: rgba(34, 34, 34, 0.3);
       }
     }
     .swiper-pagination {
@@ -196,9 +188,9 @@ const ColumnBox = styled.div`
           font-weight: 600;
         }
       }
-      .detail{
+      .detail {
         margin-top: 4px;
-        color:rgba(34,34,34,.5);
+        color: rgba(34, 34, 34, 0.5);
       }
       .banner_box {
         margin-top: 20px;
@@ -213,7 +205,7 @@ const ColumnBox = styled.div`
         }
       }
     }
-    .arrow_icon{
+    .arrow_icon {
       position: absolute;
       right: 16px;
     }
@@ -230,6 +222,16 @@ const BannerBox = styled.div`
     img {
     }
   }
+`;
+
+const SwiperImage = styled.div`
+  position: relative;
+  background-color: rgb(246, 238, 237);
+  height: 560px;
+  width: 560px;
+  background-size: contain;
+  overflow: hidden;
+  background-image: url("${props => props.img}");
 `;
 
 const DetailInfo = () => {
@@ -298,15 +300,13 @@ const DetailInfo = () => {
                 navigation={true}
                 effect="fade"
                 modules={[EffectFade, Pagination, Navigation]}>
-                {productDetail.product.images.map(item => (
-                  <SwiperSlide key={item.name}>
-                    <div className="item_inner">
-                      <div
-                        className="product_image"
-                        style={{ backgroundImage: `url(${item.url})` }}></div>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                {productDetail && productDetail.product.images.length > 0
+                  ? productDetail.product.images.map(item => (
+                      <SwiperSlide key={item.name}>
+                        <SwiperImage img={item.url}></SwiperImage>
+                      </SwiperSlide>
+                    ))
+                  : null}
               </Swiper>
               <div className="alert_box">
                 <div className="content">
