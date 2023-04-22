@@ -78,6 +78,7 @@ const Container = styled.div`
         div {
           div {
             .login_alert_layer {
+              border: 3px solid blue;
               z-index: 1;
               position: absolute;
               height: 640px;
@@ -167,6 +168,7 @@ const ColumnBox = styled.div`
     }
   }
   .alert_box {
+    width: 560px;
     display: flex;
     align-items: center;
     padding: 12px;
@@ -174,6 +176,7 @@ const ColumnBox = styled.div`
     border: 1px solid #ebebeb;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgb(0 0 0 / 12%);
+    position: relative;
     .content {
       font-size: 12px;
       .title {
@@ -193,6 +196,10 @@ const ColumnBox = styled.div`
           font-weight: 600;
         }
       }
+      .detail{
+        margin-top: 4px;
+        color:rgba(34,34,34,.5);
+      }
       .banner_box {
         margin-top: 20px;
         a {
@@ -205,6 +212,10 @@ const ColumnBox = styled.div`
           }
         }
       }
+    }
+    .arrow_icon{
+      position: absolute;
+      right: 16px;
     }
   }
 `;
@@ -231,20 +242,19 @@ const DetailInfo = () => {
   const [ScrollY, setScrollY] = useState(0);
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
-    console.log('scrollY : ', ScrollY)
+    console.log("scrollY : ", ScrollY);
   };
 
   const calcOffset = () => {
-    const bind = document.querySelector('.column_bind');
-    const box = document.querySelector('.column_box');
+    const bind = document.querySelector(".column_bind");
+    const box = document.querySelector(".column_box");
     return bind && box ? bind.offsetHeight - box.offsetHeight : 1290;
-  }
-
+  };
 
   // console.log(111, size, sizeState);
   // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
   useEffect(() => {
-    if(sizeState) {
+    if (sizeState) {
       setSizeState(null);
     }
     axiosGetFunction(
@@ -326,22 +336,7 @@ const DetailInfo = () => {
                 </a>
               </BannerBox>
               <div>
-                {user ? (
-                  <ProductGraph/>
-                ) : (
-                  <>
-                    <div className="login_alert_layer">
-                      <div className="layer_content">
-                        <p>
-                          모든 체결 거래는
-                          <br /> 로그인 후 확인 가능합니다.
-                        </p>
-                        <Link to="/login">로그인</Link>
-                      </div>
-                    </div>
-                    <ProductGraph />
-                  </>
-                )}
+                <ProductGraph />
                 <ConfirmWrap />
                 <PointGuide />
                 <MeditationNotice />
