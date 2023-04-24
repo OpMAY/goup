@@ -68,7 +68,6 @@ const DeliveryIconBox = ({order, title, side, sub}) => {
           <p className="company">
             <span className="badge_title">{title}</span>
             <span className="title">{side}</span>
-            {/* <span>아이콘</span> */}
           </p>
           <p className="sub_text">{sub}</p>
         </div>
