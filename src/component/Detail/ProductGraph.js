@@ -104,12 +104,11 @@ const ProductGraph = () => {
     }
     return result;
   }
-  
+
   let monthAgoDate = getDatesStartToLast(getMonthAgo, getToday);
   let quarterAgoDate = getDatesStartToLast(getQuarterAgo, getToday);
   let halfDate = getDatesStartToLast(getHalfAgo, getToday);
   let yearDate = getDatesStartToLast(getYearAgo, getToday);
-
 
   const handleChange = (event, newValue) => {
     console.log(1, event, newValue);
@@ -131,18 +130,23 @@ const ProductGraph = () => {
         <div className="head">
           <InfoTitle title="시세" />
           <span>
-            <select onChange={handleSize} name="size" className="size_select">
-              <option className="default_option" value="all" defaultValue>
-                {sizeState ? sizeState.size : "모든 사이즈"}
-              </option>
-              {size &&
-                size[0].size !== "ONE SIZE" &&
-                size.map((item, id) => (
-                  <option key={id} value={item.size}>
-                    {item.size !== null ? item.size : "모든 사이즈"}
-                  </option>
-                ))}
-            </select>
+            {size !== null && size[0].size === "ONE SIZE" ? "ONE SIZE" : null}
+            {size !== null && size.length > 1 ? (
+              <select
+                value={sizeState !== null ? sizeState : "all"}
+                onChange={handleSize}
+                name="size"
+                className="size_select">
+                <option value="all">모든 사이즈</option>
+                {size.map(item => {
+                  return (
+                    <option defaultValue="all" value={item.size} key={item.no}>
+                      {item.size}
+                    </option>
+                  );
+                })}
+              </select>
+            ) : null}
           </span>
         </div>
         <Box sx={{ width: "100%", typography: "body1" }}>
@@ -161,7 +165,6 @@ const ProductGraph = () => {
               </TabList>
             </Box>
             <Box sx={{ height: "200px" }}>
-              {/* 1 */}
               <TabPanel sx={panelStyle} value="1">
                 <Box sx={{ height: "200px" }}>
                   <MyResponsiveLine
@@ -190,7 +193,6 @@ const ProductGraph = () => {
                   />
                 </Box>
               </TabPanel>
-              {/* 3 */}
               <TabPanel sx={panelStyle} value="2">
                 <Box sx={{ height: "200px" }}>
                   <MyResponsiveLine
@@ -219,7 +221,6 @@ const ProductGraph = () => {
                   />
                 </Box>
               </TabPanel>
-              {/* 6 */}
               <TabPanel sx={panelStyle} value="3">
                 <Box sx={{ height: "200px" }}>
                   <MyResponsiveLine
@@ -248,7 +249,6 @@ const ProductGraph = () => {
                   />
                 </Box>
               </TabPanel>
-              {/* 1년 */}
               <TabPanel sx={panelStyle} value="4">
                 <Box sx={{ height: "200px" }}>
                   <MyResponsiveLine
@@ -277,7 +277,6 @@ const ProductGraph = () => {
                   />
                 </Box>
               </TabPanel>
-              {/* all */}
               <TabPanel sx={panelStyle} value="5">
                 <Box sx={{ height: "200px" }}>
                   <MyResponsiveLine
@@ -287,7 +286,9 @@ const ProductGraph = () => {
                         recent_price: product.recent_order_price,
                         color: "hsl(2, 100%, 53%)",
                         data: getDatesStartToLast(
-                          product.price_history.history_all[0].target_date,
+                          product.price_history.history_all[0]
+                            ? product.price_history.history_all[0].target_date
+                            : getToday,
                           getToday
                         ).map((dates, idx) => {
                           let array = product.price_history.history_quarter
