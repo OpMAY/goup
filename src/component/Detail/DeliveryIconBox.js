@@ -9,8 +9,8 @@ const DeliveryWay = styled.div`
   padding: 12px 0 18px;
   color: #222;
   position: relative;
-  border: ${props => props.order ? "1px solid #222;" : null}
-  border-radius: ${props => props.order ? "10px;" : null}
+  border: ${props => (props.order ? "1px solid #222" : null)};
+  border-radius: ${props => (props.order ? "10px" : null)};
   &:before {
     left: 56px;
     position: absolute;
@@ -21,7 +21,7 @@ const DeliveryWay = styled.div`
       props.before ? "border-top: 1px solid #f0f0f0;" : "border-top: none;"}
   }
   .way_info {
-    padding-left: ${props => props.order ? "15px;" : null}
+    padding-left: ${props => (props.order ? "15px" : null)};
     display: flex;
     align-items: center;
     .way_status {
@@ -43,8 +43,8 @@ const DeliveryWay = styled.div`
         .badge_title {
           font-weight: 600;
         }
-        .title{
-          margin-left:4px;
+        .title {
+          margin-left: 4px;
         }
       }
       .sub_text {
@@ -57,12 +57,12 @@ const DeliveryWay = styled.div`
   }
 `;
 
-const DeliveryIconBox = ({order, title, side, sub}) => {
+const DeliveryIconBox = ({ order, title, side, sub }) => {
   return (
     <DeliveryWay order={order}>
       <div className="way_info">
         <div className="way_status">
-          <img src="/images/delivery_1.png" alt="일반배송" />
+          <img src="/images/delivery_1.png" alt="배송" />
         </div>
         <div className="way_desc">
           <p className="company">

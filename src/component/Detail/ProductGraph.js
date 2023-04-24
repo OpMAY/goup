@@ -4,20 +4,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import InfoTitle from "./InfoTitle";
 import MyResponsiveLine from "./MyResponsiveLine";
 import dayjs from "dayjs";
-import {
-  Box,
-  Tab,
-  Typography,
-  Table,
-  Button,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
-import DetailMoreBidModal from "../modal/DetailMoreBidModal";
+import { Box, Tab, Typography, Button } from "@mui/material";
 import { useRecoilValue, useRecoilState } from "recoil";
 import {
   productDetailAtom,
@@ -26,6 +13,7 @@ import {
   sizeStateAtom,
 } from "../../atoms/atom";
 import { Link } from "react-router-dom";
+import TabPanelWrap from "./TabPanelWrap";
 
 const ProductContainer = styled(Box)`
   position: relative;
@@ -62,19 +50,70 @@ const panelStyle = {
 };
 
 const tabListStyle = {
+  height: "36px",
   backgroundColor: "#f4f4f4",
   borderRadius: "10px",
+  minHeight: "28px",
+  "& .MuiButtonBase-root": {
+    color: "rgba(34,34,34,.8)",
+    height: "36px",
+    minHeight: "18px",
+    "&:select": {
+      backgroundColor: "red",
+    },
+  },
+  "& .css-1ujykiq-MuiButtonBase-root-MuiTab-root.Mui-selected": {
+    color: "#222",
+    fontWeight: 700,
+    border: "0px",
+    backgroundColor: "#fff",
+    height: "28px",
+    borderRadius: "8px",
+    margin: "4px 2px",
+  },
+  "& .MuiTabs-fixed": {
+    borderRadius: "10px",
+  },
+  "& .MuiTabs-indicator": {
+    height: 0,
+    backgroundColor: "none",
+  },
 };
 
-const tableCellHead = {
-  color: "rgba(34,34,34,.5)",
-  padding: "0 0 9px",
-  fontSize: "12px",
+const boxStyle = {
+  backgroundColor: "hsla(0, 0%, 100%, 0.8)",
+  position: "absolute",
+  top: 0,
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
-const tableCell = {
-  border: "none",
-  padding: "9px 0 0",
+const boxInner = {
+  backgroundColor: "#fff",
+  width: "318px",
+  height: "150px",
+  border: "1px solid #d3d3d3",
+  textAlign: "center",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
+};
+
+const button = {
+  display: "inline-block",
+  backgroundColor: "#222",
+  color: " #fff",
+  fontWeight: 700,
+  marginTop: "12px",
+  padding: " 8px 20px",
+  borderRadius: "12px",
+  "&:hover": {
+    backgroundColor: "#222",
+  },
 };
 
 const ProductGraph = () => {
@@ -84,6 +123,33 @@ const ProductGraph = () => {
   const [listValue, setListValue] = useState("1");
   const product = useRecoilValue(productDetailAtom);
   const size = useRecoilValue(sizeAtom);
+
+  const TABPANEL = [
+    {
+      value: "1",
+      product: product.order_history,
+      text: "체결된 거래가",
+      first_title: "사이즈",
+      second_title: "거래가",
+      third_title: "거래일",
+    },
+    {
+      value: "2",
+      product: product.sell_history,
+      text: "판매 희망가가",
+      first_title: "사이즈",
+      second_title: "판매 희망가",
+      third_title: "수량",
+    },
+    {
+      value: "3",
+      product: product.purchase_history,
+      text: "구매 희망가가",
+      first_title: "사이즈",
+      second_title: "구매 희망가",
+      third_title: "수량",
+    },
+  ];
 
   let now = dayjs();
   const getToday = now.format("YYYY-MM-DD");
@@ -149,173 +215,175 @@ const ProductGraph = () => {
             ) : null}
           </span>
         </div>
-        <Box sx={{ width: "100%", typography: "body1" }}>
-          <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <TabList
-                sx={tabListStyle}
-                variant="fullWidth"
-                onChange={handleChange}
-                aria-label="lab API tabs example">
-                <Tab label="1개월" value="1" />
-                <Tab label="3개월" value="2" />
-                <Tab label="6개월" value="3" />
-                <Tab label="1년" value="4" />
-                <Tab label="전체" value="5" />
-              </TabList>
-            </Box>
-            <Box sx={{ height: "200px" }}>
-              <TabPanel sx={panelStyle} value="1">
-                <Box sx={{ height: "200px" }}>
-                  <MyResponsiveLine
-                    data={[
-                      {
-                        id: "1개월",
-                        recent_price: product.recent_order_price,
-                        color: "hsl(2, 100%, 53%)",
-                        data: monthAgoDate.map((dates, idx) => {
-                          let array = product.price_history.history_quarter
-                            .map(item => {
-                              return dates === item.target_date
-                                ? item.price
-                                : 0;
-                            })
-                            .filter(item => {
-                              return item !== 0;
-                            });
-                          return {
-                            x: dates,
-                            y: array.length > 0 ? array[0] : 0,
-                          };
-                        }),
-                      },
-                    ]}
-                  />
-                </Box>
-              </TabPanel>
-              <TabPanel sx={panelStyle} value="2">
-                <Box sx={{ height: "200px" }}>
-                  <MyResponsiveLine
-                    data={[
-                      {
-                        id: "3개월",
-                        recent_price: product.recent_order_price,
-                        color: "hsl(2, 100%, 53%)",
-                        data: quarterAgoDate.map((dates, idx) => {
-                          let array = product.price_history.history_quarter
-                            .map(item => {
-                              return dates === item.target_date
-                                ? item.price
-                                : 0;
-                            })
-                            .filter(item => {
-                              return item !== 0;
-                            });
-                          return {
-                            x: dates,
-                            y: array.length > 0 ? array[0] : 0,
-                          };
-                        }),
-                      },
-                    ]}
-                  />
-                </Box>
-              </TabPanel>
-              <TabPanel sx={panelStyle} value="3">
-                <Box sx={{ height: "200px" }}>
-                  <MyResponsiveLine
-                    data={[
-                      {
-                        id: "6개월",
-                        recent_price: product.recent_order_price,
-                        color: "hsl(2, 100%, 53%)",
-                        data: halfDate.map((dates, idx) => {
-                          let array = product.price_history.history_quarter
-                            .map(item => {
-                              return dates === item.target_date
-                                ? item.price
-                                : 0;
-                            })
-                            .filter(item => {
-                              return item !== 0;
-                            });
-                          return {
-                            x: dates,
-                            y: array.length > 0 ? array[0] : 0,
-                          };
-                        }),
-                      },
-                    ]}
-                  />
-                </Box>
-              </TabPanel>
-              <TabPanel sx={panelStyle} value="4">
-                <Box sx={{ height: "200px" }}>
-                  <MyResponsiveLine
-                    data={[
-                      {
-                        id: "1년",
-                        recent_price: product.recent_order_price,
-                        color: "hsl(2, 100%, 53%)",
-                        data: yearDate.map((dates, idx) => {
-                          let array = product.price_history.history_quarter
-                            .map(item => {
-                              return dates === item.target_date
-                                ? item.price
-                                : 0;
-                            })
-                            .filter(item => {
-                              return item !== 0;
-                            });
-                          return {
-                            x: dates,
-                            y: array.length > 0 ? array[0] : 0,
-                          };
-                        }),
-                      },
-                    ]}
-                  />
-                </Box>
-              </TabPanel>
-              <TabPanel sx={panelStyle} value="5">
-                <Box sx={{ height: "200px" }}>
-                  <MyResponsiveLine
-                    data={[
-                      {
-                        id: "전체",
-                        recent_price: product.recent_order_price,
-                        color: "hsl(2, 100%, 53%)",
-                        data: getDatesStartToLast(
-                          product.price_history.history_all[0]
-                            ? product.price_history.history_all[0].target_date
-                            : getToday,
-                          getToday
-                        ).map((dates, idx) => {
-                          let array = product.price_history.history_quarter
-                            .map(item => {
-                              return dates === item.target_date
-                                ? item.price
-                                : 0;
-                            })
-                            .filter(item => {
-                              return item !== 0;
-                            });
-                          return {
-                            x: dates,
-                            y: array.length > 0 ? array[0] : 0,
-                          };
-                        }),
-                      },
-                    ]}
-                  />
-                </Box>
-              </TabPanel>
-            </Box>
-          </TabContext>
-        </Box>
+        {product.price_history.history_all.length === 0 ? null : (
+          <Box sx={{ width: "100%", typography: "body1" }}>
+            <TabContext value={value}>
+              <Box>
+                <TabList
+                  sx={tabListStyle}
+                  variant="fullWidth"
+                  onChange={handleChange}
+                  aria-label="lab API tabs example">
+                  <Tab label="1개월" value="1" />
+                  <Tab label="3개월" value="2" />
+                  <Tab label="6개월" value="3" />
+                  <Tab label="1년" value="4" />
+                  <Tab label="전체" value="5" />
+                </TabList>
+              </Box>
+              <Box sx={{ height: "200px" }}>
+                <TabPanel sx={panelStyle} value="1">
+                  <Box sx={{ height: "200px" }}>
+                    <MyResponsiveLine
+                      data={[
+                        {
+                          id: "1개월",
+                          recent_price: product.recent_order_price,
+                          color: "hsl(2, 100%, 53%)",
+                          data: monthAgoDate.map((dates, idx) => {
+                            let array = product.price_history.history_quarter
+                              .map(item => {
+                                return dates === item.target_date
+                                  ? item.price
+                                  : 0;
+                              })
+                              .filter(item => {
+                                return item !== 0;
+                              });
+                            return {
+                              x: dates,
+                              y: array.length > 0 ? array[0] : 0,
+                            };
+                          }),
+                        },
+                      ]}
+                    />
+                  </Box>
+                </TabPanel>
+                <TabPanel sx={panelStyle} value="2">
+                  <Box sx={{ height: "200px" }}>
+                    <MyResponsiveLine
+                      data={[
+                        {
+                          id: "3개월",
+                          recent_price: product.recent_order_price,
+                          color: "hsl(2, 100%, 53%)",
+                          data: quarterAgoDate.map((dates, idx) => {
+                            let array = product.price_history.history_quarter
+                              .map(item => {
+                                return dates === item.target_date
+                                  ? item.price
+                                  : 0;
+                              })
+                              .filter(item => {
+                                return item !== 0;
+                              });
+                            return {
+                              x: dates,
+                              y: array.length > 0 ? array[0] : 0,
+                            };
+                          }),
+                        },
+                      ]}
+                    />
+                  </Box>
+                </TabPanel>
+                <TabPanel sx={panelStyle} value="3">
+                  <Box sx={{ height: "200px" }}>
+                    <MyResponsiveLine
+                      data={[
+                        {
+                          id: "6개월",
+                          recent_price: product.recent_order_price,
+                          color: "hsl(2, 100%, 53%)",
+                          data: halfDate.map((dates, idx) => {
+                            let array = product.price_history.history_quarter
+                              .map(item => {
+                                return dates === item.target_date
+                                  ? item.price
+                                  : 0;
+                              })
+                              .filter(item => {
+                                return item !== 0;
+                              });
+                            return {
+                              x: dates,
+                              y: array.length > 0 ? array[0] : 0,
+                            };
+                          }),
+                        },
+                      ]}
+                    />
+                  </Box>
+                </TabPanel>
+                <TabPanel sx={panelStyle} value="4">
+                  <Box sx={{ height: "200px" }}>
+                    <MyResponsiveLine
+                      data={[
+                        {
+                          id: "1년",
+                          recent_price: product.recent_order_price,
+                          color: "hsl(2, 100%, 53%)",
+                          data: yearDate.map((dates, idx) => {
+                            let array = product.price_history.history_quarter
+                              .map(item => {
+                                return dates === item.target_date
+                                  ? item.price
+                                  : 0;
+                              })
+                              .filter(item => {
+                                return item !== 0;
+                              });
+                            return {
+                              x: dates,
+                              y: array.length > 0 ? array[0] : 0,
+                            };
+                          }),
+                        },
+                      ]}
+                    />
+                  </Box>
+                </TabPanel>
+                <TabPanel sx={panelStyle} value="5">
+                  <Box sx={{ height: "200px" }}>
+                    <MyResponsiveLine
+                      data={[
+                        {
+                          id: "전체",
+                          recent_price: product.recent_order_price,
+                          color: "hsl(2, 100%, 53%)",
+                          data: getDatesStartToLast(
+                            product.price_history.history_all[0]
+                              ? product.price_history.history_all[0].target_date
+                              : getToday,
+                            getToday
+                          ).map((dates, idx) => {
+                            let array = product.price_history.history_quarter
+                              .map(item => {
+                                return dates === item.target_date
+                                  ? item.price
+                                  : 0;
+                              })
+                              .filter(item => {
+                                return item !== 0;
+                              });
+                            return {
+                              x: dates,
+                              y: array.length > 0 ? array[0] : 0,
+                            };
+                          }),
+                        },
+                      ]}
+                    />
+                  </Box>
+                </TabPanel>
+              </Box>
+            </TabContext>
+          </Box>
+        )}
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={listValue}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Box>
               <TabList
                 sx={tabListStyle}
                 variant="fullWidth"
@@ -327,173 +395,25 @@ const ProductGraph = () => {
               </TabList>
             </Box>
             <Box>
-              <TabPanel value="1" sx={panelStyle}>
-                <Box>
-                  <TableContainer
-                    sx={{ boxShadow: "none", padding: "20px 0" }}
-                    component={Paper}>
-                    <Table size="small" aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell sx={tableCellHead} align="left">
-                            사이즈
-                          </TableCell>
-                          <TableCell sx={tableCellHead} align="right">
-                            거래가
-                          </TableCell>
-                          <TableCell sx={tableCellHead} align="right">
-                            거래일
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {product.order_history.slice(0, 5).map((item, idx) => (
-                          <TableRow
-                            key={idx}
-                            sx={{
-                              "&:last-child td, &:last-child th": {
-                                border: 0,
-                              },
-                            }}>
-                            <TableCell
-                              sx={tableCell}
-                              component="th"
-                              scope="row">
-                              {item.size}
-                            </TableCell>
-                            <TableCell sx={tableCell} align="right">
-                              {item.price.toLocaleString()}
-                            </TableCell>
-                            <TableCell sx={tableCell} align="right">
-                              {item.reg_datetime.year}/{" "}
-                              {item.reg_datetime.monthValue}/
-                              {item.reg_datetime.dayOfMonth}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </TabPanel>
-              <TabPanel value="2" sx={panelStyle}>
-                <Box>
-                  <TableContainer
-                    sx={{ boxShadow: "none", padding: "20px 0" }}
-                    component={Paper}>
-                    <Table size="small" aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell sx={tableCellHead} align="left">
-                            사이즈
-                          </TableCell>
-                          <TableCell sx={tableCellHead} align="right">
-                            판매 희망가
-                          </TableCell>
-                          <TableCell sx={tableCellHead} align="right">
-                            수량
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {product.sell_history.slice(0, 5).map((item, idx) => (
-                          <TableRow
-                            key={idx}
-                            sx={{
-                              "&:last-child td, &:last-child th": {
-                                border: 0,
-                              },
-                            }}>
-                            <TableCell
-                              sx={tableCell}
-                              component="th"
-                              scope="row">
-                              {item.size}
-                            </TableCell>
-                            <TableCell sx={tableCell} align="right">
-                              {item.price.toLocaleString()}
-                            </TableCell>
-                            <TableCell sx={tableCell} align="right">
-                              {item.count}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </TabPanel>
-              <TabPanel value="3" sx={panelStyle}>
-                <Box>
-                  <TableContainer
-                    sx={{ boxShadow: "none", padding: "20px 0" }}
-                    component={Paper}>
-                    <Table size="small" aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell sx={tableCellHead} align="left">
-                            사이즈
-                          </TableCell>
-                          <TableCell sx={tableCellHead} align="right">
-                            구매 희망가
-                          </TableCell>
-                          <TableCell sx={tableCellHead} align="right">
-                            수량
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {product.purchase_history
-                          .slice(0, 5)
-                          .map((item, idx) => (
-                            <TableRow key={idx}>
-                              <TableCell
-                                sx={tableCell}
-                                component="th"
-                                scope="row">
-                                {item.size}
-                              </TableCell>
-                              <TableCell sx={tableCell} align="right">
-                                {item.price.toLocaleString()}
-                              </TableCell>
-                              <TableCell sx={tableCell} align="right">
-                                {item.count}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </TabPanel>
+              {TABPANEL.map(item => {
+                return (
+                  <TabPanelWrap
+                    key={item.value}
+                    value={item.value}
+                    product={item.product}
+                    text={item.text}
+                    first_title={item.first_title}
+                    second_title={item.second_title}
+                    third_title={item.third_title}
+                  />
+                );
+              })}
             </Box>
           </TabContext>
         </Box>
-        <DetailMoreBidModal />
         {user ? null : (
-          <Box
-            sx={{
-              backgroundColor: "hsla(0, 0%, 100%, 0.8)",
-              position: "absolute",
-              top: 0,
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}>
-            <Box
-              sx={{
-                backgroundColor: "#fff",
-                width: "318px",
-                height: "150px",
-                border: "1px solid #d3d3d3",
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-              }}>
+          <Box sx={boxStyle}>
+            <Box sx={boxInner}>
               <Typography
                 sx={{
                   fontSize: "14px",
@@ -501,21 +421,7 @@ const ProductGraph = () => {
                 모든 체결 거래는
                 <br /> 로그인 후 확인 가능합니다.
               </Typography>
-              <Button
-                component={Link}
-                to="/login"
-                sx={{
-                  display: "inline-block",
-                  backgroundColor: "#222",
-                  color: " #fff",
-                  fontWeight: 700,
-                  marginTop: "12px",
-                  padding: " 8px 20px",
-                  borderRadius: "12px",
-                  "&:hover": {
-                    backgroundColor: "#222",
-                  },
-                }}>
+              <Button component={Link} to="/login" sx={button}>
                 로그인
               </Button>
             </Box>
