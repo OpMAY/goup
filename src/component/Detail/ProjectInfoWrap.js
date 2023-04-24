@@ -40,7 +40,6 @@ const ProductInfoWrap = styled.div`
 
 const ProjectInfoWrap = () => {
   const productDetail = useRecoilValue(productDetailAtom);
-  console.log("projectinfoWrap", productDetail);
   return (
     <ProductInfoWrap>
       <InfoTitle class="detail_title" title="상품정보" />
@@ -49,7 +48,7 @@ const ProjectInfoWrap = () => {
           <div className="detail_box">
             <dt>모델번호</dt>
             <dd className="model_num">
-              {productDetail.product.product_info.model_code}
+              {productDetail.product.product_info.model_code? productDetail.product.product_info.model_code: "-"}
             </dd>
           </div>
           <div className="detail_box">
@@ -62,13 +61,13 @@ const ProjectInfoWrap = () => {
           </div>
           <div className="detail_box">
             <dt>컬러</dt>
-            <dd>{productDetail.product.product_info.color}</dd>
+            <dd>{productDetail.product.product_info.color? productDetail.product.product_info.color: "-"}</dd>
           </div>
           <div className="detail_box">
             <dt>발매가</dt>
             <dd>
-              {productDetail.product.product_info.released_price.toLocaleString()}
-              원
+              {productDetail.product.product_info.released_price? productDetail.product.product_info.released_price.toLocaleString() + '원' : "-"}
+              
             </dd>
           </div>
         </dl>

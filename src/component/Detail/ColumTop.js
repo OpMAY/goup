@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import BuySellButton from "./BuySellButton";
-import {useRecoilValue, useRecoilState} from "recoil";
+import {useRecoilValue} from "recoil";
 import DetailSizeModal from "../modal/DetailSizeModal";
 import DetailBookMarkModal from "../modal/DetailBookMarkModal";
-import {sizeStateAtom, productDetailAtom} from "../../atoms/atom";
+import {productDetailAtom, sizeAtom} from "../../atoms/atom";
 import {Typography} from "@mui/material";
 
 const DetailMainTitle = styled.div`
@@ -94,32 +94,9 @@ const RecentPrice = styled.div`
   }
 `;
 
-// const WishButton = styled(Link)`
-//   text-decoration: none;
-//   align-items: center;
-//   background-color: #fff;
-//   border-radius: 10px;
-//   border: 1px solid rgb(235, 235, 235);
-//   padding: 0 25px;
-//   color: #333333;
-//   margin-top: 12px;
-//   display: flex;
-//   line-height: 60px;
-//   gap: 4px;
-//   font-size: 15px;
-//   justify-content: center;
-//   .btn_text {
-//     box-sizing: border-box;
-//     text-align: center;
-//   }
-//   .wish_count {
-//     font-weight: 600;
-//   }
-// `;
-
 const ColumTop = () => {
     const productDetail = useRecoilValue(productDetailAtom);
-    const [sizeState, setSizeState] = useRecoilState(sizeStateAtom);
+    const size = useRecoilValue(sizeAtom);
 
     return (
         <div>
@@ -133,7 +110,7 @@ const ColumTop = () => {
             <div className="product_figure_wrap">
                 <SizeInfo>
                     <div className="title">사이즈</div>
-                    {sizeState && sizeState.size === "ONE SIZE" ? (
+                    {size && size[0].size === "ONE SIZE" ? (
                         <Typography >ONE SIZE</Typography>
                     ) : (
                         <DetailSizeModal product={productDetail}/>
