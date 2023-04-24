@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Inner } from "../../common/js/style";
 import ColumTop from "./ColumTop";
 import ProjectInfoWrap from "./ProjectInfoWrap";
 import DeliveryWrap from "./DeliveryWrap";
 import { BsArrowRight } from "react-icons/bs";
 import ProductGraph from "./ProductGraph";
-import { Box } from "@mui/material";
 import ConfirmWrap from "./ConfirmWrap";
 import PointGuide from "./PointGuide";
 import MeditationNotice from "./MeditationNotice";
@@ -18,15 +16,12 @@ import "swiper/css/pagination";
 import { useRecoilValue, useRecoilState } from "recoil";
 import {
   sizeAtom,
-  productAtom,
   sizeStateAtom,
   productDetailAtom,
   paramAtom,
   tokenAtom,
-  userAtom,
 } from "../../atoms/atom";
 import { axiosGetFunction } from "../../module/CustomAxios";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   .content_top {
@@ -240,7 +235,6 @@ const DetailInfo = () => {
   const [size, setSize] = useRecoilState(sizeAtom);
   const param = useRecoilValue(paramAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
-  const user = useRecoilValue(userAtom);
   const [ScrollY, setScrollY] = useState(0);
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
@@ -253,8 +247,6 @@ const DetailInfo = () => {
     return bind && box ? bind.offsetHeight - box.offsetHeight : 1290;
   };
 
-  // console.log(111, size, sizeState);
-  // 로그인이 되어 있으면 사이즈가 생김// 로그아웃이면 사이즈 안 들어옴.
   useEffect(() => {
     if (sizeState) {
       setSizeState(null);
@@ -266,12 +258,8 @@ const DetailInfo = () => {
       setToken
     ).then(res => {
       setSize(res.data.data.sizes);
-      // res.data.data.sizes[0].size === "ONE SIZE" &&
-      //   setSizeState({size: res.data.data.sizes[0].size, no: res.data.data.sizes[0].no});
     });
   }, []);
-
-  // console.log('->>>>>>>>>>>>',size)
 
   useEffect(() => {
     const watch = () => {

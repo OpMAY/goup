@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import styled from "styled-components";
-import { Hr } from "../../common/js/style";
-import SelectProductItem from "./SelectProductItem";
-import OrderButton from "./OrderButton";
-import {useRecoilValue, useRecoilState, useSetRecoilState} from "recoil";
+import { Hr } from "../../../common/js/style";
+import SelectProductItem from "../SelectProductItem";
+import OrderButton from "../OrderButton";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import {
   productDetailAtom,
   sizeAtom,
@@ -13,10 +13,12 @@ import {
   userAtom,
   paramAtom,
   productSellAtom,
-  productPurchaseAtom, checkAtom, priceStateAtom,
-} from "../../atoms/atom";
-import { axiosGetFunction } from "../../module/CustomAxios";
-import SizeButton from "../modal/DetailSizeModal/SizeButton";
+  productPurchaseAtom,
+  checkAtom,
+  priceStateAtom,
+} from "../../../atoms/atom";
+import { axiosGetFunction } from "../../../module/CustomAxios";
+import SizeButton from "../../modal/DetailSizeModal/SizeButton";
 
 const SelectContainer = styled.div`
   .size_container {
@@ -40,15 +42,15 @@ const SellSelectContainer = () => {
   const handleButton = e => {
     const clicked = e.target;
     let priceH4;
-    if(clicked.tagName === 'BUTTON') {
-      priceH4 = e.target.querySelector('h4');
-      setSizeState({size : clicked.value, no : clicked.getAttribute('no')});
-    } else if (clicked.tagName === 'H4') {
+    if (clicked.tagName === "BUTTON") {
+      priceH4 = e.target.querySelector("h4");
+      setSizeState({ size: clicked.value, no: clicked.getAttribute("no") });
+    } else if (clicked.tagName === "H4") {
       priceH4 = e.target;
-      const btn = clicked.closest('button')
-      setSizeState({size: btn.value, no: btn.getAttribute('no')});
+      const btn = clicked.closest("button");
+      setSizeState({ size: btn.value, no: btn.getAttribute("no") });
     }
-    if(priceH4.classList.contains('_price')) {
+    if (priceH4.classList.contains("_price")) {
       setPriceState(priceH4.textContent);
     } else {
       setPriceState(null);
@@ -57,12 +59,11 @@ const SellSelectContainer = () => {
 
   const checkInit = () => {
     const c = [];
-    for(let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       c.push(false);
     }
     setCheck(c);
-  }
-
+  };
 
   useEffect(() => {
     setCheck([]);
@@ -72,14 +73,14 @@ const SellSelectContainer = () => {
       token,
       setToken
     ).then(res => {
-      setProductPurchase([])
+      setProductPurchase([]);
       setProductSell(res.data.data.sizes);
     });
   }, []);
 
   return (
     <SelectContainer>
-      <SelectProductItem state="sell"/>
+      <SelectProductItem state="sell" />
       <Hr margin="20px 0 0;" />
       <Grid container className="size_container">
         <Grid container className="content" sx={{}}>
@@ -99,9 +100,11 @@ const SellSelectContainer = () => {
           ))}
         </Grid>
       </Grid>
-      {sizeState !== null && <Hr margin="0 0 20px 0;"/>}
+      {sizeState !== null && <Hr margin="0 0 20px 0;" />}
       {/* <OrderButton type="sell_step1" /> */}
-      {sizeState !== null && <OrderButton type="sell_step1" onClick={checkInit} />}
+      {sizeState !== null && (
+        <OrderButton type="sell_step1" onClick={checkInit} />
+      )}
     </SelectContainer>
   );
 };

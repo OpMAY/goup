@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import BuySelectContainer from "./BuySelectContainer";
-import BuyCheckContainer from "./BuyCheckContainer";
-import OrderPayment from "./OrderPayment";
-import SellSelectContainer from "./SellSelectContainer";
-import SellCheckContainer from "./SellCheckContainer";
-import SellOrderPayment from "./SellOrderPayment";
+import BuySelectContainer from "./Purchase/BuySelectContainer";
+import BuyCheckContainer from "./Purchase/BuyCheckContainer";
+import OrderPayment from "./Purchase/OrderPayment";
+import SellSelectContainer from "./Sell/SellSelectContainer";
+import SellCheckContainer from "./Sell/SellCheckContainer";
+import SellOrderPayment from "./Sell/SellOrderPayment";
 import Header from "../Header";
 import { useRecoilValue } from "recoil";
 import { orderToggleAtom } from "../../atoms/atom";

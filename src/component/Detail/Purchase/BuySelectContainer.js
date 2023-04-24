@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import styled from "styled-components";
-import { Hr } from "../../common/js/style";
-import SelectProductItem from "./SelectProductItem";
-import OrderButton from "./OrderButton";
-import {useRecoilValue, useRecoilState, useSetRecoilState} from "recoil";
+import { Hr } from "../../../common/js/style";
+import SelectProductItem from "../SelectProductItem";
+import OrderButton from "../OrderButton";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import {
   productDetailAtom,
   sizeAtom,
@@ -13,10 +13,12 @@ import {
   userAtom,
   paramAtom,
   productSellAtom,
-  productPurchaseAtom, checkAtom, priceStateAtom,
-} from "../../atoms/atom";
-import { axiosGetFunction } from "../../module/CustomAxios";
-import SizeButton from "../modal/DetailSizeModal/SizeButton";
+  productPurchaseAtom,
+  checkAtom,
+  priceStateAtom,
+} from "../../../atoms/atom";
+import { axiosGetFunction } from "../../../module/CustomAxios";
+import SizeButton from "../../modal/DetailSizeModal/SizeButton";
 
 const SelectContainer = styled.div`
   .size_container {
@@ -36,20 +38,20 @@ const BuySelectContainer = () => {
   const user = useRecoilValue(userAtom);
   const param = useRecoilValue(paramAtom);
   const setCheck = useSetRecoilState(checkAtom);
-  const setPriceState = useSetRecoilState(priceStateAtom)
+  const setPriceState = useSetRecoilState(priceStateAtom);
 
   const handleButton = e => {
     const clicked = e.target;
     let priceH4;
-    if(clicked.tagName === 'BUTTON') {
-      priceH4 = e.target.querySelector('h4');
-      setSizeState({size : clicked.value, no : clicked.getAttribute('no')});
-    } else if (clicked.tagName === 'H4') {
+    if (clicked.tagName === "BUTTON") {
+      priceH4 = e.target.querySelector("h4");
+      setSizeState({ size: clicked.value, no: clicked.getAttribute("no") });
+    } else if (clicked.tagName === "H4") {
       priceH4 = e.target;
-      const btn = clicked.closest('button')
-      setSizeState({size: btn.value, no: btn.getAttribute('no')});
+      const btn = clicked.closest("button");
+      setSizeState({ size: btn.value, no: btn.getAttribute("no") });
     }
-    if(priceH4.classList.contains('_price')) {
+    if (priceH4.classList.contains("_price")) {
       setPriceState(priceH4.textContent);
     } else {
       setPriceState(null);
@@ -71,11 +73,11 @@ const BuySelectContainer = () => {
 
   const checkInit = () => {
     const c = [];
-    for(let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       c.push(false);
     }
     setCheck(c);
-  }
+  };
 
   return (
     <SelectContainer>
@@ -99,8 +101,10 @@ const BuySelectContainer = () => {
           ))}
         </Grid>
       </Grid>
-      {sizeState !== null && <Hr margin="0 0 20px 0;"/>}
-      {sizeState !== null && <OrderButton type="buy_step1" onClick={checkInit} />}
+      {sizeState !== null && <Hr margin="0 0 20px 0;" />}
+      {sizeState !== null && (
+        <OrderButton type="buy_step1" onClick={checkInit} />
+      )}
     </SelectContainer>
   );
 };
