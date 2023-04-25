@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ const Unordered = styled.ul`
       font-weight: 700;
       color: #222;
     }
-    a{
+    a {
       display: block;
       padding: 4px 0;
     }
@@ -27,26 +27,27 @@ const Unordered = styled.ul`
 `;
 
 const UnorderedList = ({ list, listName, path, link }) => {
-  let [btnActive, setBtnActive] = React.useState(path);
+  let [btnActive, setBtnActive] = useState(path);
 
   const handleClick = type => {
     setBtnActive(type);
   };
 
-  const linkStyle ={
-    color:"#222",
-    textDecoration:"none",
-    fontSize:"32px"
-  }
-  const normalStyle ={
-    color:"#222",
-  }
+  const linkStyle = {
+    color: "#222",
+    textDecoration: "none",
+    fontSize: "32px",
+  };
+  const normalStyle = {
+    color: "#222",
+  };
+
   return (
     <>
       <Typography
         component={link ? Link : Typography}
         to={link ? `/${link}` : null}
-        sx={link? linkStyle : normalStyle}
+        sx={link ? linkStyle : normalStyle}
         variant="h6"
         marginTop={listName === "내 정보" && "40px"}
         fontWeight="700">
