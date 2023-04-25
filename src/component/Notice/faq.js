@@ -15,6 +15,9 @@ const Table = styled.ul`
   list-style: none;
   border: 1px solid #ebebeb;
   margin-top: 20px;
+  .select {
+    font-weight: 700;
+  }
   li {
     text-align: center;
     flex: 33.3333%;
@@ -50,8 +53,10 @@ const Faq = () => {
   const [tab, setTab] = useState(1);
   const [token, setToken] = useRecoilState(tokenAtom);
   const [qna, setQna] = useRecoilState(qnaAtom);
+  let [btnActive, setBtnActive] = useState(1);
 
-  const handleTab = e => {
+  const handleTab = (e, type) => {
+    setBtnActive(type);
     setTab(e.currentTarget.value);
   };
 
@@ -66,11 +71,9 @@ const Faq = () => {
     });
   }, []);
 
-
   //qna API의 원하는 type을 넣으면 해당 타입의 배열만 반환하는 함수
   function qnaType(RequireType) {
     const returnValue = qna.filter(item => {
-      console.log(item);
       return item.type === RequireType;
     });
     return returnValue;
@@ -84,22 +87,17 @@ const Faq = () => {
         </Typography>
       </Box>
       <Table>
-        <li value="1" onClick={handleTab}>
-          <Link to={`/faq?category=all&list=true`}>전체</Link>
-        </li>
-        <li value="2" onClick={handleTab}>
-          <Link to={`/faq?category=policy&list=true`}>이용정책</Link>
-        </li>
-        <li value="3" onClick={handleTab}>
-          <Link to={`/faq?category=common&list=true`}>공통</Link>
-        </li>
-        <li value="4" onClick={handleTab}>
-          <Link to={`/faq?category=buying&list=true`}>구매</Link>
-        </li>
-        <li value="5" onClick={handleTab}>
-          <Link to={`/faq?category=selling&list=true`}>판매</Link>
-        </li>
-        <li value="0" onClick={handleTab}></li>
+        {TABLE_LIST.map(item => {
+          return (
+            <li
+              key={item.value}
+              value={item.value}
+              className={btnActive === item.value ? "select" : ""}
+              onClick={e => handleTab(e, item.value)}>
+              {item.path ? <Link to={item.path}>{item.content}</Link> : null}
+            </li>
+          );
+        })}
       </Table>
       {tab === 1 && <FaqList qna={qna} tab={tab} />}
       {tab === 2 && <FaqList qna={qnaType("이용정책")} tab={tab} />}
@@ -111,3 +109,12 @@ const Faq = () => {
 };
 
 export default Faq;
+
+const TABLE_LIST = [
+  { value: 1, path: "/faq?category=all&list=true", content: "전체" },
+  { value: 2, path: "/faq?category=policy&list=true", content: "이용정책" },
+  { value: 3, path: "/faq?category=common&list=true", content: "공통" },
+  { value: 4, path: "/faq?category=buying&list=true", content: "구매" },
+  { value: 5, path: "/faq?category=selling&list=true", content: "판매" },
+  { value: 0 },
+];

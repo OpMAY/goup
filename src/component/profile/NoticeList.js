@@ -23,9 +23,5 @@ const SHOPPING_LIST = [
     name: "자주 묻는 질문",
     link: "/faq",
     main: "faq",
-  },
-  // {
-  //   name: "검수 기준",
-  //   link: "/auth_policy",
-  // },
+  }
 ];

@@ -16,7 +16,7 @@ const NoticeDetail = () => {
   };
 
   return (
-    <Box sx={{}}>
+    <Box>
       {noticeMatch() &&
         noticeMatch().map(item => (
           <Box key={item.no}>
@@ -52,6 +52,10 @@ const NoticeDetail = () => {
                 color: "rgba(34,34,34,.8)",
                 borderColor: "#d3d3d3",
                 borderRadius: "12px",
+                "&:hover": {
+                  border: "1px solid #d3d3d3",
+                  bgcolor:"#fff"
+                },
               }}>
               목록보기
             </Button>
