@@ -78,12 +78,18 @@ const Address = () => {
     axiosGetFunction(`/api/kream/my/address/` + user, {}, token, setToken).then(
       res => {
         console.log(res)
-        const address = res.data.data.address;
-        const index = address.findIndex(x => x._default_address);
-        const defaultAddr = address[index];
-        address.splice(index, 1);
-        address.unshift(defaultAddr);
+        const address = res.data.data.address.filter(x => x !== undefined);
+        if(address && address.length > 0) {
+          const index = address.findIndex(x => x._default_address);
+          if(index !== -1){
+            const defaultAddr = address[index];
+            address.splice(index, 1);
+            address.unshift(defaultAddr);
+          }
+        }
+        console.log(address);
         setUserAddress(address);
+        console.log(userAddress);
       }
     );
   }, []);
@@ -93,9 +99,9 @@ const Address = () => {
       <AddressBlcok>
         <div className="title_box">
           <h3 className="title">주소록</h3>
-          <AddAddressModal />
+          <AddAddressModal/>
         </div>
-        {userAddress !== undefined ? (
+        {userAddress && userAddress.length > 0? (
           userAddress.map(item => (
             <div className="address_list" key={item.no}>
               <div className="address_info">
