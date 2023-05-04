@@ -51,7 +51,8 @@ const AddAddressModal = ({setParamAddress}) => {
 
     const addAddress = () => {
         address.user_no = user;
-        address.is_default_address = address.isDefault
+        address._default_address = address.isDefault
+        console.log('address Data ', address);
         axiosPostFunction('/api/kream/my/address', address, false, token, setToken).then((res) => {
             if(res.data.status) {
                 if(setParamAddress)
