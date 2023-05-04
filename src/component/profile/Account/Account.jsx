@@ -103,6 +103,7 @@ const Account = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0,0);
     axiosGetFunction(`/api/kream/my/account/` + 1, {}, token, setToken).then(
       res => {
         setUserAccount(res.data.data.accountInfo);

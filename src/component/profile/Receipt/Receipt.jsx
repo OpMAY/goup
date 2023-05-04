@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
@@ -81,6 +81,9 @@ const names = [
   '개인소득공제(현금영수증카드)',
 ];
 const Receipt = () => {
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[])
   const [personName, setPersonName] = useState('')
 
   const handleChange = (event) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Inner } from "../common/js/style";
 import ProfileList from "../component/profile/ProfileList";
 import Buying from "../component/profile/Buying/Buying";
@@ -17,7 +17,9 @@ import WishContent from "../component/profile/WishContent";
 import Layout from "../component/Layout";
 
 const My = ({ path }) => {
-
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
   return (
     <Layout>
       <Inner padding="40px 40px;">

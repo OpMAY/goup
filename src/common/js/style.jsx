@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import BookMarkModal from '../../component/modal/BookMarkModal';
 import Button from '@mui/material/Button';
 import '../css/custom.css';
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import {useRecoilState, useSetRecoilState} from "recoil";
-import {modalOpenAtom, modalProductAtom, sizeAtom, tokenAtom} from "../../atoms/atom";
-import {axiosGetFunction} from "../../module/CustomAxios";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { modalOpenAtom, modalProductAtom, sizeAtom, tokenAtom, userAtom } from "../../atoms/atom";
+import { axiosGetFunction } from "../../module/CustomAxios";
 
 export const Inner = styled.div`
   width: 1280px;
@@ -91,26 +91,31 @@ const buttonStyle = {
   borderRadius: '50px',
   color: '#000',
 }
-export const MainItem = ({p}) => {
+export const MainItem = ({ p }) => {
   const setOpen = useSetRecoilState(modalOpenAtom);
   const setModalProduct = useSetRecoilState(modalProductAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
   const setSizes = useSetRecoilState(sizeAtom);
+  const [getUser, setGetUser] = useRecoilState(userAtom);
+  const navigate = useNavigate();
   const modalOpen = (no) => {
-    axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
-      setSizes(res.data.data.sizes);
-      setModalProduct(res.data.data.product);
-      setOpen(true);
-    });
+    if (getUser === null) {
+      navigate('/login');
+    } else {
+      axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
+        setSizes(res.data.data.sizes);
+        setModalProduct(res.data.data.product);
+        setOpen(true);
+      });
+    }
   }
-
   return (
     <>
       <MainItems>
         <LinkStyle to={`/product/${p.no}`}></LinkStyle>
         <MainItemImage color={p.brand.color} url={p.image.url}>
           <LinkStyle to={`/product/${p.no}`}></LinkStyle>
-          <Button sx={buttonStyle} onClick={() => {modalOpen(p.no)}}>
+          <Button sx={buttonStyle} onClick={() => { modalOpen(p.no) }}>
             {
               p._wish ? <BookmarkIcon /> : <BookmarkBorderIcon />
             }
@@ -119,7 +124,7 @@ export const MainItem = ({p}) => {
         {/* <img alt="Main Test Images" src="/images/img0.png"/> */}
         <div className='productInfo'>
           <em>{p.brand.name}</em>
-          <p className='name' style={{maxWidth : '294px'}}>{p.name}</p>
+          <p className='name' style={{ maxWidth: '294px' }}>{p.name}</p>
           <div className='price'>
             <strong>{addComma(p.price)}원</strong>
             <p>즉시 구매가</p>
@@ -150,8 +155,8 @@ const CardImage = styled.div`
 `
 
 
-export const Card = ({item}) => {
-  return(
+export const Card = ({ item }) => {
+  return (
     <CardItem>
       <LinkStyle to={`/shop?brands=${item.no}`}></LinkStyle>
       <CardImage url={item.image.url} color={item.color}></CardImage>
@@ -164,7 +169,7 @@ function addComma(number) {
   let len;
   let point;
   let str;
-  if(number !== null) {
+  if (number !== null) {
     const number_string = number + '';
     point = number_string.length % 3;
     len = number_string.length;
@@ -200,11 +205,11 @@ const GenderItem = styled.div`
 `
 
 export const GenderList = () => {
-  return(
+  return (
     <GenderItem>
       <div className='imgBox'></div>
       <p className='name'>test</p>
-    </GenderItem>      
+    </GenderItem>
   )
 }
 

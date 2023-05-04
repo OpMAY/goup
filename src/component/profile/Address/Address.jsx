@@ -75,6 +75,7 @@ const Address = () => {
   const [userAddress, setUserAddress] = useRecoilState(userAddressAtom);
 
   useEffect(() => {
+    window.scrollTo(0,0);
     axiosGetFunction(`/api/kream/my/address/` + user, {}, token, setToken).then(
       res => {
         console.log(res)

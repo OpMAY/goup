@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Inner } from "../../common/js/style";
 import LoginButtonBox from "./LoginButtonBox";
@@ -17,8 +17,9 @@ const LogoContainer = styled.div`
 
 const LoginPage = () => {
     const user = useRecoilValue(userAtom);
-    console.log(user);
-    
+    useEffect(() => {
+      window.scrollTo(0,0);
+    }, [])
   return (
     <Inner padding="0 40px;">
       <Stack
@@ -41,7 +42,6 @@ const LoginPage = () => {
           <LoginButtonBox name="구글" color="blue"/>
         </Stack>
       </Stack>
-      ;
     </Inner>
   );
 };

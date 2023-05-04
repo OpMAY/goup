@@ -7,7 +7,7 @@ const Login = () => {
     <Layout>
       <LoginPage />
     </Layout>
-  );
+  )
 };
 
 export default Login;
