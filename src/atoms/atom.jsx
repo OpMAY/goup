@@ -200,3 +200,8 @@ export const userAccountAtom = atom({
     key : "account",
     default : null
 })
+
+export const typeAtom = atom({
+    key: 'type',
+    default: null
+})

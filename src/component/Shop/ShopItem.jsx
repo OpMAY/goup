@@ -10,6 +10,7 @@ import {
   sizeAtom,
   paramAtom,
   userAtom,
+  typeAtom,
 } from "../../atoms/atom";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import { axiosGetFunction } from "../../module/CustomAxios";
@@ -112,6 +113,7 @@ const ShopItem = ({ product, idx }) => {
   const [token, setToken] = useRecoilState(tokenAtom);
   const setSizes = useSetRecoilState(sizeAtom);
   const [param, setPram] = useRecoilState(paramAtom)
+  const setType = useSetRecoilState(typeAtom)
 
   const [getUser, setGetUser] = useRecoilState(userAtom)
   const navigate = useNavigate()
@@ -134,6 +136,7 @@ const ShopItem = ({ product, idx }) => {
       axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
         setSizes(res.data.data.sizes);
         setModalProduct(product);
+        setType('shop');
         setOpen(true);
       });
     }

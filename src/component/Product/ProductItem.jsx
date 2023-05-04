@@ -38,7 +38,7 @@ const ItemBlock = styled.div`
 // style 끝
 
 
-const ProductItem = ({title, subTitle, items}) => {
+const ProductItem = ({title, type, subTitle, items}) => {
     // const [item, setItem] = useState();
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState([]);
@@ -63,7 +63,7 @@ const ProductItem = ({title, subTitle, items}) => {
             <ItemBlock>
                 {products !== null && products.length > 0 ?
                     products.map((p, i) => (
-                        <MainItem p={p} key={i}/>
+                        <MainItem p={p} key={i} type={type}/>
                     ))
                     : null}
             </ItemBlock>

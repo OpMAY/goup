@@ -5,9 +5,10 @@ import FocusList from './FocusList';
 import Banner from './Banner';
 import BannerSwiper from './BannerSwiper'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { bannerAtom, mainItemAtom, tokenAtom, userAtom } from "../../atoms/atom";
+import { bannerAtom, mainItemAtom, tokenAtom, typeAtom, userAtom } from "../../atoms/atom";
 import { axiosGetFunction } from "../../module/CustomAxios";
 import SizeModal from "../Shop/SizeModal";
+import { useState } from 'react';
 
 
 const Home = () => {
@@ -15,6 +16,8 @@ const Home = () => {
   const setBanner = useSetRecoilState(bannerAtom);
   const [mainItem, setMainItem] = useRecoilState(mainItemAtom);
   const user = useRecoilValue(userAtom);
+  const [droppedProducts, setDropp] = useState()
+  const [type, setType] = useRecoilState(typeAtom);
   useEffect(() => {
     const header = { user_no: user };
     axiosGetFunction('/api/kream/main', {}, token, setToken, header).then((res) => {
@@ -32,12 +35,12 @@ const Home = () => {
       {/* swiper */}
       <BannerSwiper />
       <Inner padding="0 40px;">
-        <ProductItem title={'Just Dropped'} subTitle={'발매 상품'} items={mainItem.droppedProducts} />
+        <ProductItem title={'Just Dropped'} subTitle={'발매 상품'} type='dropped' items={mainItem.droppedProducts} />
         <FocusList title={'Brand Focus'} subTitle={'추천 브랜드'} borderTop="1px solid #ccc" items={mainItem.recommendBrands}></FocusList>
       </Inner>
       <Banner />
       <Inner padding="0 40px;">
-        <ProductItem title={'Most Popular'} subTitle={'인기 상품'} items={mainItem.popularProducts} />
+        <ProductItem title={'Most Popular'} subTitle={'인기 상품'} type='popular' items={mainItem.popularProducts} />
       </Inner>
       <SizeModal />
     </>

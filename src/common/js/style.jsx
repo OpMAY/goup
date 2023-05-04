@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { modalOpenAtom, modalProductAtom, sizeAtom, tokenAtom, userAtom } from "../../atoms/atom";
+import { modalOpenAtom, modalProductAtom, sizeAtom, tokenAtom, typeAtom, userAtom } from "../../atoms/atom";
 import { axiosGetFunction } from "../../module/CustomAxios";
 
 export const Inner = styled.div`
@@ -91,13 +91,14 @@ const buttonStyle = {
   borderRadius: '50px',
   color: '#000',
 }
-export const MainItem = ({ p }) => {
+export const MainItem = ({ p,type }) => {
   const setOpen = useSetRecoilState(modalOpenAtom);
   const setModalProduct = useSetRecoilState(modalProductAtom);
   const [token, setToken] = useRecoilState(tokenAtom);
   const setSizes = useSetRecoilState(sizeAtom);
   const [getUser, setGetUser] = useRecoilState(userAtom);
   const navigate = useNavigate();
+  const setType = useSetRecoilState(typeAtom)
   const modalOpen = (no) => {
     if (getUser === null) {
       navigate('/login');
@@ -105,6 +106,7 @@ export const MainItem = ({ p }) => {
       axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
         setSizes(res.data.data.sizes);
         setModalProduct(res.data.data.product);
+        setType(type);
         setOpen(true);
       });
     }
@@ -113,7 +115,7 @@ export const MainItem = ({ p }) => {
     <>
       <MainItems>
         <LinkStyle to={`/product/${p.no}`}></LinkStyle>
-        <MainItemImage color={p.brand.color} url={p.image.url}>
+        <MainItemImage color={p.brand?.color} url={p.image.url}>
           <LinkStyle to={`/product/${p.no}`}></LinkStyle>
           <Button sx={buttonStyle} onClick={() => { modalOpen(p.no) }}>
             {
@@ -123,7 +125,7 @@ export const MainItem = ({ p }) => {
         </MainItemImage>
         {/* <img alt="Main Test Images" src="/images/img0.png"/> */}
         <div className='productInfo'>
-          <em>{p.brand.name}</em>
+          <em>{p.brand?.name}</em>
           <p className='name' style={{ maxWidth: '294px' }}>{p.name}</p>
           <div className='price'>
             <strong>{addComma(p.price)}원</strong>

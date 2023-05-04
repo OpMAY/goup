@@ -6,7 +6,7 @@ import Modal from '@mui/material/Modal'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {useRecoilState, useRecoilValue} from 'recoil';
-import {modalOpenAtom, modalProductAtom, productAtom, sizeAtom, tokenAtom} from '../../atoms/atom'
+import {mainItemAtom, modalOpenAtom, modalProductAtom, productAtom, sizeAtom, tokenAtom, typeAtom} from '../../atoms/atom'
 import {axiosPostFunction} from "../../module/CustomAxios";
 
 const Box = styled.div`
@@ -105,7 +105,9 @@ const SizeModal = () => {
     const [sizes, setSizes] = useRecoilState(sizeAtom);
     const [checkBtn, setCheckBtn] = useState(false);
     const [products, setProducts] = useRecoilState(productAtom);
+    const [mainItem, setMainItem] = useRecoilState(mainItemAtom)
     const [token, setToken] = useRecoilState(tokenAtom);
+    const type = useRecoilValue(typeAtom)
 
     const handleClose = () => {
         setOpen(false)
@@ -145,17 +147,28 @@ const SizeModal = () => {
         })
         body.wishes = wishes;
         axiosPostFunction('/api/kream/product/wish', body, false, token, setToken).then((res) => {
-            console.log(res);
+            console.log('main', mainItem)
+
             if(res.data.status === 'OK') {
                 const this_product = {...modalProduct};
                 this_product._wish = res.data.data.status;
-                const productFormattedList = [...products].map(product => {
-                    if(this_product.no === product.no) return this_product; else return product;
-                });
-                setProducts(productFormattedList);
+                if( type === 'shop'){
+                    const productFormattedList = [...products].map(product => {
+                        if(this_product.no === product.no) return this_product; else return product;
+                    });
+                    setProducts(productFormattedList);
+                } else if(type === 'dropped'){
+                    const productFormattedList = [...mainItem.droppedProducts].map(product => {
+                        if(this_product.no === product.no) return this_product; else return product;
+                    });
+                    const m = {...mainItem};
+                    m.droppedProducts = productFormattedList
+                    setMainItem(m);
+                }
                 handleClose();
             }
         })
+        
     }
     return (
         <>
