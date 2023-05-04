@@ -6,7 +6,7 @@ import Modal from '@mui/material/Modal'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {useRecoilState, useRecoilValue} from 'recoil';
-import {mainItemAtom, modalOpenAtom, modalProductAtom, productAtom, sizeAtom, tokenAtom, typeAtom} from '../../atoms/atom'
+import {mainItemAtom, modalOpenAtom, modalProductAtom, productAtom, sizeAtom, tokenAtom, typeAtom, userAtom} from '../../atoms/atom'
 import {axiosPostFunction} from "../../module/CustomAxios";
 
 const Box = styled.div`
@@ -108,6 +108,8 @@ const SizeModal = () => {
     const [mainItem, setMainItem] = useRecoilState(mainItemAtom)
     const [token, setToken] = useRecoilState(tokenAtom);
     const type = useRecoilValue(typeAtom)
+    const user = useRecoilValue(userAtom);
+
 
     const handleClose = () => {
         setOpen(false)
@@ -133,7 +135,7 @@ const SizeModal = () => {
     const handleConfirm = () => {
         // 통신
         const body = {}
-        body.user_no = 1;
+        body.user_no = user;
         body.product_no = modalProduct.no;
         const result = sizes.filter((element, index, array) => {
             return element._wish === true

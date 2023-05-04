@@ -133,7 +133,7 @@ const ShopItem = ({ product, idx }) => {
     if(getUser === null){
       navigate('/login');
     } else{
-      axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
+      axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + getUser, {}, token, setToken).then((res) => {
         setSizes(res.data.data.sizes);
         setModalProduct(product);
         setType('shop');

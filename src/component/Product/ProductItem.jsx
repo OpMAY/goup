@@ -38,7 +38,7 @@ const ItemBlock = styled.div`
 // style 끝
 
 
-const ProductItem = ({title, type, subTitle, items}) => {
+const ProductItem = ({title, subTitle, type, items}) => {
     // const [item, setItem] = useState();
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState([]);

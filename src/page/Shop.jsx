@@ -8,7 +8,7 @@ import {
     loadingAtom,
     productTotalCountAtom,
     urlParamsAtom,
-    shopAxiosFilterAtom, shopInputFilterAtom, filterChangeAtom, productCursorAtom
+    shopAxiosFilterAtom, shopInputFilterAtom, filterChangeAtom, productCursorAtom, userAtom
 } from "../atoms/atom";
 import {axiosGetFunction} from "../module/CustomAxios";
 import SizeModal from "../component/Shop/SizeModal";
@@ -24,6 +24,7 @@ const Shop = () => {
     const [filter, setFilter] = useRecoilState(shopAxiosFilterAtom);
     const [filterChanged, setFilterChanged] = useRecoilState(filterChangeAtom);
     const [cursor, setCursor] = useRecoilState(productCursorAtom);
+    const user = useRecoilValue(userAtom);
 
     useEffect(() => {
         // 1. 파라미터 분석한거 기준으로 필터 체크 박스에 스테이트 넣는거
@@ -47,6 +48,8 @@ const Shop = () => {
         filterObject.price = price;
         filterObject.size_list = size;
         filterObject.keyword = keyword;
+        filterObject.user_no = user;
+
         Object.keys(filterObject).forEach(key => {
             if(filterObject[key] === null) {
                 delete filterObject[key]
@@ -92,6 +95,7 @@ const Shop = () => {
             filterObject.price = price;
             filterObject.size_list = size;
             filterObject.keyword = keyword;
+            filterObject.user_no = user;
             Object.keys(filterObject).forEach(key => {
                 if(filterObject[key] === null) {
                     delete filterObject[key]
