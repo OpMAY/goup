@@ -67,6 +67,7 @@ export const axiosGetFunction = async (
         });
     } // 추가 헤더 설정
     config.params = params; // 파라미터 세팅
+    console.log('config', config)
     return new Promise((resolve, reject) => {
         axios.get(DEFAULT_SERVER_URL + url, config)
             .then(async res => {

@@ -20,6 +20,7 @@ const Home = () => {
   const [type, setType] = useRecoilState(typeAtom);
   useEffect(() => {
     const header = { user_no: user };
+      console.log(header)
     axiosGetFunction('/api/kream/main', {}, token, setToken, header).then((res) => {
       console.log(res);
       const obj = {};

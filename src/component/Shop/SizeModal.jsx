@@ -6,7 +6,16 @@ import Modal from '@mui/material/Modal'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {useRecoilState, useRecoilValue} from 'recoil';
-import {mainItemAtom, modalOpenAtom, modalProductAtom, productAtom, sizeAtom, tokenAtom, typeAtom, userAtom} from '../../atoms/atom'
+import {
+    mainItemAtom,
+    modalOpenAtom,
+    modalProductAtom,
+    productAtom,
+    sizeAtom,
+    tokenAtom,
+    typeAtom,
+    userAtom
+} from '../../atoms/atom'
 import {axiosPostFunction} from "../../module/CustomAxios";
 
 const Box = styled.div`
@@ -143,34 +152,50 @@ const SizeModal = () => {
         const wishes = [];
         result.map(size => {
             wishes.push({
-                size_no : size.no,
-                user_no : body.user_no
+                size_no: size.no,
+                user_no: body.user_no
             })
         })
         body.wishes = wishes;
         axiosPostFunction('/api/kream/product/wish', body, false, token, setToken).then((res) => {
             console.log('main', mainItem)
-
-            if(res.data.status === 'OK') {
+            if (res.data.status === 'OK') {
                 const this_product = {...modalProduct};
                 this_product._wish = res.data.data.status;
-                if( type === 'shop'){
+                if (type === 'shop') {
                     const productFormattedList = [...products].map(product => {
-                        if(this_product.no === product.no) return this_product; else return product;
+                        if (this_product.no === product.no) return this_product; else return product;
                     });
                     setProducts(productFormattedList);
-                } else if(type === 'dropped'){
-                    const productFormattedList = [...mainItem.droppedProducts].map(product => {
-                        if(this_product.no === product.no) return this_product; else return product;
-                    });
-                    const m = {...mainItem};
-                    m.droppedProducts = productFormattedList
-                    setMainItem(m);
+                } else {
+                    if (type === 'dropped') {
+                        const productFormattedList = [...mainItem.droppedProducts].map(product => {
+                            if (this_product.no === product.no) {
+                                const p = {...product};
+                                p._wish = this_product._wish;
+                                return p;
+                            } else return product;
+                        });
+                        const m = {...mainItem};
+                        m.droppedProducts = productFormattedList
+                        setMainItem(m);
+                    } else {
+                        const productFormattedList = [...mainItem.popularProducts].map(product => {
+                            if (this_product.no === product.no) {
+                                const p = {...product};
+                                p._wish = this_product._wish;
+                                return p;
+                            } else return product;
+                        });
+                        const m = {...mainItem};
+                        m.popularProducts = productFormattedList
+                        setMainItem(m);
+                    }
                 }
                 handleClose();
             }
         })
-        
+
     }
     return (
         <>
