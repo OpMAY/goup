@@ -21,6 +21,7 @@ const Profile = () => {
   const [user, setUser] = useRecoilState(userAtom)
   const [profile, setProfile] = useRecoilState(profileAtom);
   useEffect(() => {
+    window.scrollTo(0,0);
     axiosGetFunction(`/api/kream/my/user/${user}`,{}, token, setToken).then((res) => {
       setProfile(res.data.data.user)
     })

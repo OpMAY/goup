@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import BtnDivision from "../../Detail/BtnDivision";
 import WishBox from "./WishBox";
 
@@ -12,6 +12,9 @@ const HeadlineText = {
 };
 
 const Wish = () => {
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, [])
   return (
     <>
       <Typography sx={HeadlineText}>관심 상품</Typography>

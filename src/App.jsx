@@ -49,14 +49,14 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/my" element={getUser === null ? <Login /> : <My />} />
-        <Route path="/my/buying" element={<My path="buying" />} />
-        <Route path="/my/selling" element={<My path="selling" />} />
-        <Route path="/my/account" element={<My path="account" />} />
-        <Route path="/my/address" element={<My path="address" />} />
-        <Route path="/my/point" element={<My path="point" />} />
-        <Route path="/my/profile" element={<My path="profile" />} />
-        <Route path="/my/receipt" element={<My path="receipt" />} />
-        <Route path="/my/wish" element={<My path="wish" />} />
+        <Route path="/my/buying" element={getUser === null ? <Login /> : <My path="buying" />} />
+        <Route path="/my/selling" element={getUser === null ? <Login /> : <My path="selling" />} />
+        <Route path="/my/account" element={getUser === null ? <Login /> : <My path="account" />} />
+        <Route path="/my/address" element={getUser === null ? <Login /> : <My path="address" />} />
+        <Route path="/my/point" element={getUser === null ? <Login /> : <My path="point" />} />
+        <Route path="/my/profile" element={getUser === null ? <Login /> : <My path="profile" />} />
+        <Route path="/my/receipt" element={getUser === null ? <Login /> : <My path="receipt" />} />
+        <Route path="/my/wish" element={getUser === null ? <Login /> : <My path="wish" />} />
         <Route path="/notice" element={<Notice path="main" />} />
         <Route path="/notice/:id" element={<Notice path="detail" />} />
         <Route path="/faq" element={<Notice path="faq" />} />

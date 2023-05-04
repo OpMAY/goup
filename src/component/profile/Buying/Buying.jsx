@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tab, Stack, Tabs, Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import styled from "styled-components";
@@ -161,7 +161,9 @@ const Buying = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
   return (
     <>
       <Typography sx={headline}>구매 내역</Typography>

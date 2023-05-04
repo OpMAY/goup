@@ -173,6 +173,7 @@ const Point = () => {
   const handleClose = () => setOpen(false);
   const [userPoint, setUserPoint] = useRecoilState(userPointAtom);
   useEffect(() => {
+    window.scrollTo(0,0);
     axiosGetFunction(`/api/kream/my/point/${user}`, {}, token, setToken).then((res) => {
       console.log(res);
       setUserPoint(res.data.data.point);

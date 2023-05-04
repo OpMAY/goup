@@ -9,10 +9,11 @@ import {
   tokenAtom,
   sizeAtom,
   paramAtom,
+  userAtom,
 } from "../../atoms/atom";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import { axiosGetFunction } from "../../module/CustomAxios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ItemBlcok = styled.div`
    position: relative;
@@ -112,6 +113,9 @@ const ShopItem = ({ product, idx }) => {
   const setSizes = useSetRecoilState(sizeAtom);
   const [param, setPram] = useRecoilState(paramAtom)
 
+  const [getUser, setGetUser] = useRecoilState(userAtom)
+  const navigate = useNavigate()
+
   // const confirmClcik = () => {
   //   const sample = {...product};
   //   sample._wish = !sample._wish;
@@ -123,13 +127,17 @@ const ShopItem = ({ product, idx }) => {
   // }
 
   const modalOpen = (no) => {
-    axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
-      setSizes(res.data.data.sizes);
-      setModalProduct(product);
-      setOpen(true);
-    });
+    
+    if(getUser === null){
+      navigate('/login');
+    } else{
+      axiosGetFunction('/api/kream/product/size/' + no + '?user_no=' + 1, {}, token, setToken).then((res) => {
+        setSizes(res.data.data.sizes);
+        setModalProduct(product);
+        setOpen(true);
+      });
+    }
   }
-
   function addComma(number) {
     let len;
     let point;

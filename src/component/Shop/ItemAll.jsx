@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import {Inner} from '../../common/js/style';
+import { Inner } from '../../common/js/style';
 import FilterSide from '../../component/Shop/FilterSide';
 import ShopList from '../../component/Shop/ShopList';
 import ClearIcon from '@mui/icons-material/Clear';
-import {useNavigate} from "react-router-dom";
-import {useRecoilState, useSetRecoilState} from "recoil";
-import {filterChangeAtom} from "../../atoms/atom";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { filterChangeAtom } from "../../atoms/atom";
 
 const ShopBlock = styled.div`
   display: flex;
@@ -22,6 +22,7 @@ const Title = styled.h2`
   text-align: center;
   font-size: 32px;
   font-weight: 600;
+  margin-bottom: 15px;
 `
 
 const InputDiv = styled.div`
@@ -107,7 +108,7 @@ function setFilterInit() {
 const ItemAll = () => {
     const filters = setFilterInit();
     const setFilterChange = useSetRecoilState(filterChangeAtom);
-    const [searchText, setSearchText] = useState(null);
+    const [searchText, setSearchText] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
         setSearchText(filters.keyword);
@@ -135,7 +136,7 @@ const ItemAll = () => {
             }
             params.set('keyword', filters.keyword);
             // navigate([...params].length > 0 ? '?' + params.toString() : '');
-            navigate([...params].length > 0 ? '?' + params.toString() : '', {replace: true});
+            navigate([...params].length > 0 ? '?' + params.toString() : '', { replace: true });
             // Filter Change update 시 shop.js의 useEffect에서 해당 값을 Listen하고 있어서 데이터 새로 불러옴
             setFilterChange(true);
         }
@@ -164,26 +165,24 @@ const ItemAll = () => {
             params.set('price', filters.price.toString());
         }
         // navigate([...params].length > 0 ? '?' + params.toString() : '');
-        navigate([...params].length > 0 ? '?' + params.toString() : '', {replace: true});
+        navigate([...params].length > 0 ? '?' + params.toString() : '', { replace: true });
         // Filter Change update 시 shop.js의 useEffect에서 해당 값을 Listen하고 있어서 데이터 새로 불러옴
         setFilterChange(true);
     }
 
     return (
         <Inner padding="0 40px;">
+            <Title>SHOP</Title>
             <TitleDiv>
-                {
-                    searchText !== null ? <InputDiv><KeywordInput value={searchText} onChange={handleChange} placeholder="브랜드명, 모델명, 모델번호 등"
-                                                                       onKeyDown={search}></KeywordInput>{
-                        searchText.length > 0 ? <Delete
-                            onClick={resetInput}><ClearIcon/></Delete> : null
-                        }</InputDiv> :
-                        <Title>SHOP</Title>
-                }
+                <InputDiv><KeywordInput value={searchText ? searchText : ''} onChange={handleChange} placeholder="브랜드명, 모델명, 모델번호 등"
+                    onKeyDown={search}></KeywordInput>{
+                        searchText && searchText.length > 0 ? <Delete
+                            onClick={resetInput}><ClearIcon /></Delete> : null
+                    }</InputDiv>
             </TitleDiv>
             <ShopBlock>
-                <FilterSide/>
-                <ShopList/>
+                <FilterSide />
+                <ShopList />
             </ShopBlock>
         </Inner>
     )

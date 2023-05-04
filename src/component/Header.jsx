@@ -6,13 +6,19 @@ import { Inner } from "../common/js/style";
 // logo 경로
 import logo from "../common/images/logo.png";
 // react icon
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // tab custom css
 import "../common/css/custom.css";
 import SearchModal from "./modal/SearchModal";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../atoms/atom";
 import { Button } from "@mui/material";
+import { AiOutlineSearch } from "react-icons/ai";
+
+const button = {
+  padding: 0,
+  color: "inherit",
+};
 
 const HeaderBlock = styled.header`
   position: sticky;
@@ -73,7 +79,7 @@ const Navbar = styled.nav`
       }
 
       &:last-child {
-        padding-right: 40px;
+        padding: 0px;
       }
       
       a {
@@ -109,12 +115,16 @@ const NavCheck = {
 
 const Header = ({ title }) => {
   const [getUser, setUser] = useRecoilState(userAtom);
+  const navigate = useNavigate()
 
   const logoutClick = () => {
     setUser(null);
     window.location.href = window.location.origin;
   };
 
+  const moveClick = () => {
+    navigate('/shop')
+  }
   return (
     <>
       {title ? (
@@ -190,9 +200,13 @@ const Header = ({ title }) => {
                     <li>
                       <Link to="/my">MY</Link>
                     </li>
+                    <li>
+                      <Button sx={button} onClick={moveClick}>
+                        <AiOutlineSearch size="28" />
+                      </Button>
+                    </li>
                   </ul>
                 </nav>
-                <SearchModal />
               </NavBlock>
             </Navbar>
           </Inner>

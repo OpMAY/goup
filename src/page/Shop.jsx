@@ -64,6 +64,7 @@ const Shop = () => {
             setProductTotalCount(res.data.data.count);
             setProduct(res.data.data.products);
             setLoading(false);
+            setCursor(1);
             window.scrollTo(0,0)
         })
     }, [])
