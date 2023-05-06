@@ -21,7 +21,7 @@ const Home = () => {
   useEffect(() => {
     const header = { user_no: user };
       console.log(header)
-    axiosGetFunction('/api/kream/main', {}, token, setToken, header).then((res) => {
+    axiosGetFunction('/api/kream/main', user !== null? {user_no : user} : {}, token, setToken, header).then((res) => {
       console.log(res);
       const obj = {};
       obj.droppedProducts = res.data.data.recent_products;

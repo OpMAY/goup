@@ -7,8 +7,6 @@
     <list default="true" id="527bcbe3-158e-44ad-b750-be2867f43b46" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Product/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Product/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Shop/SizeModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/SizeModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/CustomAxios.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/CustomAxios.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +85,8 @@
       <workItem from="1681356531157" duration="18488000" />
       <workItem from="1681876303445" duration="2898000" />
       <workItem from="1681896758746" duration="117000" />
+      <workItem from="1683204747222" duration="599000" />
+      <workItem from="1683349332487" duration="699000" />
     </task>
     <servers />
   </component>
